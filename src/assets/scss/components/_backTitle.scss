@@ -1,27 +1,25 @@
-.titleFather{
-    position: relative;
-    width: 80%;
-    height: 100vh;  
+.adminContent{
+    width: 100%;
+    height: 100vh;
+    padding: 0 10px;
     display: flex;
-    align-items: start;
-    background-color: #ddd;
+    flex-direction: column;
 }
 .backWelcome{
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    margin: 5px 0 10px 0;
 }
 h1{
     font-size: $h1;
 }
-.drawBg{
+.drawBgBalloon{
     position: absolute;
     top: -20%;
-    left: 45%;
+    left: 43.5%;
     width: 7%;
     img{
         width: 100%;
