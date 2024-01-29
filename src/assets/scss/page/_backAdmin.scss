@@ -1,0 +1,13 @@
+.backAdmin{
+    display: flex;
+    // flex-wrap: wrap ;
+}
+.subtitle{
+    display: flex;
+    flex-direction: column;
+}
+.subtitle_line{
+    border: $bor1 solid $blackWord;
+    width: 100%;
+    height: 0;
+}

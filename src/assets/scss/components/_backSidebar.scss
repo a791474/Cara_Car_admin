@@ -1,0 +1,58 @@
+.backContent{
+    max-width: 1920px;
+    background-color: #fff;
+}
+.backSidebar{
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: $blue;
+    width: 20%;
+    height: 100vh;
+    padding: 20px 10px 0 10px;
+    color: $whiteWord;
+    .sidebarLogo{
+        width: 80%;
+        img{
+            width: 100%;
+            vertical-align: top;
+        }
+    }
+    nav{
+        position: relative;
+        margin:10px;
+        width: 100%;
+        ul{
+            position: absolute;
+            left: 5vh;
+            li{
+                padding: 10px;
+                font-size: $p;
+                cursor: pointer;
+                transition: 0.3s ease-in-out;
+                border-radius: $borr2;
+                background-color: transparent;
+            }
+            li.active{
+                width: 100%;
+                color: $blackWord;
+                // border-radius: $borr2;
+                background-color: $whiteWord;
+            }
+        }
+        
+    }
+    .drawBg{
+        position: absolute;
+        left: 56.5%;
+        bottom: 0;
+        width: 18vh;
+        z-index: 1;
+        img{
+            width: 100%;
+            vertical-align: top;
+        }
+    }
+}
+

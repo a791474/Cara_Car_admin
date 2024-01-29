@@ -1,0 +1,41 @@
+.titleFather{
+    position: relative;
+    width: 80%;
+    height: 100vh;  
+    display: flex;
+    align-items: start;
+    background-color: #ddd;
+}
+.backWelcome{
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+h1{
+    font-size: $h1;
+}
+.drawBg{
+    position: absolute;
+    top: -20%;
+    left: 45%;
+    width: 7%;
+    img{
+        width: 100%;
+        vertical-align: top;
+    }
+}
+a{
+    width: 15%;
+    button{
+        width: 100%;
+        height: 40px;
+        font-size: $p;
+        color: $whiteWord;
+        border-radius: $borr2;
+        background-color: #1F4987;
+    }
+}
