@@ -10,7 +10,7 @@ export default {
 <template>
         <div class="backWelcome">
             <h1>Good Morning, Manager </h1>
-            <div class="drawBg">
+            <div class="drawBgBalloon">
                 <img src="../assets/imgs/sidebar-bg-balloon.png" alt="BG">
             </div>
             <RouterLink to="/">
