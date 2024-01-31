@@ -1,4 +1,4 @@
-.backSidebar{
+.backSidebar {
     position: relative;
     display: flex;
     align-items: center;
@@ -8,21 +8,26 @@
     height: 100vh;
     padding: 20px 10px 0 10px;
     color: $whiteWord;
-    .sidebarLogo{
+
+    .sidebarLogo {
         width: 80%;
-        img{
+
+        img {
             width: 100%;
             vertical-align: top;
         }
     }
-    nav{
+
+    nav {
         position: relative;
-        margin:10px;
+        margin: 10px;
         width: 100%;
-        ul{
+
+        ul {
             position: absolute;
             left: 5vh;
-            li{
+
+            li {
                 padding: 10px;
                 font-size: $p;
                 cursor: pointer;
@@ -30,35 +35,40 @@
                 border-radius: $borr2;
                 background-color: transparent;
             }
-            li.active{
+
+            li.active {
                 width: 100%;
                 color: $blackWord;
                 // border-radius: $borr2;
                 background-color: $whiteWord;
             }
         }
-        
+
     }
-    .drawBgHello{
+
+    .drawBgHello {
         position: absolute;
         left: 56.5%;
         bottom: 0;
         width: 45%;
         z-index: 1;
-        img{
+
+        img {
             width: 100%;
             vertical-align: top;
         }
     }
 }
-.adminContent{
+
+.adminContent {
     width: 100%;
     height: 100vh;
     padding: 0 10px;
     display: flex;
     flex-direction: column;
 }
-.backWelcome{
+
+.backWelcome {
     position: relative;
     display: flex;
     align-items: center;
@@ -66,51 +76,71 @@
     width: 100%;
     margin: 5px 0 10px 0;
 }
-h1{
+
+h1 {
     font-size: $h1;
 }
-.drawBgBalloon{
+
+.drawBgBalloon {
     position: absolute;
     top: -20%;
     left: 43.5%;
     width: 7%;
-    img{
+
+    img {
         width: 100%;
         vertical-align: top;
     }
 }
-a{
+
+a {
     width: 15%;
-    button{
+
+    button {
         width: 100%;
         height: 40px;
+        cursor: pointer;
         font-size: $p;
         color: $whiteWord;
         border-radius: $borr2;
         background-color: #1F4987;
+        box-shadow: rgba(102, 102, 102, 0.35) 0px 5px 20px;
     }
 }
-.backAdmin{
+
+.backAdmin {
     display: flex;
 }
 
-.subtitle{
+.subtitle {
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    // flex-direction: column;
+    text-align: center;
     width: 100%;
+    p{
+        width: 25%;
+    }
 }
 
-.subtitle_line{
+.subtitle_line {
     border: $bor1 solid $blackWord;
     width: 100%;
     height: 0;
 }
 
-.admin_account{
+.admin_account {
+    text-align: center;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    justify-content: space-around;
     width: 100%;
+    p{
+        margin-block: 5px;
+        width: 25%;
+    }
+}
+.line{
+    width: 100%;
+    height: 0;
+    border: $bor1 solid $blackWord;
 }

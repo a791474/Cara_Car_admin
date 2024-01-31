@@ -6,10 +6,10 @@ export default {
         return {
             // currentSidebar:"",
             activeTab: "",
-            admins: [
-                { id: '001', name: '王老闆', permission: 'super manager', status: true },
-                { id: '002', name: '林副理', permission: 'manager', status: true },
-                { id: '003', name: '陳經理', permission: 'manager', status: true }
+            adminAccounts: [
+                { id: '001', name: '王老闆', role: 'super manager', checked: true },
+                { id: '002', name: '林副理', role: 'manager', checked: false },
+                { id: '003', name: '陳經理', role: 'manager', checked: false }
             ]
         };
     },
@@ -74,11 +74,12 @@ export default {
             <p>啟用中</p>
         </div>
         <div class="subtitle_line"></div>
-        <div class="admin_account">
-            <p>001</p>
-            <p>王老闆</p>
-            <p>super manager</p>
-            <button @click="toggleStatus(index)">啟用</button>
+        <div v-for="(admin, index) in adminAccounts" :key="index" class="admin_account">
+            <p>{{ admin.id }}</p>
+            <p>{{ admin.name }}</p>
+            <p>{{ admin.role }}</p>
+            <input :id="'s' + index" type="checkbox" class="switch" v-model="admin.checked">
+            <label :for="'s' + index" style="display: none;"></label>
             <div class="line"></div>
         </div>
     </div>
@@ -89,4 +90,5 @@ export default {
 // @import '@/assets/scss/components/backSidebar.scss';
 // @import '@/assets/scss/components/backTitle.scss';
 @import '@/assets/scss/page/backAdmin.scss';
+@import '@/assets/scss/components/switchBtn.scss';
 </style>
