@@ -1,4 +1,4 @@
-.backSidebar{
+.backSidebar {
     position: relative;
     display: flex;
     align-items: center;
@@ -8,21 +8,26 @@
     height: 100vh;
     padding: 20px 10px 0 10px;
     color: $whiteWord;
-    .sidebarLogo{
+
+    .sidebarLogo {
         width: 80%;
-        img{
+
+        img {
             width: 100%;
             vertical-align: top;
         }
     }
-    nav{
+
+    nav {
         position: relative;
-        margin:10px;
+        margin: 10px;
         width: 100%;
-        ul{
+
+        ul {
             position: absolute;
             left: 5vh;
-            li{
+
+            li {
                 padding: 10px;
                 font-size: $p;
                 cursor: pointer;
@@ -30,22 +35,25 @@
                 border-radius: $borr2;
                 background-color: transparent;
             }
-            li.active{
+
+            li.active {
                 width: 100%;
                 color: $blackWord;
                 // border-radius: $borr2;
                 background-color: $whiteWord;
             }
         }
-        
+
     }
-    .drawBgHello{
+
+    .drawBgHello {
         position: absolute;
         left: 56.5%;
         bottom: 0;
         width: 45%;
         z-index: 1;
-        img{
+
+        img {
             width: 100%;
             vertical-align: top;
         }

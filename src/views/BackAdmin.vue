@@ -1,6 +1,6 @@
 <script>
-// import BackSidebar from '@/components/backSidebar.vue';
-// import BackTitle from '@/components/backTitle.vue';
+import BackSidebar from '@/components/backSidebar.vue';
+import BackTitle from '@/components/backTitle.vue';
 export default {
     data() {
         return {
@@ -14,8 +14,8 @@ export default {
         };
     },
     components: {
-        // BackSidebar,
-        // BackTitle,
+        BackSidebar,
+        BackTitle,
     },
     created() {
 
@@ -37,7 +37,8 @@ export default {
 
 <template>
     <div class="backAdmin">
-        <div class="backSidebar">
+        <BackSidebar />
+        <!-- <div class="backSidebar">
             <div class="sidebarLogo">
                 <img src="../assets/imgs/sidebar-logo.png" alt="logo">
             </div>
@@ -56,9 +57,11 @@ export default {
             <div class="drawBgHello">
                 <img src="../assets/imgs/sidebar-bg-hello.png" alt="sidebarBg">
             </div>
-        </div>
+        </div> -->
+
         <div class="adminContent">
-            <div class="backWelcome">
+            <BackTitle />
+            <!-- <div class="backWelcome">
                 <h1>Good Morning, Manager </h1>
                 <div class="drawBgBalloon">
                     <img src="../assets/imgs/sidebar-bg-balloon.png" alt="BG">
@@ -66,7 +69,8 @@ export default {
                 <RouterLink to="/">
                     <button>登出</button>
                 </RouterLink>
-            </div>
+            </div> -->
+
             <div class="subtitle">
             <p>管理員編號</p>
             <p>管理員名稱</p>
@@ -83,12 +87,13 @@ export default {
             <div class="line"></div>
         </div>
     </div>
+
         </div>
 </template>
 
 <style lang="scss" scoped>
-// @import '@/assets/scss/components/backSidebar.scss';
-// @import '@/assets/scss/components/backTitle.scss';
+@import '@/assets/scss/components/backSidebar.scss';
+@import '@/assets/scss/components/backTitle.scss';
 @import '@/assets/scss/page/backAdmin.scss';
 @import '@/assets/scss/components/switchBtn.scss';
 </style>

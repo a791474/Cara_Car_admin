@@ -32,7 +32,7 @@ export default {
                 <li :class="{ active: activeTab === 'admin' }" @click="currentSidebar('admin')">權限管理</li>
             </ul>
         </nav>
-        <div class="drawBg">
+        <div class="drawBgHello">
             <img src="../assets/imgs/sidebar-bg-hello.png" alt="sidebarBg">
         </div>
     </div>

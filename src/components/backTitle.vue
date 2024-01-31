@@ -8,7 +8,6 @@ export default {
 }
 </script>
 <template>
-    <div class="titleFather">
         <div class="backWelcome">
             <h1>Good Morning, Manager </h1>
             <div class="drawBg">
@@ -18,7 +17,6 @@ export default {
                 <button>登出</button>
             </RouterLink>
         </div>
-    </div>
 </template>
 
 <style lang="scss" scoped>

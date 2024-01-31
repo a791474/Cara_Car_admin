@@ -1,11 +1,12 @@
-.adminContent{
+.adminContent {
     width: 100%;
     height: 100vh;
     padding: 0 10px;
     display: flex;
     flex-direction: column;
 }
-.backWelcome{
+
+.backWelcome {
     position: relative;
     display: flex;
     align-items: center;
@@ -13,27 +14,34 @@
     width: 100%;
     margin: 5px 0 10px 0;
 }
-h1{
+
+h1 {
     font-size: $h1;
 }
-.drawBgBalloon{
+
+.drawBgBalloon {
     position: absolute;
     top: -20%;
     left: 43.5%;
     width: 7%;
-    img{
+
+    img {
         width: 100%;
         vertical-align: top;
     }
 }
-a{
+
+a {
     width: 15%;
-    button{
+
+    button {
         width: 100%;
         height: 40px;
+        cursor: pointer;
         font-size: $p;
         color: $whiteWord;
         border-radius: $borr2;
         background-color: #1F4987;
+        box-shadow: rgba(102, 102, 102, 0.35) 0px 5px 20px;
     }
 }
