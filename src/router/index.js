@@ -33,6 +33,22 @@ const router = createRouter({
         title: '權限管理 | Cara Car',
       }
     },
+    {
+      path: '/BackMember',
+      name: 'BackMember',
+      component: () => import('../views/BackMember.vue'),
+      meta:{
+        title: '會員管理 | Cara Car',
+      }
+    },
+    {
+      path: '/BackNews',
+      name: 'BackNews',
+      component: () => import('../views/BackNews.vue'),
+      meta:{
+        title: '最新消息管理 | Cara Car',
+      }
+    },
   ]
 })
 //以下為上方新增meta:{title:}去更改每個頁面的頁簽名稱才需要解開註解。
