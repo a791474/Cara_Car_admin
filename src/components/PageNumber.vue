@@ -16,13 +16,13 @@ export default {
 <template>
     <div class="page_number">
         <div class="bgImg01">
-            <img src="../../assets/imgs/button/pageNumber/parts_cloud_1 1.png" alt="">
+            <img src="../assets/imgs/button/pageNumber/parts_cloud_1 1.png" alt="">
         </div>
         <div class="bgImg02">
-            <img src="../../assets/imgs/button/pageNumber/parts_cloud_2 1.png" alt="">
+            <img src="../assets/imgs/button/pageNumber/parts_cloud_2 1.png" alt="">
         </div>
         <div class="bgImg03">
-            <img src="../../assets/imgs/button/pageNumber/parts_balloon_1 3.png" alt="">
+            <img src="../assets/imgs/button/pageNumber/parts_balloon_1 3.png" alt="">
         </div>
         <div class="page_switcher">
             <button class="arrow_btn">
