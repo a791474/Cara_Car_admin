@@ -1,0 +1,81 @@
+.page_number{
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.page_switcher{
+    .arrow_btn{
+        width: 30px;
+        height: 30px;
+        margin: 0 5px;
+        border: none;
+        border-radius: $borr2;
+        background-color: $grey_1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        .arrow_rtl{
+            border: $blackWord solid;
+            border-width: 2px 0 0 2px;
+        }
+        .arrow_ltr{
+            border: $blackWord solid;
+            border-width: 0 2px 2px 0;
+        }
+    }
+}
+.page_chooser{
+    display: flex;
+    align-items: center;
+    .chooser_list{
+        width: 100%;
+    }
+}
+button.number{
+    width: 40px;
+    height: 40px;
+    margin: 10px;
+    border: none;
+    border-radius: $borr2;
+    background-color: $grey_1;
+    cursor: pointer;
+}
+.page_chooser li:first-child button {
+    background-color: $lightBlue;
+}
+.bgImg01{
+    width: 6%;
+    position: absolute;
+    left: 34%;
+    bottom: -30%;
+    z-index: 1;
+    img{
+        width: 100%;
+        vertical-align: top;
+    }
+}
+.bgImg02{
+    width: 6%;
+    position: absolute;
+    z-index: -1;
+    right: 34.5%;
+    bottom: 60%;
+    img{
+        width: 100%;
+        vertical-align: top;
+    }
+}
+.bgImg03{
+    width: 4%;
+    position: absolute;
+    z-index: 1;
+    right: 37%;
+    bottom: -75%;
+    img{
+        width: 100%;
+        vertical-align: top;
+    }
+}

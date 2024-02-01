@@ -1,6 +1,7 @@
 <script>
-import BackSidebar from '@/components/backSidebar.vue';
 import BackTitle from '@/components/backTitle.vue';
+import BackSidebar from '@/components/backSidebar.vue';
+import PageNumber from '@/components/PageNumber.vue';
 export default {
     data() {
         return {
@@ -16,6 +17,7 @@ export default {
     components: {
         BackSidebar,
         BackTitle,
+        PageNumber,
     },
     created() {
 
@@ -38,38 +40,9 @@ export default {
 <template>
     <div class="backAdmin">
         <BackSidebar />
-        <!-- <div class="backSidebar">
-            <div class="sidebarLogo">
-                <img src="../assets/imgs/sidebar-logo.png" alt="logo">
-            </div>
-            <nav>
-                <ul>
-                    <li :class="{ active: activeTab === 'member' }" @click="currentSidebar('member')">會員管理</li>
-                    <li :class="{ active: activeTab === 'products' }" @click="currentSidebar('products')">商品管理</li>
-                    <li :class="{ active: activeTab === 'orders' }" @click="currentSidebar('orders')">訂單管理</li>
-                    <li :class="{ active: activeTab === 'SH-products' }" @click="currentSidebar('SH-products')">二手商品管理</li>
-                    <li :class="{ active: activeTab === 'SH-orders' }" @click="currentSidebar('SH-orders')">二手訂單管理</li>
-                    <li :class="{ active: activeTab === 'promotion' }" @click="currentSidebar('promotion')">促銷商品管理</li>
-                    <li :class="{ active: activeTab === 'news' }" @click="currentSidebar('news')">最新消息管理</li>
-                    <li :class="{ active: activeTab === 'admin' }" @click="currentSidebar('admin')">權限管理</li>
-                </ul>
-            </nav>
-            <div class="drawBgHello">
-                <img src="../assets/imgs/sidebar-bg-hello.png" alt="sidebarBg">
-            </div>
-        </div> -->
 
         <div class="adminContent">
             <BackTitle />
-            <!-- <div class="backWelcome">
-                <h1>Good Morning, Manager </h1>
-                <div class="drawBgBalloon">
-                    <img src="../assets/imgs/sidebar-bg-balloon.png" alt="BG">
-                </div>
-                <RouterLink to="/">
-                    <button>登出</button>
-                </RouterLink>
-            </div> -->
 
             <div class="subtitle">
             <p>管理員編號</p>
@@ -86,7 +59,9 @@ export default {
             <label :for="'s' + index" style="display: none;"></label>
             <div class="line"></div>
         </div>
+        <PageNumber />
     </div>
+
 
         </div>
 </template>
