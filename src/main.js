@@ -16,6 +16,9 @@ import { createPinia } from 'pinia'
 //引入主程式
 import App from './App.vue'
 import router from './router'
+import ViewUIPlus from 'view-ui-plus'
+import 'view-ui-plus/dist/styles/viewuiplus.css'
+
 
 /*  創建一個vue應用程式(主要配置在app.vue)
     原先預設vueApp是app，但這邊只是單純為了好理解所以先改名
@@ -24,6 +27,7 @@ const vueApp = createApp(App)
 
 vueApp.use(createPinia())
 vueApp.use(router)
+vueApp.use(ViewUIPlus)
 
 // vueApp.component('Button', Button)
 // vueApp.component('ButtonGroup', ButtonGroup)

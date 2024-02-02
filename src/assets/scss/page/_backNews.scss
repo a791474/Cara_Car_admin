@@ -1,0 +1,9 @@
+.backMember {
+    display: flex;
+
+    .backNewsPart {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+}
