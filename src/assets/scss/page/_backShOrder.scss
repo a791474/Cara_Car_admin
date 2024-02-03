@@ -1,0 +1,91 @@
+// .comp{
+//     display: flex;
+    
+// }
+
+.shOrder{
+    .comp{
+        display: flex;
+        .content{
+            flex-direction: column;
+            width: 60%;
+            margin: 0 auto;
+            margin-top: 40px;
+            .paginator{
+                margin-top:70px;
+            }
+        }
+    }
+    .searchBar{
+        display: flex;
+        justify-content: end;
+        text-align: center;
+        align-items: center;
+        select{
+            height: 31px;
+            background-color: #D9D9D9;
+            border: none;
+            padding: 6px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        input{
+            margin: 20px;
+            background-color: #D9D9D9;
+            border: none;
+            padding: 6px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        button{
+            background-color: #D9D9D9;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        
+    }
+
+    .listTitle{
+        ul{
+            margin-top: 20px;
+            display: flex;justify-content: space-between;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #222;
+            li{
+                display: flex;
+                
+                // margin: 0 10px;
+            }
+        }
+    }
+
+    .orderContent{
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0;
+        align-items: center;
+        .searchBtn{
+            background-color: $yellow;
+            border: none;
+            padding: 3px 10px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        .switch{
+            .ivu-switch{
+
+                background-color: $blue;
+                
+            }
+            .ivu-switch-checked {
+                background-color: 
+                $grey_3;
+                border: 1px solid $grey_3;
+            }
+            
+        }
+    }
+    
+}
