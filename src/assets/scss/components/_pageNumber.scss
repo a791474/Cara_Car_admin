@@ -1,5 +1,10 @@
+.number.active {
+    background-color: $lightBlue; /* 替換成您想要的顏色 */
+}
 .page_number{
-    position: relative;
+    position: absolute;
+    left: 43%;
+    bottom: 0;
     z-index: 2;
     display: flex;
     align-items: center;
@@ -42,9 +47,6 @@ button.number{
     border-radius: $borr2;
     background-color: $grey_1;
     cursor: pointer;
-}
-.page_chooser li:first-child button {
-    background-color: $lightBlue;
 }
 .bgImg01{
     width: 6%;

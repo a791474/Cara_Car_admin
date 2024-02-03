@@ -1,0 +1,39 @@
+// .pageNumberBG{
+//     position: relative;
+//     width: 100%;
+//     height: 100vw;
+//     background-color: #fa0;
+// }
+.bgImg01{
+    width: 6%;
+    position: absolute;
+    left: 37%;
+    bottom: 0;
+    z-index: 1;
+    img{
+        width: 100%;
+        vertical-align: top;
+    }
+}
+.bgImg02{
+    width: 4.5%;
+    position: absolute;
+    z-index: -1;
+    right: 32.5%;
+    bottom: 6.5%;
+    img{
+        width: 100%;
+        vertical-align: top;
+    }
+}
+.bgImg03{
+    width: 3%;
+    position: absolute;
+    z-index: 1;
+    left: 55%;
+    bottom: 3%;
+    img{
+        width: 100%;
+        vertical-align: top;
+    }
+}

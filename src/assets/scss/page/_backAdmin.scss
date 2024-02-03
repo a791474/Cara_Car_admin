@@ -1,5 +1,6 @@
 .backAdmin {
     display: flex;
+    position: relative;
 }
 
 .subtitle {
@@ -34,6 +35,7 @@
     align-items: center;
     width: 100%;
     p{
+        font-size: $h5;
         margin-block: 5px;
         width: 25%;
     }

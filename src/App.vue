@@ -24,17 +24,10 @@ export default {
 </script>
 
 <template>
-  <!-- <MainHeader /> -->
+
   <RouterView />
 
-  <!-- <MainFooter /> -->
 </template>
 
 <style>
-
-* {
-    margin: 0;
-    padding: 0;
-    
-}
 </style>
