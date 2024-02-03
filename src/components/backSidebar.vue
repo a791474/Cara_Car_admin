@@ -3,23 +3,17 @@ export default {
     data() {
         return {
             activeTab:"",
-            name:[
-                '/BackMember',
-                '/BackProduct',
-                '/BackOrder',
-                '/Back_SH_Product',
-                '/Back_SH_Order',
-                '/BackPromotion',
-                '/BackNews',
-                '/BackAdmin'
-            ]
+            // name:[
+            //     '/BackMember',
+            //     '/BackProduct',
+            //     '/BackOrder',
+            //     '/Back_SH_Product',
+            //     '/Back_SH_Order',
+            //     '/BackPromotion',
+            //     '/BackNews',
+            //     '/BackAdmin'
+            // ]
         };
-    },
-    watch: {
-        $route(to, from) {
-            // 當路由變更時更新activeTab
-            this.updateActiveTab(to.name);
-        },
     },
     created() {
         // 在組件創建時初始化activeTab
@@ -36,28 +30,28 @@ export default {
         currentSidebar(item){
             this.activeTab = item;
             switch (item) {
-                case 'member':
+                case 'Member':
                     this.$router.push({ name: 'BackMember' });
                     break;
-                case 'products':
+                case 'Product':
                     this.$router.push({ name: 'BackProduct' });
                     break;
-                case 'orders':
+                case 'Order':
                     this.$router.push({ name: 'BackOrder' });
                     break;
-                case 'SH-products':
+                case '_SH_Product':
                     this.$router.push({ name: 'Back_SH_Product' });
                     break;
-                case 'SH-orders':
+                case '_SH_Order':
                     this.$router.push({ name: 'Back_SH_Order' });
                     break;
-                case 'promotion':
+                case 'Promotion':
                     this.$router.push({ name: 'BackPromotion' });
                     break;
-                case 'news':
+                case 'News':
                     this.$router.push({ name: 'BackNews' });
                     break;
-                case 'admin':
+                case 'Admin':
                     this.$router.push({ name: 'BackAdmin' });
                     break;
                 default: break;
@@ -74,28 +68,28 @@ export default {
         </div>
         <nav>
             <ul>
-                <li @click="currentSidebar('member')" :class="{ active: activeTab === 'member' }">
+                <li @click="currentSidebar('Member')" :class="{ active: activeTab === 'Member' }">
                     會員管理
                 </li>
-                <li @click="currentSidebar('products')" :class="{ active: activeTab === 'products' }">
+                <li @click="currentSidebar('Product')" :class="{ active: activeTab === 'Product' }">
                     商品管理
                 </li>
-                <li @click="currentSidebar('orders')" :class="{ active: activeTab === 'orders' }">
+                <li @click="currentSidebar('Order')" :class="{ active: activeTab === 'Order' }">
                     訂單管理
                 </li>
-                <li @click="currentSidebar('SH-products')" :class="{ active: activeTab === 'SH-products' }">
+                <li @click="currentSidebar('_SH_Product')" :class="{ active: activeTab === '_SH_Product' }">
                     二手商品管理
                 </li>
-                <li @click="currentSidebar('SH-orders')" :class="{ active: activeTab === 'SH-orders' }">
+                <li @click="currentSidebar('_SH_Order')" :class="{ active: activeTab === '_SH_Order' }">
                     二手訂單管理
                 </li>
-                <li @click="currentSidebar('promotion')" :class="{ active: activeTab === 'promotion' }">
+                <li @click="currentSidebar('Promotion')" :class="{ active: activeTab === 'Promotion' }">
                     促銷商品管理
                 </li>
-                <li @click="currentSidebar('news')" :class="{ active: activeTab === 'news' }">
+                <li @click="currentSidebar('News')" :class="{ active: activeTab === 'News' }">
                     最新消息管理
                 </li>
-                <li @click="currentSidebar('admin')" :class="{ active: activeTab === 'admin' }">
+                <li @click="currentSidebar('Admin')" :class="{ active: activeTab === 'Admin' }">
                     權限管理
                 </li>
             </ul>
