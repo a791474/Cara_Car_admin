@@ -38,10 +38,8 @@ export default {
 <template>
     <div class="backAdmin">
         <BackSidebar />
-
         <div class="adminContent">
             <BackTitle />
-
             <div class="subtitle">
             <p>管理員編號</p>
             <p>管理員名稱</p>
@@ -59,14 +57,10 @@ export default {
         </div>
         <PageNumber />
     </div>
-
-
         </div>
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/scss/components/backSidebar.scss';
-@import '@/assets/scss/components/backTitle.scss';
 @import '@/assets/scss/page/backAdmin.scss';
 @import '@/assets/scss/components/switchBtn.scss';
 </style>

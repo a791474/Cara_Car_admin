@@ -3,9 +3,36 @@ export default {
     data() {
         return {
             activeTab:"",
+            name:[
+                '/BackMember',
+                '/BackProduct',
+                '/BackOrder',
+                '/Back_SH_Product',
+                '/Back_SH_Order',
+                '/BackPromotion',
+                '/BackNews',
+                '/BackAdmin'
+            ]
         };
     },
+    watch: {
+        $route(to, from) {
+            // 當路由變更時更新activeTab
+            this.updateActiveTab(to.name);
+        },
+    },
+    created() {
+        // 在組件創建時初始化activeTab
+        this.updateActiveTab();
+    },
     methods: {
+        updateActiveTab() {
+            // 從路由名稱中提取選項名稱
+            const tabName = this.$route.name.replace('Back','')
+
+            // 根據提取的選項名稱設置activeTab
+            this.activeTab = tabName;
+        },
         currentSidebar(item){
             this.activeTab = item;
             switch (item) {
@@ -13,25 +40,25 @@ export default {
                     this.$router.push({ name: 'BackMember' });
                     break;
                 case 'products':
-                this.$router.push({ name: 'BackProduct' });
+                    this.$router.push({ name: 'BackProduct' });
                     break;
                 case 'orders':
-                this.$router.push({ name: 'BackOrder' });
+                    this.$router.push({ name: 'BackOrder' });
                     break;
                 case 'SH-products':
-                this.$router.push({ name: 'Back_SH_Product' });
+                    this.$router.push({ name: 'Back_SH_Product' });
                     break;
                 case 'SH-orders':
-                this.$router.push({ name: 'Back_SH_Order' });
+                    this.$router.push({ name: 'Back_SH_Order' });
                     break;
                 case 'promotion':
-                this.$router.push({ name: 'BackPromotion' });
+                    this.$router.push({ name: 'BackPromotion' });
                     break;
                 case 'news':
-                this.$router.push({ name: 'BackNews' });
+                    this.$router.push({ name: 'BackNews' });
                     break;
                 case 'admin':
-                this.$router.push({ name: 'BackAdmin' });
+                    this.$router.push({ name: 'BackAdmin' });
                     break;
                 default: break;
                 }

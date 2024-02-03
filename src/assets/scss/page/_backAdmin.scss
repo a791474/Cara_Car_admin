@@ -19,6 +19,14 @@
     height: 0;
 }
 
+.adminContent {
+    width: 100%;
+    height: 100vh;
+    padding: 0 10px;
+    display: flex;
+    flex-direction: column;
+}
+
 .admin_account {
     text-align: center;
     display: flex;
