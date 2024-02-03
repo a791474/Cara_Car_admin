@@ -2,14 +2,39 @@
 export default {
     data() {
         return {
-            // currentSidebar:"",
             activeTab:"",
         };
     },
     methods: {
         currentSidebar(item){
-            // this.currentSidebar = item
-            this.activeTab = item
+            this.activeTab = item;
+            switch (item) {
+                case 'member':
+                    this.$router.push({ name: 'BackMember' });
+                    break;
+                case 'products':
+                this.$router.push({ name: 'BackProduct' });
+                    break;
+                case 'orders':
+                this.$router.push({ name: 'BackOrder' });
+                    break;
+                case 'SH-products':
+                this.$router.push({ name: 'Back_SH_Product' });
+                    break;
+                case 'SH-orders':
+                this.$router.push({ name: 'Back_SH_Order' });
+                    break;
+                case 'promotion':
+                this.$router.push({ name: 'BackPromotion' });
+                    break;
+                case 'news':
+                this.$router.push({ name: 'BackNews' });
+                    break;
+                case 'admin':
+                this.$router.push({ name: 'BackAdmin' });
+                    break;
+                default: break;
+                }
         }
     },
 }
@@ -22,14 +47,30 @@ export default {
         </div>
         <nav>
             <ul>
-                <li :class="{ active: activeTab === 'member' }" @click="currentSidebar('member')">會員管理</li>
-                <li :class="{ active: activeTab === 'products' }" @click="currentSidebar('products')">商品管理</li>
-                <li :class="{ active: activeTab === 'orders' }" @click="currentSidebar('orders')">訂單管理</li>
-                <li :class="{ active: activeTab === 'SH-products' }" @click="currentSidebar('SH-products')">二手商品管理</li>
-                <li :class="{ active: activeTab === 'SH-orders' }" @click="currentSidebar('SH-orders')">二手訂單管理</li>
-                <li :class="{ active: activeTab === 'promotion' }" @click="currentSidebar('promotion')">促銷商品管理</li>
-                <li :class="{ active: activeTab === 'news' }" @click="currentSidebar('news')">最新消息管理</li>
-                <li :class="{ active: activeTab === 'admin' }" @click="currentSidebar('admin')">權限管理</li>
+                <li @click="currentSidebar('member')" :class="{ active: activeTab === 'member' }">
+                    會員管理
+                </li>
+                <li @click="currentSidebar('products')" :class="{ active: activeTab === 'products' }">
+                    商品管理
+                </li>
+                <li @click="currentSidebar('orders')" :class="{ active: activeTab === 'orders' }">
+                    訂單管理
+                </li>
+                <li @click="currentSidebar('SH-products')" :class="{ active: activeTab === 'SH-products' }">
+                    二手商品管理
+                </li>
+                <li @click="currentSidebar('SH-orders')" :class="{ active: activeTab === 'SH-orders' }">
+                    二手訂單管理
+                </li>
+                <li @click="currentSidebar('promotion')" :class="{ active: activeTab === 'promotion' }">
+                    促銷商品管理
+                </li>
+                <li @click="currentSidebar('news')" :class="{ active: activeTab === 'news' }">
+                    最新消息管理
+                </li>
+                <li @click="currentSidebar('admin')" :class="{ active: activeTab === 'admin' }">
+                    權限管理
+                </li>
             </ul>
         </nav>
         <div class="drawBgHello">

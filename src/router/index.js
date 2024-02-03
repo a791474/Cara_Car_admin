@@ -9,28 +9,12 @@ const router = createRouter({
     return { top: 0 }
   },
   routes: [
-    // {
-    //   path: '/',
-    //   name: 'index',
-    //   component:
-    //   meta:{
-    //     title: '後台登入 | Cara Car',
-    //   }
-    // },
     {
       path: '/',
       name: 'BackLogin',
       component: () => import('../views/BackLogin.vue'),
       meta:{
         title: '後台登入 | Cara Car',
-      }
-    },
-    {
-      path: '/BackAdmin',
-      name: 'BackAdmin',
-      component: () => import('../views/BackAdmin.vue'),
-      meta:{
-        title: '權限管理 | Cara Car',
       }
     },
     {
@@ -42,11 +26,59 @@ const router = createRouter({
       }
     },
     {
+      path: '/BackProduct',
+      name: 'BackProduct',
+      component: () => import('../views/BackProduct.vue'),
+      meta:{
+        title: '新品管理 | Cara Car',
+      }
+    },
+    {
+      path: '/BackOrder',
+      name: 'BackOrder',
+      component: () => import('../views/BackOrder.vue'),
+      meta:{
+        title: '新品訂單管理 | Cara Car',
+      }
+    },
+    {
+      path: '/Back_SH_Product',
+      name: 'Back_SH_Product',
+      component: () => import('../views/Back_SH_Product.vue'),
+      meta:{
+        title: '二手商品管理 | Cara Car',
+      }
+    },
+    {
+      path: '/Back_SH_Order',
+      name: 'Back_SH_Order',
+      component: () => import('../views/Back_SH_Order.vue'),
+      meta:{
+        title: '二手訂單管理 | Cara Car',
+      }
+    },
+    {
+      path: '/BackPromotion',
+      name: 'BackPromotion',
+      component: () => import('../views/BackPromotion.vue'),
+      meta:{
+        title: '促銷方案管理 | Cara Car',
+      }
+    },
+    {
       path: '/BackNews',
       name: 'BackNews',
       component: () => import('../views/BackNews.vue'),
       meta:{
         title: '最新消息管理 | Cara Car',
+      }
+    },
+    {
+      path: '/BackAdmin',
+      name: 'BackAdmin',
+      component: () => import('../views/BackAdmin.vue'),
+      meta:{
+        title: '權限管理 | Cara Car',
       }
     },
   ]

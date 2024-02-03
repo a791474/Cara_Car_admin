@@ -5,7 +5,6 @@ import PageNumber from '@/components/PageNumber.vue';
 export default {
     data() {
         return {
-            // currentSidebar:"",
             activeTab: "",
             adminAccounts: [
                 { id: '001', name: '王老闆', role: 'super manager', checked: true },
@@ -27,7 +26,6 @@ export default {
             this.admins[index].status = !this.admins[index].status;
         },
         currentSidebar(item) {
-            // this.currentSidebar = item
             this.activeTab = item
         }
     },
