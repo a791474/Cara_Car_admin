@@ -1,9 +1,92 @@
-.backMember {
+.backNews {
     display: flex;
+    max-height: 100vh;
 
     .backNewsPart {
+        width: 100%;
+        margin: 20px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+    }
+
+    .searchBar{
+        display: flex;
+        justify-content: end;
+        text-align: center;
+        align-items: center;
+        select{
+            height: 32px;
+            background-color: #D9D9D9;
+            border: none;
+            padding: 6px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        input{
+            margin: 20px;
+            background-color: #D9D9D9;
+            border: none;
+            padding: 6px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        button{
+            background-color: #D9D9D9;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-right: 20px;
+        }
+    }
+
+
+    .eventsList {
+        font-size: $mh6;
+        height: 60vh;
+
+        ul {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        li {
+            width: calc(90% / 6);
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+        }
+        .EventReviseItemDrawer {
+            width: 8%;
+        }
+        .eventsTitle {
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid $grey_3;
+        }
+
+        .eventsInfoList {
+            margin-bottom: 10px;
+            border-radius: $borr2;
+            background-color: $lightBlue;
+
+            li {
+                padding: 10px;
+                
+            }
+
+        }
+
+        .eventNo, .classify, .eventTitle, .eventState {
+            background-color: #fff;
+            border-radius: $borr2;
+        }
+        .eventDate {
+            color: $whiteWord;
+        }
     }
 }

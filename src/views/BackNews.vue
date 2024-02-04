@@ -5,9 +5,39 @@
 
         <section class="backNewsPart">
             <BackTitle />
-            <NewItemDrawer />
-            <ReviseItemDrawer />
-            <PageNumber />
+
+            <div class="searchBar">
+                <select v-model="selectedOption" id="selectedOption">
+                    <option value="eventNo">消息編號</option>
+                    <option value="eventTitle">消息標題</option>
+                </select>
+                <input type="text" v-model="searchText" :placeholder="placeholderText">
+                <button @click="search" class="searchBtn">搜尋</button>
+                <EventNewItemDrawer />
+            </div>
+
+            <div class="eventsList">
+                <ul class="eventsTitle">
+                    <li class="EventReviseItemDrawer"></li>
+                    <li>消息編號</li>
+                    <li>消息分類</li>
+                    <li>標題</li>
+                    <li>消息期間</li>
+                    <li>消息狀態</li>
+                </ul>
+                <ul class="eventsInfoList" v-for="(eventsInfo, index) in paginated" :key="index">
+                    <li class="EventReviseItemDrawer"> <EventReviseItemDrawer /> </li>
+                    <li class="eventNo"> {{ eventsInfo.eventNo }} </li>
+                    <li class="classify"> {{ eventsInfo.classify }} </li>
+                    <li class="eventTitle"> {{ eventsInfo.eventTitle }} </li>
+                    <li class="eventDate"> {{ eventsInfo.startDate }} ~ {{ eventsInfo.endDate }}</li>
+                    <li class="eventState"> {{ eventsInfo.eventState }} </li>
+                </ul>
+            </div>
+            
+
+
+            <PageNumber :totalPages="totalPages" :currentPage="currentPage" @pageChange="changePage" />
 
         </section>
 
@@ -20,8 +50,8 @@
 import BackTitle from '@/components/backTitle.vue';
 import BackSidebar from '@/components/backSidebar.vue';
 import PageNumber from '@/components/PageNumber.vue';
-import NewItemDrawer from '@/components/Drawer/NewItemDrawer.vue';
-import ReviseItemDrawer from '@/components/Drawer/ReviseItemDrawer.vue';
+import EventNewItemDrawer from '@/components/Drawer/EventNewItemDrawer.vue';
+import EventReviseItemDrawer from '@/components/Drawer/EventReviseItemDrawer.vue';
 
 
 export default {
@@ -29,17 +59,120 @@ export default {
         BackSidebar,
         BackTitle,
         PageNumber,
-        NewItemDrawer,
-        ReviseItemDrawer,
+        EventNewItemDrawer,
+        EventReviseItemDrawer,
 
     },
     data() {
         return {
+            // searchBar placeholder切換
+            selectedOption: 'eventNo',
+            searchText: '',
 
+            // 頁數切換
+            activeTab: "",
+            currentPage: 1,
+            perPage: 5,
+
+            // 資料
+            eventsInfo: [
+                {
+                    eventNo : '202402001',
+                    classify : '活動',
+                    eventTitle : '玩具車攝影比賽',
+                    startDate : '2024/2/1',
+                    endDate : '2024/4/1',
+                    eventState : '公告中',
+                },
+                {
+                    eventNo : '202402001',
+                    classify : '活動',
+                    eventTitle : '玩具車攝影比賽',
+                    startDate : '2024/2/1',
+                    endDate : '2024/4/1',
+                    eventState : '公告中',
+                },
+                {
+                    eventNo : '202402001',
+                    classify : '活動',
+                    eventTitle : '玩具車攝影比賽',
+                    startDate : '2024/2/1',
+                    endDate : '2024/4/1',
+                    eventState : '公告中',
+                },
+                {
+                    eventNo : '202402001',
+                    classify : '活動',
+                    eventTitle : '玩具車攝影比賽',
+                    startDate : '2024/2/1',
+                    endDate : '2024/4/1',
+                    eventState : '公告中',
+                },
+                {
+                    eventNo : '202402001',
+                    classify : '活動',
+                    eventTitle : '玩具車攝影比賽',
+                    startDate : '2024/2/1',
+                    endDate : '2024/4/1',
+                    eventState : '公告中',
+                },
+                {
+                    eventNo : '202402001',
+                    classify : '活動',
+                    eventTitle : '玩具車攝影比賽',
+                    startDate : '2024/2/1',
+                    endDate : '2024/4/1',
+                    eventState : '公告中',
+                },
+                {
+                    eventNo : '202402001',
+                    classify : '活動',
+                    eventTitle : '玩具車攝影比賽',
+                    startDate : '2024/2/1',
+                    endDate : '2024/4/1',
+                    eventState : '公告中',
+                },
+            ]
         };
     },
     methods: {
+        // searchBar placeholder切換
+        search() {
+            // 实现搜索功能的方法
+        },
 
+        // 頁數切換
+        toggleStatus(index) {
+            this.eventsInfo[index].status = !this.eventsInfo[index].status;
+        },
+        currentSidebar(item) {
+            this.activeTab = item
+        },
+        changePage(page) {
+            this.currentPage = page;
+        },
+    },
+    computed: {
+        // searchBar placeholder切換
+        placeholderText() {
+            switch(this.selectedOption) {
+                case 'eventTitle' :
+                    return '請輸入消息標題'
+                default :
+                    return '請輸入消息編號'
+
+            }
+        },
+
+        // 頁數切換
+        paginated(){
+            const start = (this.currentPage - 1) * this.perPage;
+            const end = start + this.perPage;
+            return this.eventsInfo.slice(start, end);
+        },
+        totalPages() {
+            return Math.ceil(this.eventsInfo.length / this.perPage);
+        },
     },
 };
 </script>
