@@ -2,9 +2,11 @@
     background-color: $lightBlue; /* 替換成您想要的顏色 */
 }
 .page_number{
-    position: absolute;
-    left: 43%;
-    bottom: 0;
+    width: 100%;
+    // position: absolute;
+    // left: 50%;
+    // transform: translateX(-45%);
+    // bottom: 0;
     z-index: 2;
     display: flex;
     align-items: center;
