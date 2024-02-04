@@ -11,6 +11,7 @@ export default {
     data () {
         return {
             value: false,
+            activeTab: "",
             styles: {
                 height: 'calc(100% - 55px)',
                 overflow: 'auto',
@@ -99,16 +100,64 @@ export default {
                     time: "2023-12-31",
                     checked: true
                 },
-            ]
+                {
+                    orderNo: "7777",
+                    memberNo: "20000223",
+                    productName: "復古小汽車車",
+                    quantity: "1",
+                    time: "2023-12-31",
+                    checked: true
+                },
+                {
+                    orderNo: "8888",
+                    memberNo: "20000223",
+                    productName: "復古小汽車車",
+                    quantity: "1",
+                    time: "2023-12-31",
+                    checked: true
+                },
+                {
+                    orderNo: "7777",
+                    memberNo: "20000223",
+                    productName: "復古小汽車車",
+                    quantity: "1",
+                    time: "2023-12-31",
+                    checked: true
+                },
+                {
+                    orderNo: "8888",
+                    memberNo: "20000223",
+                    productName: "復古小汽車車",
+                    quantity: "1",
+                    time: "2023-12-31",
+                    checked: true
+                },
+            
+            ],
+            currentPage: 1,
+            perPage: 8,
         }
+    },
+    computed:{
+        paginated(){
+            const start = (this.currentPage - 1) * this.perPage;
+            const end = start + this.perPage;
+            return this.orderList.slice(start, end);
+        },
+        totalPages() {
+            return Math.ceil(this.orderList.length / this.perPage);
+        },
     },
     methods: {
         toggleStatus(index) {
-            this.admins[index].status = !this.admins[index].status;
+            this.item[index].status = !this.item[index].status;
         },
         currentSidebar(item) {
             this.activeTab = item
-        }
+        },
+        changePage(page) {
+            this.currentPage = page;
+        },
     },
 }
 </script>
@@ -139,13 +188,15 @@ export default {
                     <li>出貨狀態</li>
                 </ul>
             </div>
-            <div class="orderContent" v-for="(item,index) in orderList" key="index">
-                <button @click="value = true" type="primary" class="searchBtn">查詢</button>
-                <p>{{item.orderNo}}</p>
-                <p>{{item.memberNo}}</p>
-                <p>{{item.productName}}</p>
-                <p>{{item.quantity}}</p>
-                <p>{{item.time}}</p>
+            <div class="orderContent" v-for="(item,index) in paginated" key="index">
+                <div class="searchButton">
+                    <button @click="value = true" type="primary" class="searchBtn">查詢</button>
+                </div>
+                <p class="orderContentP">{{item.orderNo}}</p>
+                <p class="orderContentP">{{item.memberNo}}</p>
+                <p class="orderContentP">{{item.productName}}</p>
+                <p class="orderContentP">{{item.quantity}}</p>
+                <p class="orderContentP">{{item.time}}</p>
                 
                 <div class="switch">
                     <Space direction="vertical">
@@ -164,7 +215,7 @@ export default {
                 
             </div>
             <div class="paginator">
-                <PageNumber />
+                <PageNumber :totalPages="totalPages" :currentPage="currentPage" @pageChange="changePage" />
             </div>
         </div>
     </div>
@@ -181,6 +232,13 @@ export default {
         :styles="styles"
     >
         <Form :model="formData">
+            <Row :gutter="32">
+            <Col span="24" >
+                <FormItem label="訂單編號" label-position="top">
+                    <Input v-model="formData.name" placeholder="please enter order number" />
+                </FormItem>
+            </Col>
+        </Row>
             <Row :gutter="32">
                 <Col span="12">
                     <FormItem label="商品名稱" label-position="top">
@@ -257,7 +315,7 @@ export default {
                 </Col>
                 
             </Row>
-            <FormItem label="備註" label-position="top">
+            <FormItem label="備註欄" label-position="top">
                 <Input type="textarea" v-model="formData.desc" :rows="4" placeholder="please enter the remark" />
             </FormItem>
         </Form>

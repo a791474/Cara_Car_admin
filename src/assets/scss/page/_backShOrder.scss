@@ -11,9 +11,9 @@
             width: 60%;
             margin: 0 auto;
             margin-top: 40px;
-            .paginator{
-                margin-top:70px;
-            }
+            // .paginator{
+            //     margin-top:70px;
+            // }
         }
     }
     .searchBar{
@@ -50,22 +50,28 @@
     .listTitle{
         ul{
             margin-top: 20px;
-            display: flex;justify-content: space-between;
+            display: flex;
+            // justify-content: space-between;
             padding-bottom: 5px;
             border-bottom: 1px solid #222;
             li{
-                display: flex;
-                
-                // margin: 0 10px;
+                display: inline-block;
+                width: 17%;
+                text-align: center;
             }
         }
     }
 
     .orderContent{
         display: flex;
-        justify-content: space-between;
+        // justify-content: space-between;
         margin: 10px 0;
         align-items: center;
+        .searchButton{
+            display: flex;
+            width: 17%;
+            justify-content: center;
+        }
         .searchBtn{
             background-color: $yellow;
             border: none;
@@ -74,18 +80,28 @@
             cursor: pointer;
         }
         .switch{
+            display: flex;
+            width: 17%;
+            justify-content: center;
             .ivu-switch{
-
                 background-color: $blue;
-                
             }
             .ivu-switch-checked {
                 background-color: 
                 $grey_3;
                 border: 1px solid $grey_3;
             }
-            
         }
     }
-    
+}
+.orderContentP{
+    display: inline-block;
+    width: 17%;
+    text-align: center;
+}
+.btnCancel{
+    width: 50px;
+    margin-right: 8px;
+    margin-top: 5px;
+    border:1px solid #6666;
 }
