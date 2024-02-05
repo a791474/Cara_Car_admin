@@ -177,49 +177,48 @@ export default {
                 <input type="text" placeholder="請輸入訂單編號">
                 <button class="searchBtn">搜尋</button>
             </div>
-            <div class="listTitle">
-                <ul>
-                    <li> </li>
-                    <li class="order">訂單編號</li>
-                    <li>會員編號</li>
-                    <li>商品名稱</li>
-                    <li>數量</li>
-                    <li>時間</li>
-                    <li>出貨狀態</li>
-                </ul>
-            </div>
-            <div class="orderContent" v-for="(item,index) in paginated" key="index">
-                <div class="searchButton">
-                    <button @click="value = true" type="primary" class="searchBtn">查詢</button>
+            <div class="orderTable">
+                <div class="listTitle">
+                    <ul>
+                        <li> </li>
+                        <li class="order">訂單編號</li>
+                        <li>會員編號</li>
+                        <li>商品名稱</li>
+                        <!-- <li>數量</li> -->
+                        <li>時間</li>
+                        <li>出貨狀態</li>
+                    </ul>
                 </div>
-                <p class="orderContentP">{{item.orderNo}}</p>
-                <p class="orderContentP">{{item.memberNo}}</p>
-                <p class="orderContentP">{{item.productName}}</p>
-                <p class="orderContentP">{{item.quantity}}</p>
-                <p class="orderContentP">{{item.time}}</p>
+                <div class="orderContent" v-for="(item,index) in paginated" :key="index">
+                    <div class="searchButton">
+                        <button @click="value = true" type="primary" class="searchBtn">查詢</button>
+                    </div>
+                    <p class="orderContentP">{{item.orderNo}}</p>
+                    <p class="orderContentP">{{item.memberNo}}</p>
+                    <p class="orderContentP">{{item.productName}}</p>
+                    <!-- <p class="orderContentP">{{item.quantity}}</p> -->
+                    <p class="orderContentP">{{item.time}}</p>
                 
-                <div class="switch">
-                    <Space direction="vertical">
-                        <Space>
-                            <Switch size="large">
-                                <template #open>
-                                <span>已出</span>
-                                </template>
-                                <template #close>
-                                <span>未出</span>
-                                </template>
-                            </Switch>
+                    <div class="switch">
+                        <Space direction="vertical">
+                            <Space>
+                                <Switch size="large">
+                                    <template #open>
+                                    <span>已出</span>
+                                    </template>
+                                    <template #close>
+                                    <span>未出</span>
+                                    </template>
+                                </Switch>
+                            </Space>
                         </Space>
-                    </Space>
+                    </div>
                 </div>
-                
             </div>
-            <div class="paginator">
-                <PageNumber :totalPages="totalPages" :currentPage="currentPage" @pageChange="changePage" />
-            </div>
+            <PageNumber :totalPages="totalPages" :currentPage="currentPage" @pageChange="changePage" />
+
         </div>
     </div>
-    
 </div>
     <!-- side bar -->
     <div class="newItemDrawer">

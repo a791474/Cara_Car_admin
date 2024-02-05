@@ -93,32 +93,32 @@ export default {
             },
             
             {
-                "orderNo": "1010",
-                "memberNo": "20000223",
-                "total": "$4,200",
-                "time": "2023-12-31",
-                "checked": true
+                orderNo: "1010",
+                memberNo: "20000223",
+                total: "$4,200",
+                time: "2023-12-31",
+                checked: true
             },
             {
-                "orderNo": "1212",
-                "memberNo": "20000223",
-                "total": "$2,300",
-                "time": "2023-12-31",
-                "checked": true
+                orderNo: "1212",
+                memberNo: "20000223",
+                total: "$2,300",
+                time: "2023-12-31",
+                checked: true
             },
             {
-                "orderNo": "1313",
-                "memberNo": "20000223",
-                "total": "$6,000",
-                "time": "2023-12-31",
-                "checked": true
+                orderNo: "1313",
+                memberNo: "20000223",
+                total: "$6,000",
+                time: "2023-12-31",
+                checked: true
             },
             {
-                "orderNo": "1414",
-                "memberNo": "20000223",
-                "total": "$3,800",
-                "time": "2023-12-31",
-                "checked": true
+                orderNo: "1414",
+                memberNo: "20000223",
+                total: "$3,800",
+                time: "2023-12-31",
+                checked: true
             },
             {
                 "orderNo": "1515",
@@ -204,52 +204,55 @@ export default {
             <div class="orderContent">
                 <BackTitle />
                 <div class="searchBar">
-                <select name="searchOption" id="searchOption">
-                    <option value="orderno">訂單編號</option>
-                    <option value="memberno">會員編號</option>
-                </select>
-                <input type="text" placeholder="請輸入訂單編號">
-                <button class="searchBtn">搜尋</button>
+                    <select name="searchOption" id="searchOption">
+                        <option value="orderno">訂單編號</option>
+                        <option value="memberno">會員編號</option>
+                    </select>
+                    <input type="text" placeholder="請輸入訂單編號">
+                    <button class="searchBtn">搜尋</button>
                 </div>
-                <div class="listTitle">
-                <ul>
-                    <li></li>
-                    <li>訂單編號</li>
-                    <li>會員編號</li>
-                    <li>總金額</li>
-                    <li>下單時間</li>
-                    <li>出貨狀態</li>
-                </ul>
-            </div>
-            <div class="orderListContent" v-for="(item,index) in paginated" :key="index">
-                <div class="searchButton">
-                    <button @click="value = true" type="primary" class="searchBtn">查詢</button>
+                <div class="orderTable">
+                    <div class="listTitle">
+                        <ul>
+                            <li></li>
+                            <li>訂單編號</li>
+                            <li>會員編號</li>
+                            <li>總金額</li>
+                            <li>下單時間</li>
+                            <li>出貨狀態</li>
+                        </ul>
+                    </div>
+                    <div class="orderListContent" v-for="(item,index) in paginated" :key="index">
+                        <div class="searchButton">
+                            <button @click="value = true" type="primary" class="searchBtn">查詢</button>
+                        </div>
+                        <p class="orderListContentP">{{item.orderNo}}</p>
+                        <p class="orderListContentP">{{item.memberNo}}</p>
+                        <p class="orderListContentP">{{item.total}}</p>
+                        <p class="orderListContentP">{{item.time}}</p>
+                    
+                        <div class="switch">
+                            <Space direction="vertical">
+                                <Space>
+                                    <Switch size="large" class="switchButton">
+                                        <template #open>
+                                        <span>已出</span>
+                                        </template>
+                                        <template #close>
+                                        <span>未出</span>
+                                        </template>
+                                    </Switch>
+                                </Space>
+                            </Space>
+                        </div>
+                    </div>
                 </div>
-                <p class="orderListContentP">{{item.orderNo}}</p>
-                <p class="orderListContentP">{{item.memberNo}}</p>
-                <p class="orderListContentP">{{item.total}}</p>
-                <p class="orderListContentP">{{item.time}}</p>
                 
-                <div class="switch">
-                    <Space direction="vertical">
-                        <Space>
-                            <Switch size="large" class="switchButton">
-                                <template #open>
-                                <span>已出</span>
-                                </template>
-                                <template #close>
-                                <span>未出</span>
-                                </template>
-                            </Switch>
-                        </Space>
-                    </Space>
-                </div>
-            </div>
+                <PageNumber :totalPages="totalPages" :currentPage="currentPage" @pageChange="changePage"/>
             </div>
         </div>
     </div>
-    <PageNumber :totalPages="totalPages" :currentPage="currentPage" @pageChange="changePage" class="pageNumber" />
-
+    
     <!-- side bar -->
 
     <div class="newItemDrawer">
