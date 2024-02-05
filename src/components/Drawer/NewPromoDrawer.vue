@@ -1,5 +1,5 @@
 <template>
-    <div class="newItemDrawer">
+    <div class="newPromoDrawer">
         
         <Button @click="value = true" type="primary">
             <i class="fa-solid fa-plus"></i>
@@ -105,5 +105,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/scss/components/newItemDrawer.scss';
+@import '@/assets/scss/components/Drawer/newPromoDrawer.scss';
 </style>

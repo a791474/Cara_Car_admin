@@ -15,7 +15,7 @@
         font-size: $h4;
         padding: 0 20px;
         li{
-            width: 16.6666%;
+            width:calc(100% / 7);
         }
     }
 }
@@ -31,59 +31,15 @@
     align-items: center;
     text-align: center;
     font-size: $h4;
-    padding: 0 20px;
-    p{width: 16.6666%;}
-    div{width: 16.6666%;}
-    .id{
-        // width: 12.6666%;
-        padding-left: 40px;
-        border: 1px solid #000;
-    }
-    .promo_card_bgc{
-        position: relative;
-        display: flex;
-        align-items: center;
-        width: 100%;
-        height: 95px;
-        padding: 0 20px 0 15px;
-        border-radius: $borr2 + 10px;
-        background-color: $lightBlue;
-        margin: auto;
-        .plan, .start_date, .finish_date, .ratio, .promo_state{
-            // width: 25%;
-            padding: 10px;
-            border-radius: $borr1;
-            background-color: #fff;
-            border: 1px solid #000;
-        }
-        .plan{
-            width: 180px;
-        }
-        .start_date, .finish_date{
-            // margin-right: 38px;
-            // padding-left: 3px;      
-        }
-        .ratio{
-            width: 6.5%;
-            // padding-left: 25px;
-        }
-        span{
-            // padding: 0 94px 0 5px;
-        }
-        .promo_state{
-            // padding: 0 13px;
-        }
-    }
+    padding: 20px;
+    width: 100%;
+    border-radius: $borr2 + 10px;
+    background-color: $lightBlue;
 }
+
 .addButton{
     display: flex;
     align-items: center;
     justify-content: end;
     padding: 5px;
-}
-.reviseItemDrawer{
-    position: absolute;
-    top: 30px;
-    left: 5px;
-    display: none;
 }
