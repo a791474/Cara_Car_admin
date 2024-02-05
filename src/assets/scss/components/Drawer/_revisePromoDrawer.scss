@@ -41,14 +41,15 @@
     }
 }
 
-.reviseItemDrawer Button {
-    height: 45px;
+.revisePromoDrawer Button {
+    width: 60%;
+    height: 40px;
     padding: 0 10px;
     border: none;
     border-radius: $borr2;
     background-color: $whiteWord;
     color: $blackWord;
-    font-size: $mp;
+    font-size: $h5;
 
     i {
         margin-left: 3px;

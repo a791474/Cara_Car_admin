@@ -35,6 +35,17 @@
     width: 100%;
     border-radius: $borr2 + 10px;
     background-color: $lightBlue;
+    ol{
+        display: flex;
+        width: 100%;
+        li{
+            width:calc(100% / 7);
+        }
+        input{
+            width: 13%;
+            text-align: center;
+        }
+    }
 }
 
 .addButton{

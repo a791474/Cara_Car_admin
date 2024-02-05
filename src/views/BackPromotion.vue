@@ -1,10 +1,11 @@
 <script>
+import axios from 'axios';
 import BackTitle from '@/components/backTitle.vue';
 import BackSidebar from '@/components/backSidebar.vue';
 import PageNumber from '@/components/PageNumber.vue';
 import PageNumberBG from '@/components/PageNumberBG.vue';
 import NewPromoDrawer from '@/components/Drawer/NewPromoDrawer.vue';
-import RevisePromoDrawer from '@/components/Drawer/ReviseItemDrawer.vue';
+import RevisePromoDrawer from '@/components/Drawer/RevisePromoDrawer.vue';
 export default {
     components: {
         BackSidebar,
@@ -16,17 +17,24 @@ export default {
     },
     data() {
         return {
-            promos: [
-                { id: 1, plan: '西洋情人節', start_date: '2024.02.14', finish_date: '2024.02.21', ratio: 10, promo_state: '啟用中' },
-            ]
+            // promos: [
+            //     { id: 1, plan: '西洋情人節', start_date: '2024.02.14', finish_date: '2024.02.21', ratio: 10, promo_state: '啟用中' },
+            // ]
+            promoData:[],
         };
     },
     created() {
-
+        axios.get(`${import.meta.env.VITE_CARA_URL}/backPromotion.php`)
+                .then((response) => {
+                    this.promoData = response.data;
+                })
+                .catch((error) => {
+                    console.error("Error fetching data:", error);
+                });
     },
     methods: {
-        updateRatio(promo) {
-            console.log('Updated ratio for promo ID:', promo.id, 'New ratio:', promo.ratio);
+        updateRatio(promoData) {
+            console.log('Updated ratio for promo ID:', promoData.promo_id, 'New ratio:', promoData.promo_ratio);
         }
     },
     mounted() {
@@ -55,16 +63,16 @@ export default {
                 </ol>
             </div>
             <div class="subtitle_line"></div>
-            <div v-for="promo in promos" :key="promo.id" class="promoCard">
-                <p class="id">{{ promo.id }}</p>
-                    <RevisePromoDrawer />
-                    <div class="plan">{{ promo.plan }}</div>
-                    <div class="start_date">{{ promo.start_date }}</div>
-                    <div class="finish_date">{{ promo.finish_date }}</div>
-                    <input type="number" class="ratio" v-model="promo.ratio" @input="updateRatio(promo)"
-                        id="ratio"><span>%</span>
-                    <div class="promo_state">{{ promo.promo_state }}
-                    </div>
+            <div v-for="promo in promoData" :key="promo" class="promoCard">
+                <ol>
+                    <li>{{ promo.promo_id }}</li>
+                    <li><RevisePromoDrawer /></li>
+                    <li>{{ promo.promo_name }}</li>
+                    <li>{{ promo.promo_start_date }}</li>
+                    <li>{{ promo.promo_end_date }}</li>
+                    <input type="number" class="ratio" v-model="promo.promo_ratio" @input="updateRatio(promo)"><span>%</span>
+                    <!-- <li>{{ promo.promo_state }}</li> -->
+                </ol>
             </div>
             <PageNumber />
         </div>
