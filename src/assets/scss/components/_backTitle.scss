@@ -34,7 +34,11 @@ a {
         color: $whiteWord;
         border: none;
         border-radius: $borr2;
-        background-color: #1F4987;
-        box-shadow: rgba(102, 102, 102, 0.35) 0px 5px 20px;
+        background-color: $blue;
+        transition: border 0.1s ease-in-out;
+        &:hover{
+            border: solid $whiteWord;
+            box-shadow: rgba(102, 102, 102, 0.35) 0px 5px 20px;
+        }
     }
 }

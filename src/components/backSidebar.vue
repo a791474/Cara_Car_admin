@@ -62,42 +62,44 @@ export default {
 </script>
 
 <template>
-        <div class="backSidebar">
-        <div class="sidebarLogo">
-            <img src="../assets/imgs/sidebar-logo.png" alt="logo">
+        <section class="sidebarFather">
+            <div class="backSidebar">
+            <div class="sidebarLogo">
+                <img src="../assets/imgs/sidebar-logo.png" alt="logo">
+            </div>
+            <nav>
+                <ul>
+                    <li @click="currentSidebar('Member')" :class="{ active: activeTab === 'Member' }">
+                        會員管理
+                    </li>
+                    <li @click="currentSidebar('Product')" :class="{ active: activeTab === 'Product' }">
+                        商品管理
+                    </li>
+                    <li @click="currentSidebar('Order')" :class="{ active: activeTab === 'Order' }">
+                        訂單管理
+                    </li>
+                    <li @click="currentSidebar('_SH_Product')" :class="{ active: activeTab === '_SH_Product' }">
+                        二手商品管理
+                    </li>
+                    <li @click="currentSidebar('_SH_Order')" :class="{ active: activeTab === '_SH_Order' }">
+                        二手訂單管理
+                    </li>
+                    <li @click="currentSidebar('Promotion')" :class="{ active: activeTab === 'Promotion' }">
+                        促銷商品管理
+                    </li>
+                    <li @click="currentSidebar('News')" :class="{ active: activeTab === 'News' }">
+                        最新消息管理
+                    </li>
+                    <li @click="currentSidebar('Admin')" :class="{ active: activeTab === 'Admin' }">
+                        權限管理
+                    </li>
+                </ul>
+            </nav>
         </div>
-        <nav>
-            <ul>
-                <li @click="currentSidebar('Member')" :class="{ active: activeTab === 'Member' }">
-                    會員管理
-                </li>
-                <li @click="currentSidebar('Product')" :class="{ active: activeTab === 'Product' }">
-                    商品管理
-                </li>
-                <li @click="currentSidebar('Order')" :class="{ active: activeTab === 'Order' }">
-                    訂單管理
-                </li>
-                <li @click="currentSidebar('_SH_Product')" :class="{ active: activeTab === '_SH_Product' }">
-                    二手商品管理
-                </li>
-                <li @click="currentSidebar('_SH_Order')" :class="{ active: activeTab === '_SH_Order' }">
-                    二手訂單管理
-                </li>
-                <li @click="currentSidebar('Promotion')" :class="{ active: activeTab === 'Promotion' }">
-                    促銷商品管理
-                </li>
-                <li @click="currentSidebar('News')" :class="{ active: activeTab === 'News' }">
-                    最新消息管理
-                </li>
-                <li @click="currentSidebar('Admin')" :class="{ active: activeTab === 'Admin' }">
-                    權限管理
-                </li>
-            </ul>
-        </nav>
         <div class="drawBgHello">
             <img src="../assets/imgs/sidebar-bg-hello.png" alt="sidebarBg">
         </div>
-    </div>
+        </section>
 </template>
 
 <style lang="scss" scoped>
