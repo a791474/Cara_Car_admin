@@ -57,7 +57,7 @@ export default {
             <div class="subtitle_line"></div>
             <div v-for="promo in promos" :key="promo.id" class="promoCard">
                 <p class="id">{{ promo.id }}</p>
-                    <ReviseItemDrawer />
+                    <RevisePromoDrawer />
                     <div class="plan">{{ promo.plan }}</div>
                     <div class="start_date">{{ promo.start_date }}</div>
                     <div class="finish_date">{{ promo.finish_date }}</div>

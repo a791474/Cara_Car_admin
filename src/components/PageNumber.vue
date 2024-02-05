@@ -55,33 +55,6 @@ export default {
                 </button>
             </li>
         </ol>
-        <!-- <ol class="page_chooser">
-            <li class="chooser_list">
-                <button class="number">
-                    1
-                </button>
-            </li>
-            <li class="chooser_list">
-                <button class="number">
-                    2
-                </button>
-            </li>
-            <li class="chooser_list">
-                <button class="number">
-                    3
-                </button>
-            </li>
-            <li class="chooser_list">
-                <button class="number">
-                    4
-                </button>
-            </li>
-            <li class="chooser_list">
-                <button class="number">
-                    5
-                </button>
-            </li>
-        </ol> -->
         <div class="page_switcher">
             <button class="arrow_btn" @click="nextPage">
             <div class="arrow_ltr"></div>

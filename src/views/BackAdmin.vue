@@ -80,9 +80,6 @@ export default {
         },
     },
     methods: {
-        toggleStatus(index) {
-            this.admins[index].status = !this.admins[index].status;
-        },
         currentSidebar(item) {
             this.activeTab = item
         },
