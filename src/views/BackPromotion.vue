@@ -3,8 +3,8 @@ import BackTitle from '@/components/backTitle.vue';
 import BackSidebar from '@/components/backSidebar.vue';
 import PageNumber from '@/components/PageNumber.vue';
 import PageNumberBG from '@/components/PageNumberBG.vue';
-import NewPromoDrawer from '@/components/NewPromoDrawer.vue';
-import ReviseItemDrawer from '@/components/Drawer/ReviseItemDrawer.vue';
+import NewPromoDrawer from '@/components/Drawer/NewPromoDrawer.vue';
+import RevisePromoDrawer from '@/components/Drawer/ReviseItemDrawer.vue';
 export default {
     components: {
         BackSidebar,
@@ -12,7 +12,7 @@ export default {
         PageNumber,
         PageNumberBG,
         NewPromoDrawer,
-        ReviseItemDrawer
+        RevisePromoDrawer
     },
     data() {
         return {
@@ -46,6 +46,7 @@ export default {
             <div class="subtitle">
                 <ol>
                     <li>方案編號</li>
+                    <li></li>
                     <li>促銷名稱</li>
                     <li>起始日期</li>
                     <li>結束日期</li>
@@ -56,7 +57,6 @@ export default {
             <div class="subtitle_line"></div>
             <div v-for="promo in promos" :key="promo.id" class="promoCard">
                 <p class="id">{{ promo.id }}</p>
-                <div class="promo_card_bgc">
                     <ReviseItemDrawer />
                     <div class="plan">{{ promo.plan }}</div>
                     <div class="start_date">{{ promo.start_date }}</div>
@@ -65,7 +65,6 @@ export default {
                         id="ratio"><span>%</span>
                     <div class="promo_state">{{ promo.promo_state }}
                     </div>
-                </div>
             </div>
             <PageNumber />
         </div>

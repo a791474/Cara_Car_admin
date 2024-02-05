@@ -110,5 +110,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/scss/components/eventNewItemDrawer.scss'
+@import '@/assets/scss/components//Drawer/eventNewItemDrawer.scss'
 </style>
