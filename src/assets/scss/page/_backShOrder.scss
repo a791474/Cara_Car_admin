@@ -4,11 +4,13 @@
 // }
 
 .shOrder{
+    max-height: 100vh;
     .comp{
         display: flex;
+        
         .content{
             flex-direction: column;
-            width: 60%;
+            width: 75%;
             margin: 0 auto;
             margin-top: 40px;
             // .paginator{
@@ -61,7 +63,9 @@
             }
         }
     }
-
+    .orderTable{
+        height: 55vh;
+    }
     .orderContent{
         display: flex;
         // justify-content: space-between;
