@@ -3,7 +3,7 @@
     max-height: 100vh;
 
     .backMemberPart {
-        width: 100%;
+        width: 80%;
         margin: 20px;
         display: flex;
         flex-direction: column;
@@ -43,6 +43,7 @@
     .memberList {
         font-size: $mh6;
         height: 60vh;
+        overflow: hidden;
 
         ul {
             display: flex;

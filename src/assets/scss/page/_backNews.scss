@@ -3,7 +3,7 @@
     max-height: 100vh;
 
     .backNewsPart {
-        width: 100%;
+        width: 80%;
         margin: 20px;
         display: flex;
         flex-direction: column;
@@ -45,6 +45,7 @@
     .eventsList {
         font-size: $mh6;
         height: 60vh;
+        // overflow: scroll;
 
         ul {
             display: flex;
