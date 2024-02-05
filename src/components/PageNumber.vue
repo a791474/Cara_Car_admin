@@ -84,7 +84,7 @@ export default {
         </ol> -->
         <div class="page_switcher">
             <button class="arrow_btn" @click="nextPage">
-                <div class="arrow_ltr"></div>
+            <div class="arrow_ltr"></div>
             </button>
         </div>
     </div>

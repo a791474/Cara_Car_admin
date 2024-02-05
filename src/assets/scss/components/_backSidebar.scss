@@ -1,11 +1,19 @@
-.backSidebar {
+.sidebarFather{
     position: relative;
     display: flex;
     align-items: center;
-    flex-direction: column;
-    background-color: $blue;
-    width: 20%;
+    width: 15%;
     height: 100vh;
+}
+.backSidebar {
+    
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 0 $borr3 $borr3 0;
+    background-color: $blue;
+    width: 100%;
+    height: 98vh;
     padding: 20px 10px 0 10px;
     color: $whiteWord;
 
@@ -45,17 +53,16 @@
         }
 
     }
+}
+.drawBgHello {
+    position: absolute;
+    left: 56.5%;
+    bottom: 2%;
+    width: 45%;
+    z-index: 1;
 
-    .drawBgHello {
-        position: absolute;
-        left: 56.5%;
-        bottom: 0;
-        width: 45%;
-        z-index: 1;
-
-        img {
-            width: 100%;
-            vertical-align: top;
-        }
+    img {
+        width: 100%;
+        vertical-align: top;
     }
 }
