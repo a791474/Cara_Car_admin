@@ -81,9 +81,9 @@ export default {
             searchText: '',
 
             // 頁數切換
-            // activeTab: "",
+            activeTab: "",
             currentPage: 1,
-            perPage: 10,
+            perPage: 5,
 
             // 資料
             // memberInfo: [

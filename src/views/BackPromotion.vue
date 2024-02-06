@@ -71,7 +71,10 @@ export default {
                     <li>{{ promo.promo_start_date }}</li>
                     <li>{{ promo.promo_end_date }}</li>
                     <input type="number" class="ratio" v-model="promo.promo_ratio" @input="updateRatio(promo)"><span>%</span>
-                    <!-- <li>{{ promo.promo_state }}</li> -->
+                    <li>
+                        <input :id="'promo_s' + index" type="checkbox" class="switch" v-model="promo.promo_state">
+                        <label :for="'promo_s' + index" style="display: none;"></label>
+                    </li>
                 </ol>
             </div>
             <PageNumber />
@@ -82,4 +85,5 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/scss/page/backPromotion.scss';
+@import '@/assets/scss/components/switchBtn.scss';
 </style>

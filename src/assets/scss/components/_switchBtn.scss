@@ -1,3 +1,6 @@
+// -webkit-appearance這是 Webkit 瀏覽器引擎（例如 Chrome 和 Safari）特有的屬性。
+// -moz-appearance：這是 Mozilla 瀏覽器引擎（例如 Firefox）特有的屬性。
+//這兩個屬性允許開發者在某些情況下更深入地控制表單元素的樣式，它們通常用於定制化複選框、單選按鈕等表單元素的外觀。
 @supports (-webkit-appearance: none) or (-moz-appearance: none) {
 
     input[type="checkbox"]{
@@ -39,21 +42,6 @@
             --d-t: 0.6s;
             --d-t-e: cubic-bezier(0.2, 0.85, 0.32, 1.2);
         }
-
-        // &:disabled {
-        //     --b: var(--disabled);
-        //     cursor: not-allowed;
-        //     opacity: 0.9;
-
-        //     &:checked {
-        //         --b: var(--disabled-inner);
-        //         --bc: var(--border);
-        //     }
-
-        //     &+label {
-        //         cursor: not-allowed;
-        //     }
-        // }
 
         &:hover {
             &:not(:checked) {
