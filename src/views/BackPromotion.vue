@@ -17,9 +17,9 @@ export default {
     },
     data() {
         return {
-            // promos: [
-            //     { id: 1, plan: '西洋情人節', start_date: '2024.02.14', finish_date: '2024.02.21', ratio: 10, promo_state: '啟用中' },
-            // ]
+            activeTab: "",
+            currentPage: 1,
+            perPage: 5,
             promoData:[],
         };
     },
@@ -32,10 +32,36 @@ export default {
                     console.error("Error fetching data:", error);
                 });
     },
+    computed:{
+        // 頁數切換
+        paginated(){
+            const start = (this.currentPage - 1) * this.perPage; //將當前頁數-1再乘以頁面顯示內容筆數得到start值
+            const end = start + this.perPage;//計算此頁面中的內容是否達到perPage中的數字最後索引值來得到end值
+            return this.promoData.slice(start, end);//用JS的.slice()方法獲取vue data中的member陣列內容顯示內容
+        },
+        totalPages() {
+            return Math.ceil(this.promoData.length / this.perPage);//用Math.ceil()無條件進位，值則是用member陣列物件長度除以顯示內容筆數取得
+        },
+        Checkboxes(){
+            return this.paginated.map(promo => {
+            return promo.promo_state === 1;
+        });
+        },
+        promoState(){
+            return (promoState) => promoState === 1 ? "啟用中" : "未啟用";
+        },
+    },
     methods: {
         updateRatio(promoData) {
             console.log('Updated ratio for promo ID:', promoData.promo_id, 'New ratio:', promoData.promo_ratio);
-        }
+        },
+        currentSidebar(item) {
+            this.activeTab = item
+        },
+        changePage(page) {
+            this.currentPage = page;
+        },
+
     },
     mounted() {
 
@@ -63,21 +89,20 @@ export default {
                 </ol>
             </div>
             <div class="subtitle_line"></div>
-            <div v-for="promo in promoData" :key="promo" class="promoCard">
+            <div v-for="(promo, index) in paginated" :key="index" class="promoCard">
                 <ol>
-                    <li>{{ promo.promo_id }}</li>
+                    <li class="promo_id">{{ promo.promo_id }}</li>
                     <li><RevisePromoDrawer /></li>
-                    <li>{{ promo.promo_name }}</li>
-                    <li>{{ promo.promo_start_date }}</li>
-                    <li>{{ promo.promo_end_date }}</li>
-                    <input type="number" class="ratio" v-model="promo.promo_ratio" @input="updateRatio(promo)"><span>%</span>
+                    <li class="promo_name">{{ promo.promo_name }}</li>
+                    <li class="promo_start_date">{{ promo.promo_start_date }}</li>
+                    <li class="promo_end_date">{{ promo.promo_end_date }}</li>
                     <li>
-                        <input :id="'promo_s' + index" type="checkbox" class="switch" v-model="promo.promo_state">
-                        <label :for="'promo_s' + index" style="display: none;"></label>
+                        <input id="promoRatio" type="number" class="ratio" v-model="promo.promo_ratio" @input="updateRatio(promo)"><span>%</span>
                     </li>
+                    <li><input id="promoState" type="text" :value="promoState(promo.promo_state)" readonly></li>
                 </ol>
             </div>
-            <PageNumber />
+            <PageNumber :totalPages="totalPages" :currentPage="currentPage" @pageChange="changePage" />
         </div>
 
     </div>
@@ -85,5 +110,5 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/scss/page/backPromotion.scss';
-@import '@/assets/scss/components/switchBtn.scss';
+// @import '@/assets/scss/components/switchBtn.scss';
 </style>
