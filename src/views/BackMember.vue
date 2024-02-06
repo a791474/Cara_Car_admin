@@ -36,12 +36,21 @@
                         <Space direction="vertical">
                             <Space>
                                 <!-- 這裡要問老師，我們設定的值是0或1，開關之後會變成true或false，預設值v-if沒有用 -->
-                                {{ memInfo.m_state }} 
+                                <!-- {{ memInfo.m_state }} 
                                 <Switch v-model="memInfo.m_state" size="large" class="switchButton">
                                     <template v-if="memInfo.m_state === true" #open>
                                         <span>封存</span>
                                     </template>
                                     <template v-else #close>
+                                        <span>正常</span>
+                                    </template>
+                                </Switch> -->
+                                {{ memInfo.m_state }} 
+                                <Switch size="large" class="switchButton">
+                                    <template #open>
+                                        <span>封存</span>
+                                    </template>
+                                    <template #close>
                                         <span>正常</span>
                                     </template>
                                 </Switch>
@@ -85,140 +94,9 @@ export default {
             currentPage: 1,
             perPage: 5,
 
-            // 資料
-            // memberInfo: [
-            //     {
-            //         memId : '20000221',
-            //         memName : '李小生',
-            //         memPhone : '0934788493',
-            //         memEmail : 'cara_car@gmail.com',
-            //         memBirthday : '1988/07/24',
-            //         memAddress : '桃園市中壢區復興路46號8樓',
-            //     },
-            //     {
-            //         memId : '20000221',
-            //         memName : '李小生',
-            //         memPhone : '0934788493',
-            //         memEmail : 'cara_car@gmail.com',
-            //         memBirthday : '1988/07/24',
-            //         memAddress : '桃園市中壢區復興路46號8樓',
-            //     },
-            //     {
-            //         memId : '20000221',
-            //         memName : '李小生',
-            //         memPhone : '0934788493',
-            //         memEmail : 'cara_car@gmail.com',
-            //         memBirthday : '1988/07/24',
-            //         memAddress : '桃園市中壢區復興路46號8樓',
-            //     },
-            //     {
-            //         memId : '20000221',
-            //         memName : '李小生',
-            //         memPhone : '0934788493',
-            //         memEmail : 'cara_car@gmail.com',
-            //         memBirthday : '1988/07/24',
-            //         memAddress : '桃園市中壢區復興路46號8樓',
-            //     },
-            //     {
-            //         memId : '20000221',
-            //         memName : '李小生',
-            //         memPhone : '0934788493',
-            //         memEmail : 'cara_car@gmail.com',
-            //         memBirthday : '1988/07/24',
-            //         memAddress : '桃園市中壢區復興路46號8樓',
-            //     },
-
-            //     {
-            //         memId : '20000221',
-            //         memName : '李小生',
-            //         memPhone : '0934788493',
-            //         memEmail : 'cara_car@gmail.com',
-            //         memBirthday : '1988/07/24',
-            //         memAddress : '桃園市中壢區復興路46號8樓',
-            //     },
-            //     {
-            //         memId : '20000221',
-            //         memName : '李小生',
-            //         memPhone : '0934788493',
-            //         memEmail : 'cara_car@gmail.com',
-            //         memBirthday : '1988/07/24',
-            //         memAddress : '桃園市中壢區復興路46號8樓',
-            //     },
-            //     {
-            //         memId : '20000221',
-            //         memName : '李小生',
-            //         memPhone : '0934788493',
-            //         memEmail : 'cara_car@gmail.com',
-            //         memBirthday : '1988/07/24',
-            //         memAddress : '桃園市中壢區復興路46號8樓',
-            //     },
-            //     {
-            //         memId : '20000221',
-            //         memName : '李小生',
-            //         memPhone : '0934788493',
-            //         memEmail : 'cara_car@gmail.com',
-            //         memBirthday : '1988/07/24',
-            //         memAddress : '桃園市中壢區復興路46號8樓',
-            //     },
-            //     {
-            //         memId : '20000221',
-            //         memName : '李小生',
-            //         memPhone : '0934788493',
-            //         memEmail : 'cara_car@gmail.com',
-            //         memBirthday : '1988/07/24',
-            //         memAddress : '桃園市中壢區復興路46號8樓',
-            //     },
-            //     {
-            //         memId : '20000221',
-            //         memName : '李小生',
-            //         memPhone : '0934788493',
-            //         memEmail : 'cara_car@gmail.com',
-            //         memBirthday : '1988/07/24',
-            //         memAddress : '桃園市中壢區復興路46號8樓',
-            //     },
-            //     {
-            //         memId : '20000221',
-            //         memName : '李小生',
-            //         memPhone : '0934788493',
-            //         memEmail : 'cara_car@gmail.com',
-            //         memBirthday : '1988/07/24',
-            //         memAddress : '桃園市中壢區復興路46號8樓',
-            //     },
-            //     {
-            //         memId : '20000221',
-            //         memName : '李小生',
-            //         memPhone : '0934788493',
-            //         memEmail : 'cara_car@gmail.com',
-            //         memBirthday : '1988/07/24',
-            //         memAddress : '桃園市中壢區復興路46號8樓',
-            //     },
-            //     {
-            //         memId : '20000221',
-            //         memName : '李小生',
-            //         memPhone : '0934788493',
-            //         memEmail : 'cara_car@gmail.com',
-            //         memBirthday : '1988/07/24',
-            //         memAddress : '桃園市中壢區復興路46號8樓',
-            //     },
-            //     {
-            //         memId : '20000221',
-            //         memName : '李小生',
-            //         memPhone : '0934788493',
-            //         memEmail : 'cara_car@gmail.com',
-            //         memBirthday : '1988/07/24',
-            //         memAddress : '桃園市中壢區復興路46號8樓',
-            //     },
-            //     {
-            //         memId : '20000221',
-            //         memName : '李小生',
-            //         memPhone : '0934788493',
-            //         memEmail : 'cara_car@gmail.com',
-            //         memBirthday : '1988/07/24',
-            //         memAddress : '桃園市中壢區復興路46號8樓',
-            //     },
-            // ]
+            
             //從後端member表單接資料
-            member: [],
+            memData: [],
         };
     },
     created() { //在頁面載入時同時載入function
@@ -226,7 +104,7 @@ export default {
         axios.get(`${import.meta.env.VITE_CARA_URL}/memberCenterLogin.php`)
                 .then((response) => {
                     // 成功取得資料後，將資料存入 member 陣列
-                    this.member = response.data;
+                    this.memData = response.data;
                 })
                 .catch((error) => {
                     console.error("Error fetching data:", error);
@@ -239,6 +117,9 @@ export default {
         },
 
         // 頁數切換
+        // toggleStatus(index) {
+        //     this.memData[index].m_state = !this.memData[index].m_state;
+        // },
         currentSidebar(item) {
             this.activeTab = item
         },
@@ -261,13 +142,13 @@ export default {
         },
 
         // 頁數切換
-        paginated() {
+        paginated(){
             const start = (this.currentPage - 1) * this.perPage; //將當前頁數-1再乘以頁面顯示內容筆數得到start值
-            const end = start + this.perPage; //計算此頁面中的內容是否達到perPage中的數字最後索引值來得到end值
-            return this.member.slice(start, end); //用JS的.slice()方法獲取vue data中的member陣列內容顯示內容
+            const end = start + this.perPage;//計算此頁面中的內容是否達到perPage中的數字最後索引值來得到end值
+            return this.memData.slice(start, end);//用JS的.slice()方法獲取vue data中的member陣列內容顯示內容
         },
         totalPages() {
-            return Math.ceil(this.member.length / this.perPage); //用Math.ceil()無條件進位，值則是用member陣列物件長度除以顯示內容筆數取得
+            return Math.ceil(this.memData.length / this.perPage);//用Math.ceil()無條件進位，值則是用member陣列物件長度除以顯示內容筆數取得
         },
     },
 
