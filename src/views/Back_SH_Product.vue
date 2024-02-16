@@ -12,7 +12,7 @@
         </select>
         <input type="text" v-model="searchText" :placeholder="placeholderText">
         <button @click="search" class="searchBtn">搜尋</button>
-        <NewItemDrawer />
+        <SHPNewItemDrawer />
       </div>
       <!-- SHProducts -->
       <div class="SHProductsList">
@@ -27,8 +27,8 @@
         </ul>
         <ul class="SHProductsInfoList" v-for="(SHProductsInfo, index) in paginated" :key="index">
           <li class="SHProductsNo"> {{ SHProductsInfo.SHProductsNo }} </li>
-          <li class="ReviseItemDrawer">
-            <ReviseItemDrawer />
+          <li class="SHPReviseItemDrawer">
+            <SHPReviseItemDrawer />
           </li>
           <li class="picture"> {{ SHProductsInfo.picture }} </li>
           <li class="classify"> {{ SHProductsInfo.classify }} </li>
@@ -53,8 +53,8 @@
 import BackTitle from '@/components/backTitle.vue';
 import BackSidebar from '@/components/backSidebar.vue';
 import PageNumber from '@/components/PageNumber.vue';
-import NewItemDrawer from '@/components/Drawer/NewItemDrawer.vue';
-import ReviseItemDrawer from '@/components/Drawer/ReviseItemDrawer.vue';
+import SHPNewItemDrawer from '@/components/Drawer/SHPNewItemDrawer.vue';
+import SHPReviseItemDrawer from '@/components/Drawer/SHPReviseItemDrawer.vue';
 
 
 export default {
@@ -62,8 +62,8 @@ export default {
     BackSidebar,
     BackTitle,
     PageNumber,
-    NewItemDrawer,
-    ReviseItemDrawer,
+    SHPNewItemDrawer,
+    SHPReviseItemDrawer,
 
   },
   data() {
@@ -75,7 +75,7 @@ export default {
       // 頁數切換
       activeTab: "",
       currentPage: 1,
-      perPage: 8,
+      perPage: 5,
 
       // 存放商品資料的陣列      
       SHProductsInfo: [
