@@ -4,7 +4,7 @@
 .promoContent{
     display: flex;
     flex-direction: column;
-    width: 85%;
+    width: 80%;
     padding: 0 10px;
 }
 .subtitle{
@@ -30,20 +30,41 @@
     display: flex;
     align-items: center;
     text-align: center;
-    font-size: $h4;
+    font-size: $h5;
     padding: 20px;
-    width: 100%;
+    margin-bottom: 10px;
     border-radius: $borr2 + 10px;
     background-color: $lightBlue;
     ol{
         display: flex;
+        align-items: center;
         width: 100%;
         li{
             width:calc(100% / 7);
         }
-        input{
-            width: 13%;
+        .promo_id, .promo_name, .promo_start_date, .promo_end_date{
+            background-color: $whiteWord;
+        }
+        .promo_name, .promo_start_date, .promo_end_date{
+            margin: 0 5px;
+        }
+        #promoRatio{
+            width: 50%;
             text-align: center;
+            margin-left: 30px;
+            border: none;
+            border-radius: $borr1;
+        }
+        span{
+            padding-left: 5px;
+            // margin-right: 30px;
+        }
+        #promoState{
+            width: 40%;
+            text-align: center;
+            padding: 5px 0;
+            border: none;
+            border-radius: $borr1;
         }
     }
 }

@@ -1,3 +1,22 @@
+.productsin{
+    // background-color: $blue;
+}
+.btnUpload{
+    height: 35px;
+        padding: 0 10px;
+        border-radius: $borr2;
+        background-color: $blue;
+        color: $whiteWord;
+        // font-size: $mp;
+    
+        i {
+            margin-left: 3px;
+        }
+    
+        &:hover {
+            background-color: $navy;
+        }
+}
 .demo-drawer-footer{
     width: 100%;
     position: absolute;
@@ -41,23 +60,21 @@
     }
 }
 
-.revisePromoDrawer Button {
-    width: 60%;
-    height: 40px;
+.SHPNewItemDrawer Button {
+    height: 50px;
+    padding: 0 10px;
     border: none;
     border-radius: $borr2;
-    background-color: $whiteWord;
+    background-color: $yellow;
     color: $blackWord;
-    font-size: $h5;
+    font-size: $mp;
 
     i {
         margin-left: 3px;
     }
 
     &:hover {
-        background-color: $blue;
-        color: $whiteWord;
+        background-color: $orange ;
     }
-
 
 }

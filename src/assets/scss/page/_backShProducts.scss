@@ -3,7 +3,7 @@
     max-height: 100vh;
 
     .backSHProductsInfo {
-        width: 100%;
+        width: 80%;
         margin: 20px;
         display: flex;
         flex-direction: column;
@@ -44,7 +44,7 @@
 
     .SHProductsList {
         font-size: $mh6;
-        height: 60vh;
+        height: 62vh;
 
         ul {
             display: flex;
@@ -67,10 +67,16 @@
             padding-bottom: 5px;
             margin-bottom: 20px;
             border-bottom: 1px solid $grey_3;
+            .ReviseItemDrawer{
+                padding: 0;
+                margin-left: -8px;
+
+            }
         }
 
         .SHProductsInfoList {
-            margin-bottom: 10px;
+            margin-bottom: 5px;
+            height: 15%;
             border-radius: $borr2;
             background-color: $lightBlue;
             .SHProductsNo{
@@ -80,7 +86,7 @@
             }
 
             li {
-                padding: 10px;
+                padding: 1%;
             }
             // .SHProductsManager{
             //     width: 80%;
@@ -113,7 +119,7 @@
         .SHProductsDate{
             background-color: #fff;
             border-radius: $borr2;
-            padding: 1%;
+            padding: 0px;
         }
     }
 }
