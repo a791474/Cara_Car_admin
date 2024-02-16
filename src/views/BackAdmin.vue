@@ -135,13 +135,13 @@ export default {
             <div class="subtitle_line"></div>
             <div v-for="(admin, index) in paginated" :key="index" class="admin_account">
                 <p>{{ admin.admin_id }}</p>
-                <p>{{ admin.ADMIN_ACCOUNT }}</p>
-                <p>{{ admin.ADMIN_AUTHORITY }}</p>
+                <p>{{ admin.admin_account }}</p>
+                <p>{{ admin.admin_authority }}</p>
                 <Space direction="vertical">
                     <Space> 
                         <Switch 
                         size="large"
-                        v-model="admin.ADMIN_STATE" 
+                        v-model="admin.admin_state" 
                         @on-change="changeState(admin)">
                             <template #open>
                                 <span>啟用</span>
