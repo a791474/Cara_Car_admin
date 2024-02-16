@@ -3,7 +3,6 @@ import axios from 'axios';
 import BackTitle from '@/components/backTitle.vue';
 import BackSidebar from '@/components/backSidebar.vue';
 import PageNumber from '@/components/PageNumber.vue';
-import PageNumberBG from '@/components/PageNumberBG.vue';
 import NewPromoDrawer from '@/components/Drawer/NewPromoDrawer.vue';
 import RevisePromoDrawer from '@/components/Drawer/RevisePromoDrawer.vue';
 export default {
@@ -11,7 +10,6 @@ export default {
         BackSidebar,
         BackTitle,
         PageNumber,
-        PageNumberBG,
         NewPromoDrawer,
         RevisePromoDrawer
     },
@@ -24,7 +22,7 @@ export default {
         };
     },
     created() {
-        axios.get(`${import.meta.env.VITE_CARA_URL}/backPromotion.php`)
+        axios.get(`${import.meta.env.VITE_CARA_URL}/back/backPromotion.php`)
                 .then((response) => {
                     this.promoData = response.data;
                 })
