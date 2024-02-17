@@ -1,4 +1,5 @@
 <script>
+import axios from 'axios';
 import BackTitle from '@/components/backTitle.vue';
 import BackSidebar from '@/components/backSidebar.vue';
 import PageNumber from '@/components/PageNumber.vue';
@@ -27,118 +28,132 @@ export default {
                 date: '',
                 desc: ''
             },
+
+            // placehoder切換
+            selectedOption: 'memberNo',  //select預設值
             orderList: [
-                {
-                    orderNo: "1111",
-                    memberNo: "20000221",
-                    productName: "超強小汽車車",
-                    quantity: "1",
-                    time: "2023-12-31",
-                    checked: true
-                },
-                {
-                    orderNo: "2222",
-                    memberNo: "20000222",
-                    productName: "急速小汽車車",
-                    quantity: "1",
-                    time: "2023-12-31",
-                    checked: true
-                },
-                {
-                    orderNo: "3333",
-                    memberNo: "20000223",
-                    productName: "復古小汽車車",
-                    quantity: "1",
-                    time: "2023-12-31",
-                    checked: true
-                },
-                {
-                    orderNo: "4444",
-                    memberNo: "20000223",
-                    productName: "復古小汽車車",
-                    quantity: "1",
-                    time: "2023-12-31",
-                    checked: true
-                },
-                {
-                    orderNo: "5555",
-                    memberNo: "20000223",
-                    productName: "復古小汽車車",
-                    quantity: "1",
-                    time: "2023-12-31",
-                    checked: true
-                },
-                {
-                    orderNo: "6666",
-                    memberNo: "20000223",
-                    productName: "復古小汽車車",
-                    quantity: "1",
-                    time: "2023-12-31",
-                    checked: true
-                },
-                {
-                    orderNo: "7777",
-                    memberNo: "20000223",
-                    productName: "復古小汽車車",
-                    quantity: "1",
-                    time: "2023-12-31",
-                    checked: true
-                },
-                {
-                    orderNo: "8888",
-                    memberNo: "20000223",
-                    productName: "復古小汽車車",
-                    quantity: "1",
-                    time: "2023-12-31",
-                    checked: true
-                },
-                {
-                    orderNo: "9999",
-                    memberNo: "20000223",
-                    productName: "復古小汽車車",
-                    quantity: "1",
-                    time: "2023-12-31",
-                    checked: true
-                },
-                {
-                    orderNo: "7777",
-                    memberNo: "20000223",
-                    productName: "復古小汽車車",
-                    quantity: "1",
-                    time: "2023-12-31",
-                    checked: true
-                },
-                {
-                    orderNo: "8888",
-                    memberNo: "20000223",
-                    productName: "復古小汽車車",
-                    quantity: "1",
-                    time: "2023-12-31",
-                    checked: true
-                },
-                {
-                    orderNo: "7777",
-                    memberNo: "20000223",
-                    productName: "復古小汽車車",
-                    quantity: "1",
-                    time: "2023-12-31",
-                    checked: true
-                },
-                {
-                    orderNo: "8888",
-                    memberNo: "20000223",
-                    productName: "復古小汽車車",
-                    quantity: "1",
-                    time: "2023-12-31",
-                    checked: true
-                },
+                // {
+                //     orderNo: "1111",
+                //     memberNo: "20000221",
+                //     productName: "超強小汽車車",
+                //     quantity: "1",
+                //     time: "2023-12-31",
+                //     checked: true
+                // },
+                // {
+                //     orderNo: "2222",
+                //     memberNo: "20000222",
+                //     productName: "急速小汽車車",
+                //     quantity: "1",
+                //     time: "2023-12-31",
+                //     checked: true
+                // },
+                // {
+                //     orderNo: "3333",
+                //     memberNo: "20000223",
+                //     productName: "復古小汽車車",
+                //     quantity: "1",
+                //     time: "2023-12-31",
+                //     checked: true
+                // },
+                // {
+                //     orderNo: "4444",
+                //     memberNo: "20000223",
+                //     productName: "復古小汽車車",
+                //     quantity: "1",
+                //     time: "2023-12-31",
+                //     checked: true
+                // },
+                // {
+                //     orderNo: "5555",
+                //     memberNo: "20000223",
+                //     productName: "復古小汽車車",
+                //     quantity: "1",
+                //     time: "2023-12-31",
+                //     checked: true
+                // },
+                // {
+                //     orderNo: "6666",
+                //     memberNo: "20000223",
+                //     productName: "復古小汽車車",
+                //     quantity: "1",
+                //     time: "2023-12-31",
+                //     checked: true
+                // },
+                // {
+                //     orderNo: "7777",
+                //     memberNo: "20000223",
+                //     productName: "復古小汽車車",
+                //     quantity: "1",
+                //     time: "2023-12-31",
+                //     checked: true
+                // },
+                // {
+                //     orderNo: "8888",
+                //     memberNo: "20000223",
+                //     productName: "復古小汽車車",
+                //     quantity: "1",
+                //     time: "2023-12-31",
+                //     checked: true
+                // },
+                // {
+                //     orderNo: "9999",
+                //     memberNo: "20000223",
+                //     productName: "復古小汽車車",
+                //     quantity: "1",
+                //     time: "2023-12-31",
+                //     checked: true
+                // },
+                // {
+                //     orderNo: "7777",
+                //     memberNo: "20000223",
+                //     productName: "復古小汽車車",
+                //     quantity: "1",
+                //     time: "2023-12-31",
+                //     checked: true
+                // },
+                // {
+                //     orderNo: "8888",
+                //     memberNo: "20000223",
+                //     productName: "復古小汽車車",
+                //     quantity: "1",
+                //     time: "2023-12-31",
+                //     checked: true
+                // },
+                // {
+                //     orderNo: "7777",
+                //     memberNo: "20000223",
+                //     productName: "復古小汽車車",
+                //     quantity: "1",
+                //     time: "2023-12-31",
+                //     checked: true
+                // },
+                // {
+                //     orderNo: "8888",
+                //     memberNo: "20000223",
+                //     productName: "復古小汽車車",
+                //     quantity: "1",
+                //     time: "2023-12-31",
+                //     checked: true
+                // },
             
             ],
+            searchText: '',
             currentPage: 1,
             perPage: 8,
         }
     },
     computed:{
+        placeholderText() {
+            switch (this.selectedOption) {
+                case 'productName':
+                    return '請輸入商品名稱'
+                case 'orderNo':
+                    return '請輸入訂單編號'
+                default:
+                    return '請輸入會員編號'
+            }
+        },
         paginated(){
             const start = (this.currentPage - 1) * this.perPage;
             const end = start + this.perPage;
@@ -147,6 +162,17 @@ export default {
         totalPages() {
             return Math.ceil(this.orderList.length / this.perPage);
         },
+    },
+    created() { //在頁面載入時同時載入function
+        //axios的get方法(`$import.meta.env.{變數}/檔名.php`)用.env檔中寫的網址來判斷網址URL的前贅
+        axios.get(`${import.meta.env.VITE_CARA_URL}/shOrder.php`)
+                .then((response) => {
+                    // 成功取得資料後，將資料存入 member 陣列，(this.data內接資料的空陣列名稱)
+                    this.orderList = response.data;
+                })
+                .catch((error) => {
+                    console.error("Error fetching data:", error);
+                });
     },
     methods: {
         toggleStatus(index) {
@@ -169,13 +195,13 @@ export default {
         <div class="content">
             <BackTitle />
             <div class="searchBar">
-                <select name="searchOption" id="searchOption">
-                    <option value="orderno">訂單編號</option>
-                    <option value="memberno">會員編號</option>
-                    <option value="product">商品名稱</option>
+                <select v-model="selectedOption" id="selectedOption" >
+                    <option value="orderNo">訂單編號</option>
+                    <option value="memberNo">會員編號</option>
+                    <option value="productName">商品名稱</option>
                 </select>
-                <input type="text" placeholder="請輸入訂單編號">
-                <button class="searchBtn">搜尋</button>
+                <input type="text" v-model="searchText" :placeholder="placeholderText">
+                <button @click="search" class="searchBtn">搜尋</button>
             </div>
             <div class="orderTable">
                 <div class="listTitle">
@@ -193,22 +219,24 @@ export default {
                     <div class="searchButton">
                         <button @click="value = true" type="primary" class="searchBtn">查詢</button>
                     </div>
-                    <p class="orderContentP">{{item.orderNo}}</p>
-                    <p class="orderContentP">{{item.memberNo}}</p>
+                    <!-- item.資料庫欄位名稱 -->
+                    <p class="orderContentP">{{item.sh_ord_id}}</p>
+                    <p class="orderContentP">{{item.member_id}}</p>
                     <p class="orderContentP">{{item.productName}}</p>
                     <!-- <p class="orderContentP">{{item.quantity}}</p> -->
-                    <p class="orderContentP">{{item.time}}</p>
+                    <p class="orderContentP">{{item.sh_ord_date}}</p>
                 
                     <div class="switch">
                         <Space direction="vertical">
                             <Space>
-                                <Switch size="large">
-                                    <template #open>
+                                <Switch v-model="item.ord_del_state" size="large">
+                                    {{ item.ord_del_state }}<template v-if="item.ord_del_state === true" #open>
                                     <span>已出</span>
                                     </template>
-                                    <template #close>
+                                    <template v-else #close>
                                     <span>未出</span>
                                     </template>
+                                    <!-- {{ item.ord_del_state ? '已出' : '未出' }} -->
                                 </Switch>
                             </Space>
                         </Space>
@@ -233,7 +261,7 @@ export default {
         <Form :model="formData">
             <Row :gutter="32">
             <Col span="24" >
-                <FormItem label="訂單編號" label-position="top">
+                <FormItem label="訂單編號" label-position="Left">
                     <Input v-model="formData.name" placeholder="please enter order number" />
                 </FormItem>
             </Col>
