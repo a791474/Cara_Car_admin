@@ -1,0 +1,110 @@
+.backProducts{
+    display: flex;
+    // max-height: 100vh;
+    .backProductInfo{
+        flex-grow: 1;
+        margin: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+    .searchBar{
+        display: flex;
+        justify-content: end;
+        text-align: center;
+        align-items: center;
+        select{
+            height: 32px;
+            background-color: #D9D9D9;
+            border: none;
+            padding: 6px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        input{
+            margin: 20px;
+            background-color: #D9D9D9;
+            border: none;
+            padding: 6px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        button{
+            background-color: #D9D9D9;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-right: 20px;
+        }
+    }
+
+    .productsList {
+        font-size: $mh6;
+        height: 60vh;
+
+        ul {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        li {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
+.productInfoList {
+    margin: 0 0 10px 0;
+    padding: 0 10px;
+    border-radius: $borr2;
+    background-color: $lightBlue;
+    li {
+        padding: 5px;
+    }
+    .productNo{
+        width: 25px;
+        height: 25px;
+        border-radius: $borr3;
+        display: flex;
+        text-align: center;
+    }
+    .picture{
+        width: 12%;
+        padding: 0;
+        margin: 5px;
+        img{
+            width: 100%;
+            vertical-align: top;
+        }
+    }
+    .classify, .productName {
+        flex-grow: 1;
+    }
+    .ReviseItemDrawer{
+        padding: 15px 0px;
+    }
+    .productPriceAndSale, .productStateAndPin{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .promo_state{
+        width: 100px;
+        height: 80%;
+    }
+}
+
+.productNo, .classify, .productName, .productPrice{
+    background-color: #fff;
+    border-radius: $borr2;
+    margin: 5px;
+    padding: 5px;
+}
+.productSale, .promo_state, .productState, .productPin{
+    background-color: #fff;
+    border-radius: $borr2;
+    padding: 5px;
+}
