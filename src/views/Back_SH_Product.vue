@@ -224,5 +224,5 @@ export default {
 
 
 <style lang="scss" scoped>
-@import '@/assets/scss/page/backShProducts.scss'
+@import '@/assets/scss/page/backShProducts.scss';
 </style>
