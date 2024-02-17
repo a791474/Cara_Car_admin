@@ -28,7 +28,9 @@
     padding: 10px;
     display: flex;
     flex-direction: column;
-
+    .ivu-space{
+        width: 25%;
+    }
 }
 
 .admin_account {

@@ -90,7 +90,7 @@ export default {
             <div v-for="(promo, index) in paginated" :key="index" class="promoCard">
                 <ol>
                     <li class="promo_id">{{ promo.promo_id }}</li>
-                    <li><RevisePromoDrawer /></li>
+                    <li><RevisePromoDrawer :detail="promo"/></li>
                     <li class="promo_name">{{ promo.promo_name }}</li>
                     <li class="promo_start_date">{{ promo.promo_start_date }}</li>
                     <li class="promo_end_date">{{ promo.promo_end_date }}</li>
@@ -108,5 +108,4 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/scss/page/backPromotion.scss';
-// @import '@/assets/scss/components/switchBtn.scss';
 </style>

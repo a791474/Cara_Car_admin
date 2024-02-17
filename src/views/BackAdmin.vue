@@ -42,20 +42,29 @@ export default {
                     console.error("Error fetching data:", error);
                 });
         },
-        // handleBeforeChange() {
-        //     return new Promise((resolve) => {
-        //         this.$Modal.confirm({
-        //             title: "確定切換權限嗎？",
-        //             content: "您確定切換權限嗎？",
-        //             onOk: () => {
-        //                 resolve();
-        //             },
-        //         });
-        //     });
-        // },
-        // changeState(status){
-        //     this.$Message.info('开关状态：' + status);
-        // },
+            handleBeforeChange() {
+                return new Promise((resolve) => {
+                    this.$Modal.confirm({
+                        title: "確定切換權限嗎？",
+                        content: "您確定切換權限嗎？",
+                        onOk: () => {
+                            resolve();
+                        },
+                    });
+                });
+            },
+        changeState(status){
+            // this.$Message.info('开关状态：' + JSON.stringify(status));
+            return new Promise((resolve) => {
+                    this.$Modal.confirm({
+                        title: "確定切換權限嗎？",
+                        content: "您確定切換權限嗎？",
+                        onOk: () => {
+                            resolve();
+                        },
+                    });
+                });
+        },
         currentSidebar(item) {
             this.activeTab = item
         },
@@ -64,7 +73,7 @@ export default {
         },
     },
     mounted() {
-        
+
     },
 }
 </script>
@@ -78,7 +87,7 @@ export default {
                 <p>管理員編號</p>
                 <p>管理員名稱</p>
                 <p>權限等級</p>
-                <p>啟用中</p>
+                <p>啟用狀態</p>
             </div>
             <div class="subtitle_line"></div>
             <div v-for="(admin, index) in paginated" :key="index" class="admin_account">
@@ -86,11 +95,9 @@ export default {
                 <p>{{ admin.admin_account }}</p>
                 <p>{{ admin.admin_authority }}</p>
                 <Space direction="vertical">
-                    <Space> 
-                        <Switch 
-                        size="large"
-                        v-model="admin.admin_state" 
-                        @on-change="changeState(admin)">
+                    <Space>
+                        <Switch size="large" v-model="admin.admin_state" :true-value="1" :false-value="0"
+                            @on-change="changeState(admin)">
                             <template #open>
                                 <span>啟用</span>
                             </template>

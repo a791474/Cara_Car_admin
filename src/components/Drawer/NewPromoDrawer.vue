@@ -16,6 +16,22 @@
     <Form :model="formData">
             <Row :gutter="32">
                 <Col span="12">
+                    <FormItem label="優惠名稱" label-position="top">
+                        <Input v-model="promoData.promo_name" placeholder="請輸入優惠名稱" />
+                    </FormItem>
+                </Col>
+                <Col span="12">
+                    <FormItem label="折扣類別" label-position="top">
+                        <Select v-model="promoData.pro_category" placeholder="請選擇優惠類別">
+                            <Option value="">電動車</Option>
+                            <Option value="">模型車</Option>
+                            <Option value="">配件</Option>
+                        </Select>
+                    </FormItem>
+                </Col>
+            </Row>
+            <Row :gutter="32">
+                <Col span="12">
                     <FormItem label="折扣率" label-position="top">
                         <Input v-model="promoData.promo_ratio" placeholder="請輸入0~100之間" />
                     </FormItem>
@@ -88,7 +104,7 @@ export default {
         }
     },
     created() {
-        axios.get(`${import.meta.env.VITE_CARA_URL}/backPromotion.php`)
+        axios.get(`${import.meta.env.VITE_CARA_URL}/back/backPromotion.php`)
                 .then((response) => {
                     this.promoData = response.data;
                 })
