@@ -24,7 +24,7 @@ export default {
         const bodyFormData = new FormData();
         bodyFormData.append('admin_account', this.account);
         bodyFormData.append('admin_psw', this.psw8888);
-
+        // console.log(userData);
         // 請記得將php埋入跨域
         apiInstance({
             method: 'post',
@@ -35,7 +35,7 @@ export default {
             if(res && res.data){
                 if(res.data.code == 1){
                     this.updateToken(res.data.session_id)
-                    // this.updateUserData(res.data.memInfo)
+                    this.updateUserData(res.data.adminInfo)
                     this.$router.push('/BackAdmin')
 
                 }else{

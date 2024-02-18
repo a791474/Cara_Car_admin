@@ -23,9 +23,10 @@ export default defineStore('userStore', {
                 localStorage.removeItem('userToken')
             }
         },
-        // updateUserData(val) {
-        //     this.userData = val
-        // },
+        updateUserData(val) {
+            this.userData = val
+            console.log(this.userData);
+        },
         checkLogin() {
             const storageToken = localStorage.getItem('userToken')
             if (this.token) {
