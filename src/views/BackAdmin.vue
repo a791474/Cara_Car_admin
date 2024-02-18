@@ -23,6 +23,9 @@ export default {
         this.axiosData();
     },
     computed: {
+        authority(){
+            return (authority) => authority === 1 ? "一般管理員" : "超級管理員";
+        },
         paginated() {
             const start = (this.currentPage - 1) * this.perPage;
             const end = start + this.perPage;
@@ -42,28 +45,17 @@ export default {
                     console.error("Error fetching data:", error);
                 });
         },
-            handleBeforeChange() {
-                return new Promise((resolve) => {
-                    this.$Modal.confirm({
-                        title: "確定切換權限嗎？",
-                        content: "您確定切換權限嗎？",
-                        onOk: () => {
-                            resolve();
-                        },
-                    });
-                });
-            },
         changeState(status){
-            // this.$Message.info('开关状态：' + JSON.stringify(status));
-            return new Promise((resolve) => {
-                    this.$Modal.confirm({
-                        title: "確定切換權限嗎？",
-                        content: "您確定切換權限嗎？",
-                        onOk: () => {
-                            resolve();
-                        },
-                    });
-                });
+        this.$Message.info('有這些欄位資料→' + JSON.stringify(status));
+            // return new Promise((resolve) => {
+            //     this.$Modal.confirm({
+            //         title: "確定切換權限嗎？",
+            //         content: "您確定切換權限嗎？",
+            //         onOk: () => {
+            //             resolve();
+            //         },
+            //     });
+            // });
         },
         currentSidebar(item) {
             this.activeTab = item
@@ -92,8 +84,9 @@ export default {
             <div class="subtitle_line"></div>
             <div v-for="(admin, index) in paginated" :key="index" class="admin_account">
                 <p>{{ admin.admin_id }}</p>
-                <p>{{ admin.admin_account }}</p>
-                <p>{{ admin.admin_authority }}</p>
+                <p>{{ admin.admin_name }}</p>
+                <input id="authority" type="text" :value="authority(admin.admin_authority)" readonly>
+                <!-- <p>{{ admin.admin_state }}</p> -->
                 <Space direction="vertical">
                     <Space>
                         <Switch size="large" v-model="admin.admin_state" :true-value="1" :false-value="0"
