@@ -19,7 +19,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(userStore, ['updateToken', 'updateName', 'checkLogin', 'updateUserData']),
+        ...mapActions(userStore, ['updateToken', 'checkLogin', 'updateUserData']),
     login(){
         const bodyFormData = new FormData();
         bodyFormData.append('admin_account', this.account);
@@ -46,11 +46,6 @@ export default {
             console.log(error);
         })
     },
-    // register(){
-    //     this.$router.push({ 
-    //         name: 'register'
-    //     }) 
-    // },
     togglePswVisbility() {
         this.passwordVisible = !this.passwordVisible;
     },
@@ -66,13 +61,11 @@ export default {
             </div>
             <fieldset class="input-area">
                 <input type="email" placeholder="使用者名稱" v-model="account">
-                <!-- <input :type="passwordVisible ? 'text' : 'password'" v-model="psw8888" placeholder="●●●●●●●●" maxlength="12"> -->
                 <input :type="passwordVisible ? 'text' : 'password'" v-model="psw8888" placeholder="●●●●●●●●">
                 <div id="errorMessage" class="error-message"></div>
                 <img v-if="passwordVisible" src="../assets/imgs/login/open-eye.svg" alt="closeEye" class="eye" @click="togglePswVisbility">
                 <img v-else src="../assets/imgs/login/close-eye.svg" alt="closeOpen" class="eye" @click="togglePswVisbility">
                 <button class="loginBtn" @click="login">登入</button>
-                <!-- <button class="loginBtn" @click="register">註冊</button> -->
             </fieldset>
         </div>
     </div>

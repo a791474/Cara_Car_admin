@@ -5,7 +5,7 @@ import userStore from '@/stores/user'
 export default {
     data() {
         return {
-            userStoreData:userStore(),
+            userStoreData:userStore(), //呼叫user.js的Pinia
         };
     },
     created() {
