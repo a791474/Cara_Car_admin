@@ -3,16 +3,6 @@ export default {
     data() {
         return {
             activeTab:"",
-            // name:[
-            //     '/BackMember',
-            //     '/BackProduct',
-            //     '/BackOrder',
-            //     '/Back_SH_Product',
-            //     '/Back_SH_Order',
-            //     '/BackPromotion',
-            //     '/BackNews',
-            //     '/BackAdmin'
-            // ]
         };
     },
     created() {
@@ -23,7 +13,6 @@ export default {
         updateActiveTab() {
             // 從路由名稱中提取選項名稱
             const tabName = this.$route.name.replace('Back','')
-
             // 根據提取的選項名稱設置activeTab
             this.activeTab = tabName;
         },

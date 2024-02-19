@@ -17,13 +17,15 @@ export default {
             currentPage: 1,
             perPage: 10,
             adminData: [],
+            adminState: null,
         };
     },
     created() {
         this.axiosData();
+        this.fetchAdminState();
     },
     computed: {
-        authority(){
+        authority() {
             return (authority) => authority === 1 ? "一般管理員" : "超級管理員";
         },
         paginated() {
@@ -45,8 +47,31 @@ export default {
                     console.error("Error fetching data:", error);
                 });
         },
-        changeState(status){
-        this.$Message.info('有這些欄位資料→' + JSON.stringify(status));
+        async fetchAdminState() {
+            try {
+                // 發送請求獲取admin_state
+                const response = await fetch(`${import.meta.env.VITE_CARA_URL}/back/backAdminState.php`);
+                const data = await response.json();
+                this.adminState = data.admin_state;
+            } catch (error) {
+                console.error('Failed to fetch admin state:', error);
+            }
+        },
+        async changeState(newState) {
+            try {
+                // 發送請求更新admin_state 到後端
+                const response = await fetch(`${import.meta.env.VITE_CARA_URL}/back/backAdminState.php`, {
+                    method: 'POST',
+                    // headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ admin_state: newState })
+                });
+                // 如果return更新後的狀態，可以根據需要進行處理
+                const responseData = await response.json();
+                console.log('Updated admin state:', responseData);
+            } catch (error) {
+                console.error('Failed to update admin state:', error);
+            }
+            // this.$Message.info('有這些欄位資料→' + JSON.stringify(status));
             // return new Promise((resolve) => {
             //     this.$Modal.confirm({
             //         title: "確定切換權限嗎？",
@@ -86,7 +111,6 @@ export default {
                 <p>{{ admin.admin_id }}</p>
                 <p>{{ admin.admin_name }}</p>
                 <input id="authority" type="text" :value="authority(admin.admin_authority)" readonly>
-                <!-- <p>{{ admin.admin_state }}</p> -->
                 <Space direction="vertical">
                     <Space>
                         <Switch size="large" v-model="admin.admin_state" :true-value="1" :false-value="0"
