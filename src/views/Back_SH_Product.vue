@@ -78,109 +78,121 @@ export default {
       perPage: 5,
 
       // 存放商品資料的陣列      
-      SHProductsInfo: [
-        {
-          SHProductsNo: '01',
-          picture: '商品圖片',
-          classify: '商品分類',
-          SHProductsName: '超強小汽車車',
-          SHProductsPrice: '10000',
-          SHProductsState: '上架',
-          OnDate: '2024/2/1',
-        },
-        {
-          SHProductsNo: '02',
-          picture: '商品圖片',
-          classify: '商品分類',
-          SHProductsName: '超強小汽車車',
-          SHProductsPrice: '10000',
-          SHProductsState: '上架',
-          OnDate: '2024/2/1',
-        },
-        {
-          SHProductsNo: '01',
-          picture: '商品圖片',
-          classify: '商品分類',
-          SHProductsName: '超強小汽車車',
-          SHProductsPrice: '10000',
-          SHProductsState: '上架',
-          OnDate: '2024/2/1',
-        },
-        {
-          SHProductsNo: '01',
-          picture: '商品圖片',
-          classify: '商品分類',
-          SHProductsName: '超強小汽車車',
-          SHProductsPrice: '10000',
-          SHProductsState: '上架',
-          OnDate: '2024/2/1',
-        },
-        {
-          SHProductsNo: '01',
-          picture: '商品圖片',
-          classify: '商品分類',
-          SHProductsName: '超強小汽車車',
-          SHProductsPrice: '10000',
-          SHProductsState: '上架',
-          OnDate: '2024/2/1',
-        },
-        {
-          SHProductsNo: '01',
-          picture: '商品圖片',
-          classify: '商品分類',
-          SHProductsName: '超強小汽車車',
-          SHProductsPrice: '10000',
-          SHProductsState: '上架',
-          OnDate: '2024/2/1',
-        },
-        {
-          SHProductsNo: '01',
-          picture: '商品圖片',
-          classify: '商品分類',
-          SHProductsName: '超強小汽車車',
-          SHProductsPrice: '10000',
-          SHProductsState: '上架',
-          OnDate: '2024/2/1',
-        },
-        {
-          SHProductsNo: '01',
-          picture: '商品圖片',
-          classify: '商品分類',
-          SHProductsName: '超強小汽車車',
-          SHProductsPrice: '10000',
-          SHProductsState: '上架',
-          OnDate: '2024/2/1',
-        },
-        {
-          SHProductsNo: '01',
-          picture: '商品圖片',
-          classify: '商品分類',
-          SHProductsName: '超強小汽車車',
-          SHProductsPrice: '10000',
-          SHProductsState: '上架',
-          OnDate: '2024/2/1',
-        },
-        {
-          SHProductsNo: '01',
-          picture: '商品圖片',
-          classify: '商品分類',
-          SHProductsName: '超強小汽車車',
-          SHProductsPrice: '10000',
-          SHProductsState: '上架',
-          OnDate: '2024/2/1',
-        },
+      // SHProductsInfo: [
+      //   {
+      //     SHProductsNo: '01',
+      //     picture: '商品圖片',
+      //     classify: '商品分類',
+      //     SHProductsName: '超強小汽車車',
+      //     SHProductsPrice: '10000',
+      //     SHProductsState: '上架',
+      //     OnDate: '2024/2/1',
+      //   },
+      //   {
+      //     SHProductsNo: '02',
+      //     picture: '商品圖片',
+      //     classify: '商品分類',
+      //     SHProductsName: '超強小汽車車',
+      //     SHProductsPrice: '10000',
+      //     SHProductsState: '上架',
+      //     OnDate: '2024/2/1',
+      //   },
+      //   {
+      //     SHProductsNo: '01',
+      //     picture: '商品圖片',
+      //     classify: '商品分類',
+      //     SHProductsName: '超強小汽車車',
+      //     SHProductsPrice: '10000',
+      //     SHProductsState: '上架',
+      //     OnDate: '2024/2/1',
+      //   },
+      //   {
+      //     SHProductsNo: '01',
+      //     picture: '商品圖片',
+      //     classify: '商品分類',
+      //     SHProductsName: '超強小汽車車',
+      //     SHProductsPrice: '10000',
+      //     SHProductsState: '上架',
+      //     OnDate: '2024/2/1',
+      //   },
+      //   {
+      //     SHProductsNo: '01',
+      //     picture: '商品圖片',
+      //     classify: '商品分類',
+      //     SHProductsName: '超強小汽車車',
+      //     SHProductsPrice: '10000',
+      //     SHProductsState: '上架',
+      //     OnDate: '2024/2/1',
+      //   },
+      //   {
+      //     SHProductsNo: '01',
+      //     picture: '商品圖片',
+      //     classify: '商品分類',
+      //     SHProductsName: '超強小汽車車',
+      //     SHProductsPrice: '10000',
+      //     SHProductsState: '上架',
+      //     OnDate: '2024/2/1',
+      //   },
+      //   {
+      //     SHProductsNo: '01',
+      //     picture: '商品圖片',
+      //     classify: '商品分類',
+      //     SHProductsName: '超強小汽車車',
+      //     SHProductsPrice: '10000',
+      //     SHProductsState: '上架',
+      //     OnDate: '2024/2/1',
+      //   },
+      //   {
+      //     SHProductsNo: '01',
+      //     picture: '商品圖片',
+      //     classify: '商品分類',
+      //     SHProductsName: '超強小汽車車',
+      //     SHProductsPrice: '10000',
+      //     SHProductsState: '上架',
+      //     OnDate: '2024/2/1',
+      //   },
+      //   {
+      //     SHProductsNo: '01',
+      //     picture: '商品圖片',
+      //     classify: '商品分類',
+      //     SHProductsName: '超強小汽車車',
+      //     SHProductsPrice: '10000',
+      //     SHProductsState: '上架',
+      //     OnDate: '2024/2/1',
+      //   },
+      //   {
+      //     SHProductsNo: '01',
+      //     picture: '商品圖片',
+      //     classify: '商品分類',
+      //     SHProductsName: '超強小汽車車',
+      //     SHProductsPrice: '10000',
+      //     SHProductsState: '上架',
+      //     OnDate: '2024/2/1',
+      //   },
 
-      ]
+      // ]
+      SHPro:[]
     };
   },
+  created() { //在頁面載入時同時載入function
+        //axios的get方法(`$import.meta.env.{變數}/檔名.php`)用.env檔中寫的網址來判斷網址URL的前贅
+        axios.get(`${import.meta.env.VITE_CARA_URL}/back/backSHProduct.php`)
+                .then((response) => {
+                    // 成功取得資料後，將資料存入 member 陣列
+                    this.SHPro = response.data;
+                })
+                .catch((error) => {
+                    console.error("Error fetching data:", error);
+                });
+    },
   methods: {
     search() {
       if (this.searchText.trim() === '') {
         // 如果搜尋框為空，還原顯示所有商品
-        this.paginated = this.SHProductsInfo.slice(0, this.perPage);
+        this.paginated = this.SHPro.slice(0, this.perPage);
       } else {
         // 根據搜尋條件過濾商品
-        this.paginated = this.SHProductsInfo.filter(product => {
+        this.paginated = this.SHPro.filter(product => {
           return product.SHProductsName.toLowerCase().includes(this.searchText.toLowerCase());
         }).slice(0, this.perPage);
       }
@@ -189,7 +201,7 @@ export default {
 
     // 頁碼
     toggleStatus(index) {
-      this.SHProductsInfo[index].status = !this.SHProductsInfo[index].status;
+      this.SHPro[index].status = !this.SHPro[index].status;
     },
     currentSidebar(item) {
       this.activeTab = item
@@ -213,10 +225,10 @@ export default {
     paginated() {
       const start = (this.currentPage - 1) * this.perPage;
       const end = start + this.perPage;
-      return this.SHProductsInfo.slice(start, end);
+      return this.SHPro.slice(start, end);
     },
     totalPages() {
-      return Math.ceil(this.SHProductsInfo.length / this.perPage);
+      return Math.ceil(this.SHPro.length / this.perPage);
     },
   },
 };
