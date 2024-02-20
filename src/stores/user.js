@@ -10,6 +10,7 @@ export default defineStore('userStore', {
 
     // 對應 computed (物件形式)
     getters: {
+
     },
 
     // 對應 methods (物件形式)
@@ -24,8 +25,13 @@ export default defineStore('userStore', {
             }
         },
         updateUserData(val) {
-            this.userData = val
-            console.log(this.userData);
+            console.log(val);
+            this.userData = {
+                id: val.admin_id,
+                name: val.admin_name,
+                email: val.admin_account,
+            }
+            localStorage.setItem('userData',JSON.stringify(this.userData));
         },
         checkLogin() {
             const storageToken = localStorage.getItem('userToken')

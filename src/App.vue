@@ -18,7 +18,20 @@ export default {
       
     }
   },
-  methods:{    
+  methods:{
+
+  },
+  watch: {
+    // '$route'() {
+    //   if (!isLogin && notLoginPage) {
+    //   this.$router.push('')
+    // }
+    // },
+  },
+  mounted() {
+    // if (!isLogin && notLoginPage) {
+    //   this.$router.push('')
+    // }
   },
 }
 </script>
@@ -26,7 +39,6 @@ export default {
 <template>
 
   <RouterView />
-
 </template>
 
 <style>

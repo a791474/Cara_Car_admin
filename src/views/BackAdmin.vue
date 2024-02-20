@@ -17,12 +17,11 @@ export default {
             currentPage: 1,
             perPage: 10,
             adminData: [],
-            adminState: null,
+            adminState: 0,
         };
     },
     created() {
         this.axiosData();
-        this.fetchAdminState();
     },
     computed: {
         authority() {
@@ -39,48 +38,34 @@ export default {
     },
     methods: {
         axiosData() {
-            axios.get(`${import.meta.env.VITE_CARA_URL}/back/backAdmin.php`)
+            axios.post(`${import.meta.env.VITE_CARA_URL}/back/backAdmin.php`)
                 .then((response) => {
                     this.adminData = response.data;
+                    console.log(this.adminData);
                 })
                 .catch((error) => {
                     console.error("Error fetching data:", error);
                 });
         },
-        async fetchAdminState() {
-            try {
-                // 發送請求獲取admin_state
-                const response = await fetch(`${import.meta.env.VITE_CARA_URL}/back/backAdminState.php`);
-                const data = await response.json();
-                this.adminState = data.admin_state;
-            } catch (error) {
-                console.error('Failed to fetch admin state:', error);
-            }
-        },
-        async changeState(newState) {
+        changeState(admin) {
+            const newState = admin.admin_state == true ? 1 : 0;
+            const currentId =admin.admin_id;
+            console.log(newState);
+
+            const editItem = new FormData();
+            editItem.append("tableName", "admin")
+            editItem.append("admin_state", newState)
+            editItem.append("admin_id", currentId)
+            console.log(editItem);
             try {
                 // 發送請求更新admin_state 到後端
-                const response = await fetch(`${import.meta.env.VITE_CARA_URL}/back/backAdminState.php`, {
-                    method: 'POST',
-                    // headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ admin_state: newState })
+                const response = axios.post(`${import.meta.env.VITE_CARA_URL}/back/backAdminState.php`, editItem, {
+                    headers: { "Content-Type": "multipart/form-data" },
                 });
-                // 如果return更新後的狀態，可以根據需要進行處理
-                const responseData = await response.json();
-                console.log('Updated admin state:', responseData);
+                console.log('Updated admin state:', response.data);
             } catch (error) {
                 console.error('Failed to update admin state:', error);
             }
-            // this.$Message.info('有這些欄位資料→' + JSON.stringify(status));
-            // return new Promise((resolve) => {
-            //     this.$Modal.confirm({
-            //         title: "確定切換權限嗎？",
-            //         content: "您確定切換權限嗎？",
-            //         onOk: () => {
-            //             resolve();
-            //         },
-            //     });
-            // });
         },
         currentSidebar(item) {
             this.activeTab = item

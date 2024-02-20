@@ -9,8 +9,10 @@ export default {
         };
     },
     created() {
+        this.userData.admin_name = localStorage.getItem("userData") ? JSON.parse(localStorage.getItem("userData")).name:"";
         // 判斷有沒有登入過
         this.checkLogin();
+        console.log(this.userData);
         // 把userData從Pinia確定有抽到此Vue檔中，並給admin_id定義
         const admin_id = this.userData.admin_id;
         //console.log(this.userData); //確定有抓到
@@ -31,14 +33,12 @@ export default {
     },
     methods: {
         //使用 mapActions 輔助函數將/src/stores/user裡的actions/methods 映射在這裡
-        ...mapActions(userStore, ['checkLogin', 'updateToken']),
+        ...mapActions(userStore, ['checkLogin', 'updateToken','updateUserData']),
         logout() {
             // 調用pinia的updateToken
-            this.updateToken('')
-            if (!this.token) {
-                //清除Token後回到登入頁
-                this.$router.push('/')
-            }
+            this.$router.push('/')
+            this.userStoreData.updateToken("");
+            this.userStoreData.updateUserData("");
         },
     }
 }
