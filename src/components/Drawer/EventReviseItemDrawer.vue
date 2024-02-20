@@ -35,6 +35,15 @@
             </FormItem>
         </Col>
     </Row>
+    
+    <!-- 是否下架 -->
+    <Row :gutter="32">
+        <Col span="12">
+            <FormItem label="是否下架" label-position="top">
+                    <Checkbox v-model="formData.disLaunch" label="下架"></Checkbox>
+            </FormItem>
+        </Col>
+    </Row>
 
 
     <Row :gutter="32">

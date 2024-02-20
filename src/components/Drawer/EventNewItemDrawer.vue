@@ -40,7 +40,7 @@
             <Row :gutter="32">
                 <Col span="12">
                     <FormItem label="是否下架" label-position="top">
-                        <Input type="checkbox" v-model="formData.disLaunch" placeholder="請輸入消息標題" />
+                            <Checkbox v-model="formData.disLaunch" label="下架"></Checkbox>
                     </FormItem>
                 </Col>
             </Row>
@@ -93,6 +93,7 @@ export default {
                 height: 'calc(100% - 55px)',
                 overflow: 'auto',
                 paddingBottom: '53px',
+                marginButton: '10px',
                 position: 'static'
             },
             formData: {
