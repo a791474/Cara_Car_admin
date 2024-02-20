@@ -71,13 +71,14 @@
         .switch{
 
             .ivu-switch{
-                background-color: $blue;
-                
-            }
-            .ivu-switch-checked {
                 background-color: 
                 $grey_3;
                 border: 1px solid $grey_3;
+                
+            }
+            .ivu-switch-checked {
+                background-color: $blue;
+                
             }
         }
     }
