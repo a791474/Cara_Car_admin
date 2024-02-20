@@ -35,23 +35,18 @@
                     <li class="switch">
                         <Space direction="vertical">
                             <Space>
-                                <!-- 這裡要問老師，我們設定的值是0或1，開關之後會變成true或false，預設值v-if沒有用 -->
-                                <!-- {{ memInfo.m_state }} 
-                                <Switch v-model="memInfo.m_state" size="large" class="switchButton">
-                                    <template v-if="memInfo.m_state === true" #open>
-                                        <span>封存</span>
-                                    </template>
-                                    <template v-else #close>
-                                        <span>正常</span>
-                                    </template>
-                                </Switch> -->
                                 {{ memInfo.m_state }} 
-                                <Switch size="large" class="switchButton">
+                                <Switch size="large" class="switchButton"
+                                v-model="memInfo.m_state"
+                                :true-value="1"
+                                :false-value="0"
+                                @on-change="changeState(memInfo)"
+                                :before-change="handleBeforeChange">
                                     <template #open>
-                                        <span>封存</span>
+                                        <span>正常</span>
                                     </template>
                                     <template #close>
-                                        <span>正常</span>
+                                        <span>封存</span>
                                     </template>
                                 </Switch>
                             </Space>
@@ -60,9 +55,7 @@
                 </ul>
             </div>
 
-
             <PageNumber :totalPages="totalPages" :currentPage="currentPage" @pageChange="changePage" />
-
 
         </section>
     </main>
@@ -74,7 +67,6 @@ import BackTitle from '@/components/backTitle.vue';
 import BackSidebar from '@/components/backSidebar.vue';
 import PageNumber from '@/components/PageNumber.vue';
 import PageNumberBG from '@/components/PageNumberBG.vue';
-
 
 export default {
     components: {
@@ -97,20 +89,30 @@ export default {
             
             //從後端member表單接資料
             memData: [],
+
+            // 會員帳號狀態
+            memberState: null,
+
+
         };
     },
     created() { //在頁面載入時同時載入function
-        //axios的get方法(`$import.meta.env.{變數}/檔名.php`)用.env檔中寫的網址來判斷網址URL的前贅
-        axios.get(`${import.meta.env.VITE_CARA_URL}/back/backMember.php`)
-                .then((response) => {
-                    // 成功取得資料後，將資料存入 member 陣列
-                    this.memData = response.data;
-                })
-                .catch((error) => {
-                    console.error("Error fetching data:", error);
-                });
+        this.memberData()
+        this.fetchMemberState()
     },
     methods: {
+        // 帳號狀態切換確認
+        handleBeforeChange () {
+            return new Promise((resolve) => {
+                this.$Modal.confirm({
+                    title: '更改狀態確認',
+                    content: '確定要更改狀態嗎?',
+                    onOk: () => {
+                        resolve();
+                    }
+                });
+            });
+        },
         // searchBar placeholder切換
         search() {
             // 实现搜索功能的方法
@@ -126,6 +128,47 @@ export default {
         changePage(page) {
             this.currentPage = page;
         },
+        memberData() {
+            //axios的get方法(`$import.meta.env.{變數}/檔名.php`)用.env檔中寫的網址來判斷網址URL的前贅
+            axios.get(`${import.meta.env.VITE_CARA_URL}/back/backMember.php`)
+                .then((response) => {
+                    // 成功取得資料後，將資料存入 member 陣列
+                    this.memData = response.data;
+                })
+                .catch((error) => {
+                    console.error("Error fetching data:", error);
+                });
+        },
+        async fetchMemberState() {
+            try {
+                // 發送請求獲取m_state
+                const response = await fetch(`${import.meta.env.VITE_CARA_URL}/back/backMemberState.php`);
+                const data = await response.json();
+                this.memberState = data.m_state;
+            } catch (error) {
+                console.error('Failed to fetch member state:', error);
+            }
+        },
+        changeState(memInfo) {
+            const newState = memInfo.m_state == true ? 1 : 0;
+            const currentId =memInfo.member_id;
+            // console.log(newState);
+
+            const editItem = new FormData();
+            editItem.append("tableName", "member")
+            editItem.append("m_state", newState)
+            editItem.append("member_id", currentId)
+            // console.log(editItem);
+            try {
+                axios.post(`${import.meta.env.VITE_CARA_URL}/back/backMemberState.php`, editItem, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                });
+                console.log('Updated admin state:', newState);
+            } catch (error) {
+                console.error('Failed to update admin state:', error);
+            }
+        },
+        
     },
     computed: {
         // searchBar placeholder切換
