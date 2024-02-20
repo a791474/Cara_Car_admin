@@ -90,7 +90,7 @@ export default {
             //從後端member表單接資料
             memData: [],
             displayData: [],
-            responseData: [],
+            // responseData: [],
 
             // 會員帳號狀態
             memberState: null,
@@ -101,11 +101,10 @@ export default {
     created() { //在頁面載入時同時載入function
         this.memberData()
         this.fetchMemberState()
-        this.filterHandle() 
     },
     watch: {
         search(newVal, oldVal) {
-            console.log(this.search);
+            // console.log(this.search);
             // console.log('new:'+newVal);
             // console.log('old:'+oldVal);
 
@@ -126,7 +125,8 @@ export default {
                 });
             });
         },
-        // searchBar placeholder切換
+        
+        // search功能
         filterHandle() {
             this.displayData = this.memData.filter((memInfo)=>{
 
