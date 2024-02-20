@@ -12,7 +12,6 @@ export default {
         this.userData.admin_name = localStorage.getItem("userData") ? JSON.parse(localStorage.getItem("userData")).name:"";
         // 判斷有沒有登入過
         this.checkLogin();
-        console.log(this.userData);
         // 把userData從Pinia確定有抽到此Vue檔中，並給admin_id定義
         const admin_id = this.userData.admin_id;
         //console.log(this.userData); //確定有抓到
