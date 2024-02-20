@@ -4,6 +4,10 @@
 
     <section class="backSHProductsInfo">
       <BackTitle />
+      <button type="button" @click="checkState = -1" :class="{ 'checked': checkState === -1 }">全部</button>
+      <button type="button" @click="checkState = 1">上架</button>
+      <button type="button" @click="checkState = 0">下架</button>
+
 
       <div class="searchBar">
         <select v-model="selectedOption" id="selectedOption">
@@ -20,21 +24,23 @@
           <li>商品編號</li>
           <li class="ReviseItemDrawer"></li>
           <li>商品圖片</li>
-          <li>商品分類</li>
           <li>商品名稱</li>
           <li>價格</li>
+          <li>上架時間</li>
           <li>狀態</li>
         </ul>
         <ul class="SHProductsInfoList" v-for="(SHProductsInfo, index) in paginated" :key="index">
-          <li class="SHProductsNo"> {{ SHProductsInfo.SHProductsNo }} </li>
+          <li class="SHProductsNo"> {{ SHProductsInfo.sh_pro_id }} </li>
           <li class="SHPReviseItemDrawer">
-            <SHPReviseItemDrawer />
+            <SHPReviseItemDrawer :detail="SHProductsInfo" />
           </li>
           <li class="picture"> {{ SHProductsInfo.picture }} </li>
-          <li class="classify"> {{ SHProductsInfo.classify }} </li>
-          <li class="SHProductsName"> {{ SHProductsInfo.SHProductsName }} </li>
-          <li class="SHProductsPrice"> {{ SHProductsInfo.SHProductsPrice }} </li>
-          <li class="SHProductsDate"> {{ SHProductsInfo.SHProductsState }}<br>{{ SHProductsInfo.OnDate }}</li>
+          <li class="SHProductsName"> {{ SHProductsInfo.sh_pro_name }} </li>
+          <li class="SHProductsPrice"> {{ SHProductsInfo.sh_pro_price }} </li>
+          <li class="SHProductsDate"> {{ SHProductsInfo.launch_date }} </li>
+          <li><input class="SHPState" type="text" :value="SHPState(SHProductsInfo.sh_pro_state)" readonly>
+          </li>
+          <!-- <li class="SHProductsDate"> {{ SHProductsInfo.sh_pro_intro }}<br>{{ SHProductsInfo.sh_pro_info }}</li>  -->
 
         </ul>
       </div>
@@ -50,6 +56,7 @@
 
 
 <script>
+import axios from 'axios';
 import BackTitle from '@/components/backTitle.vue';
 import BackSidebar from '@/components/backSidebar.vue';
 import PageNumber from '@/components/PageNumber.vue';
@@ -76,115 +83,36 @@ export default {
       activeTab: "",
       currentPage: 1,
       perPage: 5,
-
-      // 存放商品資料的陣列      
-      // SHProductsInfo: [
-      //   {
-      //     SHProductsNo: '01',
-      //     picture: '商品圖片',
-      //     classify: '商品分類',
-      //     SHProductsName: '超強小汽車車',
-      //     SHProductsPrice: '10000',
-      //     SHProductsState: '上架',
-      //     OnDate: '2024/2/1',
-      //   },
-      //   {
-      //     SHProductsNo: '02',
-      //     picture: '商品圖片',
-      //     classify: '商品分類',
-      //     SHProductsName: '超強小汽車車',
-      //     SHProductsPrice: '10000',
-      //     SHProductsState: '上架',
-      //     OnDate: '2024/2/1',
-      //   },
-      //   {
-      //     SHProductsNo: '01',
-      //     picture: '商品圖片',
-      //     classify: '商品分類',
-      //     SHProductsName: '超強小汽車車',
-      //     SHProductsPrice: '10000',
-      //     SHProductsState: '上架',
-      //     OnDate: '2024/2/1',
-      //   },
-      //   {
-      //     SHProductsNo: '01',
-      //     picture: '商品圖片',
-      //     classify: '商品分類',
-      //     SHProductsName: '超強小汽車車',
-      //     SHProductsPrice: '10000',
-      //     SHProductsState: '上架',
-      //     OnDate: '2024/2/1',
-      //   },
-      //   {
-      //     SHProductsNo: '01',
-      //     picture: '商品圖片',
-      //     classify: '商品分類',
-      //     SHProductsName: '超強小汽車車',
-      //     SHProductsPrice: '10000',
-      //     SHProductsState: '上架',
-      //     OnDate: '2024/2/1',
-      //   },
-      //   {
-      //     SHProductsNo: '01',
-      //     picture: '商品圖片',
-      //     classify: '商品分類',
-      //     SHProductsName: '超強小汽車車',
-      //     SHProductsPrice: '10000',
-      //     SHProductsState: '上架',
-      //     OnDate: '2024/2/1',
-      //   },
-      //   {
-      //     SHProductsNo: '01',
-      //     picture: '商品圖片',
-      //     classify: '商品分類',
-      //     SHProductsName: '超強小汽車車',
-      //     SHProductsPrice: '10000',
-      //     SHProductsState: '上架',
-      //     OnDate: '2024/2/1',
-      //   },
-      //   {
-      //     SHProductsNo: '01',
-      //     picture: '商品圖片',
-      //     classify: '商品分類',
-      //     SHProductsName: '超強小汽車車',
-      //     SHProductsPrice: '10000',
-      //     SHProductsState: '上架',
-      //     OnDate: '2024/2/1',
-      //   },
-      //   {
-      //     SHProductsNo: '01',
-      //     picture: '商品圖片',
-      //     classify: '商品分類',
-      //     SHProductsName: '超強小汽車車',
-      //     SHProductsPrice: '10000',
-      //     SHProductsState: '上架',
-      //     OnDate: '2024/2/1',
-      //   },
-      //   {
-      //     SHProductsNo: '01',
-      //     picture: '商品圖片',
-      //     classify: '商品分類',
-      //     SHProductsName: '超強小汽車車',
-      //     SHProductsPrice: '10000',
-      //     SHProductsState: '上架',
-      //     OnDate: '2024/2/1',
-      //   },
-
-      // ]
-      SHPro:[]
+      SHPro: [],
+      checkState: -1,// -1, 0, 1
     };
   },
   created() { //在頁面載入時同時載入function
-        //axios的get方法(`$import.meta.env.{變數}/檔名.php`)用.env檔中寫的網址來判斷網址URL的前贅
+    //axios的get方法(`$import.meta.env.{變數}/檔名.php`)用.env檔中寫的網址來判斷網址URL的前贅
+    // 使用 Promise.all 來確保兩個請求都完成後再處理資料
+    Promise.all([
+        // axios.get(`${import.meta.env.VITE_CARA_URL}/back/backSHProduct.php`),
+        axios.post(`${import.meta.env.VITE_CARA_URL}/back/backSHProductRe.php`)
+    ])
         axios.get(`${import.meta.env.VITE_CARA_URL}/back/backSHProduct.php`)
-                .then((response) => {
-                    // 成功取得資料後，將資料存入 member 陣列
-                    this.SHPro = response.data;
-                })
-                .catch((error) => {
-                    console.error("Error fetching data:", error);
-                });
-    },
+      .then((response) => {
+        // 成功取得資料後，將資料存入陣列
+        this.SHPro = response.data;
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+      
+    // axios.get(`${import.meta.env.VITE_CARA_URL}/back/backSHProduct.php`)
+    //   .then((response) => {
+    //     // 成功取得資料後，將資料存入陣列
+    //     this.SHPro = response.data;
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error fetching data:", error);
+    //   });
+    
+  },
   methods: {
     search() {
       if (this.searchText.trim() === '') {
@@ -197,7 +125,15 @@ export default {
         }).slice(0, this.perPage);
       }
     },
-    // ---------------------不確定
+    loadData(url) {
+      axios.get(url)
+        .then((response) => {
+          this.SHPro = response.data;
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    },
 
     // 頁碼
     toggleStatus(index) {
@@ -217,18 +153,23 @@ export default {
           return '請輸入商品分類'
         default:
           return '請輸入商品編號'
-
       }
     },
-
-    // 頁碼切換
+    SHPState() {
+      return (SHPState) => SHPState === 1 ? "上架中" : "未上架";
+    },
+    SHProAfterFilter() {
+      if (this.checkState === -1) return this.SHPro
+      return this.SHPro.filter(v => v.sh_pro_state === this.checkState);
+    },
+    // 頁碼切換 (SHProAfterFilter 這樣才能根據塞選出來的筆數去分頁)
     paginated() {
       const start = (this.currentPage - 1) * this.perPage;
       const end = start + this.perPage;
-      return this.SHPro.slice(start, end);
+      return this.SHProAfterFilter.slice(start, end);
     },
     totalPages() {
-      return Math.ceil(this.SHPro.length / this.perPage);
+      return Math.ceil(this.SHProAfterFilter.length / this.perPage);
     },
   },
 };

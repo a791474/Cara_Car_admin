@@ -111,7 +111,7 @@
 
         }
 
-        .SHProductsNo, .picture, .classify, .SHProductsName, .SHProductsPrice {
+        .SHProductsNo, .picture, .SHProductsName, .SHProductsPrice, .SHPState {
             background-color: #fff;
             border-radius: $borr2;
             margin: 1%;
@@ -120,6 +120,12 @@
             background-color: #fff;
             border-radius: $borr2;
             padding: 0px;
+        }
+        .SHPState{
+            border: none;
+            width: 90%;
+            padding: 8%;
+            text-align: center;
         }
     }
 }

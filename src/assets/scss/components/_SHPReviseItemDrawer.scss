@@ -1,6 +1,14 @@
 .productsin{
     // background-color: $blue;
 }
+.onOrRemoved{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    input{
+        margin: 10px;
+    }
+}
 .btnUpload{
     height: 35px;
         padding: 0 10px;
