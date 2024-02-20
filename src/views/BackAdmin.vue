@@ -50,19 +50,19 @@ export default {
         changeState(admin) {
             const newState = admin.admin_state == true ? 1 : 0;
             const currentId =admin.admin_id;
-            console.log(newState);
+            // console.log(newState);
 
             const editItem = new FormData();
             editItem.append("tableName", "admin")
             editItem.append("admin_state", newState)
             editItem.append("admin_id", currentId)
-            console.log(editItem);
+            // console.log(editItem);
             try {
                 // 發送請求更新admin_state 到後端
-                const response = axios.post(`${import.meta.env.VITE_CARA_URL}/back/backAdminState.php`, editItem, {
+                axios.post(`${import.meta.env.VITE_CARA_URL}/back/backAdminState.php`, editItem, {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
-                console.log('Updated admin state:', response.data);
+                console.log('Updated admin state:', newState);
             } catch (error) {
                 console.error('Failed to update admin state:', error);
             }
