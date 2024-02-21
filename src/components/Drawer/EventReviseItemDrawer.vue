@@ -29,8 +29,8 @@
         <Col span="24">
             <FormItem label="消息分類" label-position="top">
                 <Select v-model="formData.classify" placeholder="請選擇消息分類">
-                    <Option value="discount">優惠</Option>
-                    <Option value="activity">活動</Option>
+                    <Option value="2">優惠</Option>
+                    <Option value="1">活動</Option>
                 </Select>
             </FormItem>
         </Col>
@@ -40,27 +40,35 @@
     <Row :gutter="32">
         <Col span="12">
             <FormItem label="是否下架" label-position="top">
-                    <Checkbox v-model="formData.disLaunch" label="下架"></Checkbox>
+                    <Checkbox v-model="formData.eventState" label="下架"></Checkbox>
             </FormItem>
         </Col>
     </Row>
 
-
+    <!-- 上下架時間 -->
     <Row :gutter="32">
         <Col span="12">
             <FormItem label="上架時間" label-position="top">
-                <DatePicker v-model="formData.startDate" type="daterange" placeholder="請設定上架時間" style="display: block" placement="bottom-end"></DatePicker>
+                <DatePicker v-model="formData.startDate" type="date" placeholder="請設定上架時間" style="display: block" placement="bottom-end"></DatePicker>
             </FormItem>
         </Col>
         <Col span="12">
             <FormItem label="下架時間" label-position="top">
-                <DatePicker v-model="formData.endDate" type="daterange" placeholder="請設定下架時間" style="display: block" placement="bottom-end"></DatePicker>
+                <DatePicker v-model="formData.endDate" type="date" placeholder="請設定下架時間" style="display: block" placement="bottom-end"></DatePicker>
             </FormItem>
         </Col>
     </Row>
+
+    <!-- 圖片檔 -->
     <FormItem label="消息圖片" label-position="top">
-        <Input type="file" v-model="formData.eventImg" :rows="10" />
+        <Input type="file" 
+        id="newsImgUpFile" 
+        name="newsImgUpFile" @change="handleFileUpload" 
+        v-model="formData.eventImg" 
+        :rows="10" />
     </FormItem>
+
+    <!-- 內文 -->
     <FormItem label="消息內容" label-position="top">
         <Input type="textarea" v-model="formData.eventInformation" :rows="10" placeholder="請輸入消息介紹資訊" />
     </FormItem>
@@ -69,7 +77,7 @@
 
         <div class="demo-drawer-footer">
             <Button class="btnCancel" style="margin-right: 8px" @click="value = false">Cancel</Button>
-            <Button class="btnSubmit" type="primary" @click="value = false">
+            <Button class="btnSubmit" type="primary" @click="reviseData">
                 <i class="fa-solid fa-screwdriver-wrench"></i>
             確認修改
             </Button>
@@ -91,22 +99,97 @@ export default {
                 paddingBottom: '53px',
                 position: 'static'
             },
-            internalFormData: {
-
+            formData: {
+                eventTitle: '',
+                classify: '',
+                disLaunch: '',
+                startDate: '',
+                endDate: '',
+                eventImg: '',
+                eventInformation: '',
+                eventState: '',
             },
+            confirmData: {}
         }
     },
     props: {
-        // value: Boolean, // 這裡是雙向綁定的值，用來控制抽屜的顯示与隱藏
-        formData: Object // 這裡是表單數據，通過props接收父组件傳遞的數據
+        detail: {
+            type: Object,
+            required: true,
+        }
+    },
+    created(){
+        // this.xxx()
     },
     watch: {
-        value(newValue) {
-            this.value = newValue; // 監聽父组件傳遞的雙向綁定值的變化，並同步更新子組件的drawerVisible屬性
+        value(newVal) {
+            if(newVal){
+                this.formData.eventTitle = this.detail.news_title;
+                this.formData.classify = this.detail.news_category;
+                this.formData.startDate = this.detail.news_start_date;
+                this.formData.endDate = this.detail.news_end_date;
+                this.formData.eventImg = this.detail.img_path;
+                this.formData.eventInformation = this.detail.news_content;
+                this.formData.eventState = this.detail.news_state;
+            } 
         },
-        drawerVisible(newValue) {
-            this.$emit('input', newValue); // 監聽抽屉的顯示與隱藏狀態的變化，並通過 $emit 將新的狀態傳遞給父组件
+        detail: {
+            handler(newVal) {
+                // Handle changes in detail
+                // Update form data accordingly
+            },
+            deep: true
+
         }
+    },
+    methods: {
+        // 處理圖片上傳
+        handleFileUpload(event) {
+            const file = event.target.files[0];
+            // 從完整路徑中提取圖片名
+            const fileName = file.name;
+            // 將圖片名存儲到 formData 中
+            this.formData.eventImg = fileName;
+        },
+
+        //執行submit
+        // reviseData() {
+        //     if(this.formData.eventTitle && this.formData.classify && this.formData.startDate && this.formData.endDate && this.formData.eventImg && this.formData.eventState && this.formData.eventInformation) {
+                
+        //         if(this.formData.eventTitle != this.detail.news_title ||
+        //             this.formData.classify != this.detail.news_category ||
+        //             this.formData.startDate != this.detail.news_start_date ||
+        //             this.formData.endDate != this.detail.news_end_date ||
+        //             this.formData.eventImg != this.detail.img_path ||
+        //             this.formData.eventInformation != this.detail.news_content ||
+        //             this.formData.eventState != this.detail.news_state) {
+
+        //             // this.prepareConfirmData();
+
+        //             axios.post(`${import.meta.env.VITE_CARA_URL}/back/updateNewsInfo.php`, this.formData, {
+        //                 headers :{
+        //                     "Content-Type": "application/json"
+        //                 }
+        //             })
+        //                 .then(() => {
+        //                     // 提示成功新增資料
+        //                     alert('已成功修改資料!');
+
+        //                     // 關閉抽屜
+        //                     this.value = false;
+        //                 })
+        //                 .catch((error) => {
+        //                     console.error("Error fetching data:", error);
+        //                 });
+
+        //         }
+        //     } else {
+        //         alert("請填寫所有欄位")
+        //     }
+        // },
+
+
+        
     },
 }
 </script>
