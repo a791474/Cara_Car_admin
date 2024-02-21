@@ -1,4 +1,5 @@
 <script>
+import axios from 'axios';
 import BackTitle from '@/components/backTitle.vue';
 import BackSidebar from '@/components/backSidebar.vue';
 import PageNumber from '@/components/PageNumber.vue';
@@ -10,6 +11,8 @@ export default {
     },
     data() {
         return {
+            selectOption: 'orderno',
+            searchText: '',
             value: false,
             activeTab: "",
             styles: {
@@ -28,149 +31,93 @@ export default {
                 desc: ''
             },
             orderList:[
-            {
-                orderNo: "1111",
-                memberNo: "20000221",
-                total:"$1,500",
-                time: "2023-12-31",
-                checked: true
-            },
-            {
-                orderNo: "2222",
-                memberNo: "20000222",
-                total:"$2,500",
-                time: "2023-12-31",
-                checked: true
-            },
-            {
-                orderNo: "3333",
-                memberNo: "20000223",
-                total:"$4,500",
-                time: "2023-12-31",
-                checked: true
-            },
-            {
-                orderNo: "4444",
-                memberNo: "20000223",
-                total:"$1,800",
-                time: "2023-12-31",
-                checked: true
-            },
-            {
-                orderNo: "5555",
-                memberNo: "20000223",
-                total:"$3,500",
-                time: "2023-12-31",
-                checked: true
-            },
-            {
-                orderNo: "6666",
-                memberNo: "20000223",
-                total:"$2,800",
-                time: "2023-12-31",
-                checked: true
-            },
-            {
-                orderNo: "7777",
-                memberNo: "20000223",
-                total:"$1,500",
-                time: "2023-12-31",
-                checked: true
-            },
-            {
-                orderNo: "8888",
-                memberNo: "20000223",
-                total:"$5,500",
-                time: "2023-12-31",
-                checked: true
-            },
-            {
-                orderNo: "9999",
-                memberNo: "20000223",
-                total:"$1,500",
-                time: "2023-12-31",
-                checked: true
-            },
-            
-            {
-                orderNo: "1010",
-                memberNo: "20000223",
-                total: "$4,200",
-                time: "2023-12-31",
-                checked: true
-            },
-            {
-                orderNo: "1212",
-                memberNo: "20000223",
-                total: "$2,300",
-                time: "2023-12-31",
-                checked: true
-            },
-            {
-                orderNo: "1313",
-                memberNo: "20000223",
-                total: "$6,000",
-                time: "2023-12-31",
-                checked: true
-            },
-            {
-                orderNo: "1414",
-                memberNo: "20000223",
-                total: "$3,800",
-                time: "2023-12-31",
-                checked: true
-            },
-            {
-                "orderNo": "1515",
-                "memberNo": "20000223",
-                "total": "$2,100",
-                "time": "2023-12-31",
-                "checked": true
-            },
-            {
-                "orderNo": "1616",
-                "memberNo": "20000223",
-                "total": "$4,700",
-                "time": "2023-12-31",
-                "checked": true
-            },
-            {
-                "orderNo": "1717",
-                "memberNo": "20000223",
-                "total": "$2,500",
-                "time": "2023-12-31",
-                "checked": true
-            },
-            {
-                "orderNo": "1818",
-                "memberNo": "20000223",
-                "total": "$7,200",
-                "time": "2023-12-31",
-                "checked": true
-            },
-            {
-                "orderNo": "1919",
-                "memberNo": "20000223",
-                "total": "$2,900",
-                "time": "2023-12-31",
-                "checked": true
-            },
-            {
-                "orderNo": "2020",
-                "memberNo": "20000223",
-                "total": "$1,200",
-                "time": "2023-12-31",
-                "checked": true
-            },
+            // {
+            //     orderNo: "1111",
+            //     memberNo: "20000221",
+            //     total:"$1,500",
+            //     time: "2023-12-31",
+            //     checked: true
+            // },
+            // {
+            //     orderNo: "2222",
+            //     memberNo: "20000222",
+            //     total:"$2,500",
+            //     time: "2023-12-31",
+            //     checked: true
+            // },
+            // {
+            //     orderNo: "3333",
+            //     memberNo: "20000223",
+            //     total:"$4,500",
+            //     time: "2023-12-31",
+            //     checked: true
+            // },
+            // {
+            //     orderNo: "4444",
+            //     memberNo: "20000223",
+            //     total:"$1,800",
+            //     time: "2023-12-31",
+            //     checked: true
+            // },
+            // {
+            //     orderNo: "5555",
+            //     memberNo: "20000223",
+            //     total:"$3,500",
+            //     time: "2023-12-31",
+            //     checked: true
+            // },
+            // {
+            //     orderNo: "6666",
+            //     memberNo: "20000223",
+            //     total:"$2,800",
+            //     time: "2023-12-31",
+            //     checked: true
+            // },
+            // {
+            //     orderNo: "7777",
+            //     memberNo: "20000223",
+            //     total:"$1,500",
+            //     time: "2023-12-31",
+            //     checked: true
+            // },
+            // {
+            //     orderNo: "8888",
+            //     memberNo: "20000223",
+            //     total:"$5,500",
+            //     time: "2023-12-31",
+            //     checked: true
+            // },
+            // {
+            //     orderNo: "9999",
+            //     memberNo: "20000223",
+            //     total:"$1,500",
+            //     time: "2023-12-31",
+            //     checked: true
+            // },
         ],
             currentPage: 1,
             perPage: 8,
         };
     },
     created() {
-        
+        axios.get(`${import.meta.env.VITE_CARA_URL}/back/backOrder.php`)
+        .then((response)=>{
+            this.orderList = response.data;
+            console.log(this.orderList);
+        })
+        .catch((error)=>{
+            console.error("Error fetching data:", error);
+        });
     },
     computed:{
+        placeholderText(){
+            switch (this.selectOption){
+                case 'orderno':
+                    return '請輸入訂單編號'
+                case 'memberno':
+                    return '請輸入會員編號'
+            }
+        },
         paginated(){
             const start = (this.currentPage - 1) * this.perPage;
             const end = start + this.perPage;
@@ -181,9 +128,9 @@ export default {
         },
     },
     methods: {
-        toggleStatus(index) {
-            this.item[index].status = !this.item[index].status;
-        },
+        // toggleStatus(index) {
+        //     this.item[index].status = !this.item[index].status;
+        // },
         currentSidebar(item) {
             this.activeTab = item
         },
@@ -204,11 +151,11 @@ export default {
             <div class="orderContent">
                 <BackTitle />
                 <div class="searchBar">
-                    <select name="searchOption" id="searchOption">
+                    <select name="searchOption" id="searchOption" v-model="selectOption" >
                         <option value="orderno">訂單編號</option>
                         <option value="memberno">會員編號</option>
                     </select>
-                    <input type="text" placeholder="請輸入訂單編號">
+                    <input type="text" v-model="searchText" :placeholder="placeholderText">
                     <button class="searchBtn">搜尋</button>
                 </div>
                 <div class="orderTable">
@@ -226,20 +173,21 @@ export default {
                         <div class="searchButton">
                             <button @click="value = true" type="primary" class="searchBtn">查詢</button>
                         </div>
-                        <p class="orderListContentP">{{item.orderNo}}</p>
-                        <p class="orderListContentP">{{item.memberNo}}</p>
-                        <p class="orderListContentP">{{item.total}}</p>
-                        <p class="orderListContentP">{{item.time}}</p>
+                        <p class="orderListContentP">{{item.ord_id}}</p>
+                        <p class="orderListContentP">{{item.member_id}}</p>
+                        <p class="orderListContentP">{{item.ord_total}}</p>
+                        <p class="orderListContentP">{{item.ord_date}}</p>
                     
                         <div class="switch">
                             <Space direction="vertical">
                                 <Space>
-                                    <Switch size="large" class="switchButton">
+                                    <Switch size="large" v-model="item.ord_del_state" :true-value="1" :false-value="0" @on-change="changeState(item)" class="switchButton" >
                                         <template #open>
-                                        <span>已出</span>
+                                            <!-- v-if="item.ord_del_state" -->
+                                            <span >已出</span>
                                         </template>
                                         <template #close>
-                                        <span>未出</span>
+                                            <span >未出</span>
                                         </template>
                                     </Switch>
                                 </Space>
