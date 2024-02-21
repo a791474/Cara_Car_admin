@@ -91,17 +91,23 @@ export default {
                 paddingBottom: '53px',
                 position: 'static'
             },
-            formData: {
-                eventTitle: '玩具車攝影比賽',
-                classify: '',
-                disLaunch: '',
-                startDate: '',
-                endDate: '',
-                eventImg: '',
-                eventInformation: ''
+            internalFormData: {
+
             },
         }
-    }
+    },
+    props: {
+        // value: Boolean, // 這裡是雙向綁定的值，用來控制抽屜的顯示与隱藏
+        formData: Object // 這裡是表單數據，通過props接收父组件傳遞的數據
+    },
+    watch: {
+        value(newValue) {
+            this.value = newValue; // 監聽父组件傳遞的雙向綁定值的變化，並同步更新子組件的drawerVisible屬性
+        },
+        drawerVisible(newValue) {
+            this.$emit('input', newValue); // 監聽抽屉的顯示與隱藏狀態的變化，並通過 $emit 將新的狀態傳遞給父组件
+        }
+    },
 }
 </script>
 

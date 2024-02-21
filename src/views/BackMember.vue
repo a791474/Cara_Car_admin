@@ -11,8 +11,8 @@
                     <option value="m_name">會員姓名</option>
                     <option value="m_email">電子信箱</option>
                 </select>
-                <input type="text" v-model="searchText" :placeholder="placeholderText">
-                <button @click="search" class="searchBtn">搜尋</button>
+                <input v-model.trim="search" :placeholder="placeholderText">
+                <!-- <button @click="search" class="searchBtn">搜尋</button> -->
             </div>
 
             <div class="memberList">
@@ -79,7 +79,7 @@ export default {
         return {
             // searchBar placeholder切換
             selectedOption: 'member_id',
-            searchText: '',
+            search: '',
 
             // 頁數切換
             activeTab: "",
@@ -89,6 +89,8 @@ export default {
             
             //從後端member表單接資料
             memData: [],
+            displayData: [],
+            // responseData: [],
 
             // 會員帳號狀態
             memberState: null,
@@ -99,6 +101,16 @@ export default {
     created() { //在頁面載入時同時載入function
         this.memberData()
         this.fetchMemberState()
+    },
+    watch: {
+        search(newVal, oldVal) {
+            // console.log(this.search);
+            // console.log('new:'+newVal);
+            // console.log('old:'+oldVal);
+
+            // 可以調用下面的methods
+            this.filterHandle()
+        }
     },
     methods: {
         // 帳號狀態切換確認
@@ -113,9 +125,22 @@ export default {
                 });
             });
         },
-        // searchBar placeholder切換
-        search() {
-            // 实现搜索功能的方法
+        
+        // search功能
+        filterHandle() {
+            this.displayData = this.memData.filter((memInfo)=>{
+
+                switch (this.selectedOption) {
+                    case 'member_id':
+                        return memInfo.member_id.toString().includes(this.search);
+                    case 'm_name':
+                        return memInfo.m_name.includes(this.search);
+                    case 'm_email':
+                        return memInfo.m_email.includes(this.search);
+                    default:
+                        return false;
+                }
+            })
         },
 
         // 頁數切換
@@ -134,6 +159,8 @@ export default {
                 .then((response) => {
                     // 成功取得資料後，將資料存入 member 陣列
                     this.memData = response.data;
+                    this.displayData = response.data;
+                    this.responseData = response.data;
                 })
                 .catch((error) => {
                     console.error("Error fetching data:", error);
@@ -188,7 +215,7 @@ export default {
         paginated(){
             const start = (this.currentPage - 1) * this.perPage; //將當前頁數-1再乘以頁面顯示內容筆數得到start值
             const end = start + this.perPage;//計算此頁面中的內容是否達到perPage中的數字最後索引值來得到end值
-            return this.memData.slice(start, end);//用JS的.slice()方法獲取vue data中的member陣列內容顯示內容
+            return this.displayData.slice(start, end);//用JS的.slice()方法獲取vue data中的member陣列內容顯示內容
         },
         totalPages() {
             return Math.ceil(this.memData.length / this.perPage);//用Math.ceil()無條件進位，值則是用member陣列物件長度除以顯示內容筆數取得
