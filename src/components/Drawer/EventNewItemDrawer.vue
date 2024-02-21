@@ -102,6 +102,8 @@ import axios from 'axios'
                     marginButton: '10px',
                     position: 'static',
                 },
+
+                // 設定上面v-model要綁的名稱, 這裡可以自己定義名稱
                 formData: {
                     eventTitle: '',
                     classify: '',
@@ -152,7 +154,6 @@ import axios from 'axios'
                     alert('所有欄位都必須填寫哦');
             }
         }
-
     },
 }
 </script>

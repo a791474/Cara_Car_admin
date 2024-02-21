@@ -99,6 +99,8 @@ export default {
                 paddingBottom: '53px',
                 position: 'static'
             },
+
+            // 設定上面v-model要綁的名稱, 這裡可以自己定義名稱
             formData: {
                 newsId: '',
                 eventTitle: '',
@@ -112,7 +114,6 @@ export default {
                 // launch: '',
                 // date: '',
             },
-            // confirmData: {}
         }
     },
     props: {
@@ -125,6 +126,7 @@ export default {
         
     },
     watch: {
+        // 讓v-model能抓的到資料庫裡對應的值
         value(newVal) {
             if(newVal){
                 this.formData.newsId = this.detail.news_id;
@@ -135,32 +137,10 @@ export default {
                 this.formData.eventImg = this.detail.img_path;
                 this.formData.eventInformation = this.detail.news_content;
                 // this.formData.eventState = this.detail.news_state;
-
             } 
         },
-        detail: {
-            handler(newVal) {
-                // Handle changes in detail
-                // Update form data accordingly
-            },
-            deep: true
-
-        }
     },
     methods: {
-        // 確認是否送出
-        handleBeforeChange () {
-            return new Promise((resolve) => {
-                this.$Modal.confirm({
-                    title: '更改消息確認',
-                    content: '確定要更新消息嗎?',
-                    onOk: () => {
-                        resolve();
-                    }
-                });
-            });
-        },
-
         // 處理圖片上傳
         handleFileUpload(event) {
             const file = event.target.files[0];
@@ -195,7 +175,7 @@ export default {
                 // 用户取消操作
             });
         },  
-        // 確認是否送出
+        // 確認是否要更新消息
         handleBeforeChange() {
             return new Promise((resolve, reject) => {
                 this.$Modal.confirm({
