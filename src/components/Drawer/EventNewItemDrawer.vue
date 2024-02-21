@@ -62,7 +62,11 @@
 
                 <!-- 消息圖片 -->
                 <FormItem label="消息圖片" label-position="top">
-                    <Input type="file" v-model="formData.eventImg" :rows="10" />
+                    <Input type="file" 
+                    id="newsImgUpFile" 
+                    name="newsImgUpFile" @change="handleFileUpload" 
+                    v-model="formData.eventImg" 
+                    :rows="10" />
                 </FormItem>
 
                 <!-- 消息內容 -->
@@ -110,6 +114,14 @@ import axios from 'axios'
             }
         },
         methods: {
+            // 處理圖片上傳
+            handleFileUpload(event) {
+                const file = event.target.files[0];
+                // 從完整路徑中提取圖片名
+                const fileName = file.name;
+                // 將圖片名存儲到 formData 中
+                this.formData.eventImg = fileName;
+            },
             async submitForm() {
                 // 檢查欄位是否存在空值
                 let hasNonEmptyField = false;
