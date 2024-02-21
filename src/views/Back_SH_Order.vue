@@ -12,7 +12,6 @@ export default {
     data () {
         return {
             value: false,
-            activeTab: "",
             styles: {
                 height: 'calc(100% - 55px)',
                 overflow: 'auto',
@@ -31,117 +30,14 @@ export default {
 
             // placehoder切換
             selectedOption: 'memberNo',  //select預設值
-            orderList: [
-                // {
-                //     orderNo: "1111",
-                //     memberNo: "20000221",
-                //     productName: "超強小汽車車",
-                //     quantity: "1",
-                //     time: "2023-12-31",
-                //     checked: true
-                // },
-                // {
-                //     orderNo: "2222",
-                //     memberNo: "20000222",
-                //     productName: "急速小汽車車",
-                //     quantity: "1",
-                //     time: "2023-12-31",
-                //     checked: true
-                // },
-                // {
-                //     orderNo: "3333",
-                //     memberNo: "20000223",
-                //     productName: "復古小汽車車",
-                //     quantity: "1",
-                //     time: "2023-12-31",
-                //     checked: true
-                // },
-                // {
-                //     orderNo: "4444",
-                //     memberNo: "20000223",
-                //     productName: "復古小汽車車",
-                //     quantity: "1",
-                //     time: "2023-12-31",
-                //     checked: true
-                // },
-                // {
-                //     orderNo: "5555",
-                //     memberNo: "20000223",
-                //     productName: "復古小汽車車",
-                //     quantity: "1",
-                //     time: "2023-12-31",
-                //     checked: true
-                // },
-                // {
-                //     orderNo: "6666",
-                //     memberNo: "20000223",
-                //     productName: "復古小汽車車",
-                //     quantity: "1",
-                //     time: "2023-12-31",
-                //     checked: true
-                // },
-                // {
-                //     orderNo: "7777",
-                //     memberNo: "20000223",
-                //     productName: "復古小汽車車",
-                //     quantity: "1",
-                //     time: "2023-12-31",
-                //     checked: true
-                // },
-                // {
-                //     orderNo: "8888",
-                //     memberNo: "20000223",
-                //     productName: "復古小汽車車",
-                //     quantity: "1",
-                //     time: "2023-12-31",
-                //     checked: true
-                // },
-                // {
-                //     orderNo: "9999",
-                //     memberNo: "20000223",
-                //     productName: "復古小汽車車",
-                //     quantity: "1",
-                //     time: "2023-12-31",
-                //     checked: true
-                // },
-                // {
-                //     orderNo: "7777",
-                //     memberNo: "20000223",
-                //     productName: "復古小汽車車",
-                //     quantity: "1",
-                //     time: "2023-12-31",
-                //     checked: true
-                // },
-                // {
-                //     orderNo: "8888",
-                //     memberNo: "20000223",
-                //     productName: "復古小汽車車",
-                //     quantity: "1",
-                //     time: "2023-12-31",
-                //     checked: true
-                // },
-                // {
-                //     orderNo: "7777",
-                //     memberNo: "20000223",
-                //     productName: "復古小汽車車",
-                //     quantity: "1",
-                //     time: "2023-12-31",
-                //     checked: true
-                // },
-                // {
-                //     orderNo: "8888",
-                //     memberNo: "20000223",
-                //     productName: "復古小汽車車",
-                //     quantity: "1",
-                //     time: "2023-12-31",
-                //     checked: true
-                // },
-            
-            ],
+            orderList: [],
             searchText: '',
+
+             //頁面切換
+            activeTab: "",
             currentPage: 1,
             perPage: 8,
-        }
+                }
     },
     computed:{
         placeholderText() {
@@ -165,14 +61,15 @@ export default {
     },
     created() { //在頁面載入時同時載入function
         //axios的get方法(`$import.meta.env.{變數}/檔名.php`)用.env檔中寫的網址來判斷網址URL的前贅
-        axios.get(`${import.meta.env.VITE_CARA_URL}/shOrder.php`)
+        axios.get(`${import.meta.env.VITE_CARA_URL}/back/backShOrder.php`)
                 .then((response) => {
-                    // 成功取得資料後，將資料存入 member 陣列，(this.data內接資料的空陣列名稱)
                     this.orderList = response.data;
+                    console.log(response);
                 })
                 .catch((error) => {
                     console.error("Error fetching data:", error);
                 });
+                
     },
     methods: {
         toggleStatus(index) {
@@ -215,19 +112,20 @@ export default {
                         <li>出貨狀態</li>
                     </ul>
                 </div>
-                <div class="orderContent" v-for="(item,index) in paginated" :key="index">
+                
+                <div class="orderContent" v-for="(item,index) in orderList" :key="index">
                     <div class="searchButton">
                         <button @click="value = true" type="primary" class="searchBtn">查詢</button>
                     </div>
                     <!-- item.資料庫欄位名稱 -->
                     <p class="orderContentP">{{item.sh_ord_id}}</p>
                     <p class="orderContentP">{{item.member_id}}</p>
-                    <p class="orderContentP">{{item.productName}}</p>
+                    <p class="orderContentP">{{item.sh_pro_name}}</p>
                     <!-- <p class="orderContentP">{{item.quantity}}</p> -->
                     <p class="orderContentP">{{item.sh_ord_date}}</p>
                 
                     <div class="switch">
-                        <Space direction="vertical">
+                        <!-- <Space direction="vertical">
                             <Space>
                                 <Switch v-model="item.ord_del_state" size="large">
                                     {{ item.ord_del_state }}<template v-if="item.ord_del_state === true" #open>
@@ -236,10 +134,21 @@ export default {
                                     <template v-else #close>
                                     <span>未出</span>
                                     </template>
-                                    <!-- {{ item.ord_del_state ? '已出' : '未出' }} -->
+                                     {{ item.ord_del_state ? '已出' : '未出' }} 
                                 </Switch>
                             </Space>
-                        </Space>
+                        </Space> -->
+                        <Space>
+                        <Switch size="large" v-model="item.ord_del_state" :true-value="1" :false-value="0"
+                            @on-change="changeState(item)">
+                            <template #open>
+                                <span>已出貨</span>
+                            </template>
+                            <template #close>
+                                <span>未出貨</span>
+                            </template>
+                        </Switch>
+                    </Space>
                     </div>
                 </div>
             </div>
