@@ -28,7 +28,17 @@
                     <li>消息狀態</li>
                 </ul>
                 <ul class="eventsInfoList" v-for="(eventsInfo, index) in paginated" :key="index">
-                    <li class="EventReviseItemDrawer"> <EventReviseItemDrawer  :form-data="formData"/> </li>
+
+
+                    <li class="EventReviseItemDrawer"> 
+
+                        <EventReviseItemDrawer 
+                        :detail="eventsInfo" />
+
+
+                    </li>
+
+
                     <li class="eventNo"> {{ eventsInfo.news_id }} </li>
                     <li class="classify"> {{ eventsInfo.news_category == '2' ? '優惠' : '活動'}} </li>
                     <li class="eventTitle"> {{ eventsInfo.news_title }} </li>
@@ -80,8 +90,6 @@ export default {
             newsData: [],
             displayData: [],
 
-            // drawerVisible: false,
-            formData: [],
         };
     },
     created() { //在頁面載入時同時載入function
