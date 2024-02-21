@@ -4,18 +4,20 @@
 
     <section class="backSHProductsInfo">
       <BackTitle />
-      <button type="button" @click="checkState = -1" :class="{ 'checked': checkState === -1 }">全部</button>
-      <button type="button" @click="checkState = 1">上架</button>
-      <button type="button" @click="checkState = 0">下架</button>
-
-
+      <div class="stateChange">
+        <button type="button" @click="checkState = -1" :class="{ 'checked': checkState === -1 }">全部</button>
+        <button type="button" @click="checkState = 1" :class="{ 'checked': checkState === 1 }">上架</button>
+        <button type="button" @click="checkState = 0" :class="{ 'checked': checkState === 0 }">下架</button>
+      </div>
       <div class="searchBar">
         <select v-model="selectedOption" id="selectedOption">
           <option value="SHProductsNo">商品編號</option>
-          <option value="SHProductsTitle">商品分類</option>
+          <option value="SHProductsTitle">商品名稱</option>
         </select>
-        <input type="text" v-model="searchText" :placeholder="placeholderText">
-        <button @click="search" class="searchBtn">搜尋</button>
+
+        <input type="text" v-model="searchText" @input="searchData" :placeholder="placeholderText">
+        <button @click="performSearch" class="searchBtn">搜尋</button>
+        
         <SHPNewItemDrawer />
       </div>
       <!-- SHProducts -->
@@ -78,6 +80,7 @@ export default {
       // searchBar placeholder切換
       selectedOption: 'SHProductsNo',
       searchText: '',
+      placeholderText: "請輸入搜尋內容", // placeholder 文字
 
       // 頁數切換
       activeTab: "",
@@ -91,10 +94,10 @@ export default {
     //axios的get方法(`$import.meta.env.{變數}/檔名.php`)用.env檔中寫的網址來判斷網址URL的前贅
     // 使用 Promise.all 來確保兩個請求都完成後再處理資料
     Promise.all([
-        // axios.get(`${import.meta.env.VITE_CARA_URL}/back/backSHProduct.php`),
-        axios.post(`${import.meta.env.VITE_CARA_URL}/back/backSHProductRe.php`)
+      // axios.get(`${import.meta.env.VITE_CARA_URL}/back/backSHProduct.php`),
+      // axios.post(`${import.meta.env.VITE_CARA_URL}/back/backSHProductRe.php`)
     ])
-        axios.get(`${import.meta.env.VITE_CARA_URL}/back/backSHProduct.php`)
+    axios.get(`${import.meta.env.VITE_CARA_URL}/back/backSHProduct.php`)
       .then((response) => {
         // 成功取得資料後，將資料存入陣列
         this.SHPro = response.data;
@@ -102,7 +105,7 @@ export default {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-      
+
     // axios.get(`${import.meta.env.VITE_CARA_URL}/back/backSHProduct.php`)
     //   .then((response) => {
     //     // 成功取得資料後，將資料存入陣列
@@ -111,18 +114,21 @@ export default {
     //   .catch((error) => {
     //     console.error("Error fetching data:", error);
     //   });
-    
+
   },
   methods: {
-    search() {
+    performSearch() {
       if (this.searchText.trim() === '') {
         // 如果搜尋框為空，還原顯示所有商品
         this.paginated = this.SHPro.slice(0, this.perPage);
       } else {
         // 根據搜尋條件過濾商品
-        this.paginated = this.SHPro.filter(product => {
-          return product.SHProductsName.toLowerCase().includes(this.searchText.toLowerCase());
-        }).slice(0, this.perPage);
+        this.SHPro.filter(product => {
+  const searchProperty = this.selectedOption === 'SHProductsName' ? 'sh_pro_name' : 'sh_pro_id';
+  const regex = new RegExp(this.searchText, 'i');
+  return product[searchProperty].toLowerCase().includes(this.searchText.toLowerCase());
+}).slice(0, this.perPage);
+
       }
     },
     loadData(url) {

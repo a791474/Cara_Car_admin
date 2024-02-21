@@ -80,10 +80,14 @@
                     </Col> -->
                 </Row>
                 <FormItem label="商品圖片" label-position="top">
-                    <Button class="btnUpload" type="file" multiple="multiple" v-model="File" @click="value = false">點我上傳
-                    </Button>
-                    <Input class="btnUpload" type="file" multiple="multiple" v-model="File" :rows="4"
-                        placeholder="please enter the description" />
+                    <!-- <Button class="btnUpload" type="file" multiple="multiple" v-model="File" @click="value = false">點我上傳
+                    </Button> -->
+                    <!-- <Input class="btnUpload" type="text" v-model="File" @click="value = false">點我上傳</Input> -->
+
+                    <Input class="btnUpload" type="file" multiple="multiple" v-model="File" @click="value = false">點我上傳</Input>
+
+                    <!-- <Input class="btnUpload" type="file" multiple="multiple" v-model="File" :rows="4"
+                        placeholder="please enter the description" /> -->
                 </FormItem>
                 <div class="productsin">
                     商品介紹區
@@ -100,7 +104,8 @@
             </Form>
             <div class="demo-drawer-footer">
                 <Button class="btnCancel" style="margin-right: 8px" @click="value = false">Cancel</Button>
-                <Button class="btnSubmit" type="primary" @click="value = submitData">
+                <Button class="btnSubmit" type="primary" 
+                @click="submitData">
                     <i class="fa-solid fa-screwdriver-wrench"></i>
                     確認修改
                 </Button>
@@ -111,6 +116,7 @@
 </template>    
 
 <script>
+import axios from 'axios';
 
 export default {
     props: {
@@ -141,27 +147,46 @@ export default {
                 desc: '',
                 descMore: '',
             },
+            // submitForm: null,
+            File: null,
         }
     },
     methods: {
         closeDrawer() {
             this.value = false;
         },
-        submitData(shPro) {
+        submitData() {
             // 数据提交逻辑，使用 Axios 发送数据到后端 API
-            const newState = shPro.sh_pro_state == true ? 1 : 0;
-            const currentId = shPro.sh_pro_id;
-            console.log(newState);
+            const newState = this.detail.sh_pro_state == true ? 1 : 0;
+            const currentId = this.detail.sh_pro_id;
+            const newName = this.detail.sh_pro_name;
+            const newEName = this.detail.sh_pro_en_name;
+            const newSold = this.detail.sh_pro_sold;
+            const newDate = this.detail.launch_date;
+            const newPin = this.detail.sh_pro_pin;
+            console.log(this.detail);
             const editItem = new FormData();
             editItem.append("tableName", "sh_pro")
-            editItem.append("sh_pro_state", newState)
+            // editItem.append("sh_pro_state", newState)
+            editItem.append("sh_pro_state", newState.toString());
+            editItem.append("sh_pro_name", newName)
+            editItem.append("sh_pro_en_name", newEName)
+            editItem.append("sh_pro_sold", newSold)
+            editItem.append("launch_date", newDate)
+            editItem.append("sh_pro_pin", newPin)
             editItem.append("sh_pro_id", currentId)
             axios.post(`${import.meta.env.VITE_CARA_URL}/back/backSHProductRe.php`, editItem, {
                 headers: { "Content-Type": "multipart/form-data" },
-            }).then(response => this.closeDrawer())
-                .catch(error => {
-                    console.error('Error submitting data:', error);
-                });
+                
+            }).then(response => {
+                alert('確定修改?')
+                console.log(editItem);
+                // this.closeDrawer()
+            })
+            .catch(error => {
+                console.error('Error submitting data:', error);
+            });
+            // console.log(newState);
         },
     },
     watch: {
@@ -172,7 +197,7 @@ export default {
                 this.formData.year = this.detail.sh_pro_year
                 this.formData.situation = this.detail.sh_pro_situation
 
-                this.formData.check = this.detail.sh_pro_state
+                // this.formData.check = this.detail.sh_pro_state
 
                 this.formData.price = this.detail.sh_pro_price
                 this.formData.date = this.detail.launch_date

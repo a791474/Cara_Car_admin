@@ -100,7 +100,7 @@
             </Form>
             <div class="demo-drawer-footer">
                 <Button class="btnCancel" style="margin-right: 8px" @click="value = closeDrawer">Cancel</Button>
-                <Button class="btnSubmit" type="primary" @click="value = addProduct">
+                <Button class="btnSubmit" type="primary" @click="submitForm">
                     <i class="fa-solid fa-screwdriver-wrench"></i>
                     新增商品
                 </Button>
@@ -111,6 +111,9 @@
 </template>    
 
 <script>
+import axios from 'axios'
+
+
 export default {
     data() {
         return {
@@ -138,6 +141,7 @@ export default {
         }
     },
     methods: {
+        
         showDrawer() {
             this.value = true;
         },

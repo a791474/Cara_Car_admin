@@ -9,7 +9,26 @@
         flex-direction: column;
         justify-content: space-between;
     }
-
+    .stateChange{
+        width: 33%;
+        border-bottom: $grey_2 1.5px solid;
+        .checked{
+            background-color: $lightBlue;
+        }
+        button{
+            width: 100px;
+            background-color: $grey_1;
+            margin: 0 5px;
+            border-radius: $borr1 $borr1 0 0;
+            border: none;
+            padding: 4px;
+            font-size: $p;
+            cursor: pointer;
+            &:hover{
+                background-color: $grey_2;
+            }
+        }
+    }
     .searchBar{
         display: flex;
         justify-content: end;
