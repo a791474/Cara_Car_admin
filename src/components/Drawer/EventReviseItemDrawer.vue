@@ -29,21 +29,21 @@
         <Col span="24">
             <FormItem label="消息分類" label-position="top">
                 <Select v-model="formData.classify" placeholder="請選擇消息分類">
-                    <Option value="2">優惠</Option>
-                    <Option value="1">活動</Option>
+                    <Option :value="2">優惠</Option>
+                    <Option :value="1">活動</Option>
                 </Select>
             </FormItem>
         </Col>
     </Row>
     
     <!-- 是否下架 -->
-    <Row :gutter="32">
+    <!-- <Row :gutter="32">
         <Col span="12">
             <FormItem label="是否下架" label-position="top">
                     <Checkbox v-model="formData.eventState" label="下架"></Checkbox>
             </FormItem>
         </Col>
-    </Row>
+    </Row> -->
 
     <!-- 上下架時間 -->
     <Row :gutter="32">
@@ -61,9 +61,8 @@
 
     <!-- 圖片檔 -->
     <FormItem label="消息圖片" label-position="top">
-        <Input type="file" 
-        id="newsImgUpFile" 
-        name="newsImgUpFile" @change="handleFileUpload" 
+        <Input type="text" 
+        @change="handleFileUpload" 
         v-model="formData.eventImg" 
         :rows="10" />
     </FormItem>
@@ -88,6 +87,7 @@
 </template>    
 
 <script>
+import axios from 'axios';
 
 export default {
     data () {
@@ -100,16 +100,19 @@ export default {
                 position: 'static'
             },
             formData: {
+                newsId: '',
                 eventTitle: '',
                 classify: '',
-                disLaunch: '',
                 startDate: '',
                 endDate: '',
                 eventImg: '',
                 eventInformation: '',
-                eventState: '',
+                // eventState: '',
+                // disLaunch: '',
+                // launch: '',
+                // date: '',
             },
-            confirmData: {}
+            // confirmData: {}
         }
     },
     props: {
@@ -119,18 +122,20 @@ export default {
         }
     },
     created(){
-        // this.xxx()
+        
     },
     watch: {
         value(newVal) {
             if(newVal){
+                this.formData.newsId = this.detail.news_id;
                 this.formData.eventTitle = this.detail.news_title;
                 this.formData.classify = this.detail.news_category;
                 this.formData.startDate = this.detail.news_start_date;
                 this.formData.endDate = this.detail.news_end_date;
                 this.formData.eventImg = this.detail.img_path;
                 this.formData.eventInformation = this.detail.news_content;
-                this.formData.eventState = this.detail.news_state;
+                // this.formData.eventState = this.detail.news_state;
+
             } 
         },
         detail: {
@@ -143,6 +148,19 @@ export default {
         }
     },
     methods: {
+        // 確認是否送出
+        handleBeforeChange () {
+            return new Promise((resolve) => {
+                this.$Modal.confirm({
+                    title: '更改消息確認',
+                    content: '確定要更新消息嗎?',
+                    onOk: () => {
+                        resolve();
+                    }
+                });
+            });
+        },
+
         // 處理圖片上傳
         handleFileUpload(event) {
             const file = event.target.files[0];
@@ -152,46 +170,50 @@ export default {
             this.formData.eventImg = fileName;
         },
 
-        //執行submit
-        // reviseData() {
-        //     if(this.formData.eventTitle && this.formData.classify && this.formData.startDate && this.formData.endDate && this.formData.eventImg && this.formData.eventState && this.formData.eventInformation) {
-                
-        //         if(this.formData.eventTitle != this.detail.news_title ||
-        //             this.formData.classify != this.detail.news_category ||
-        //             this.formData.startDate != this.detail.news_start_date ||
-        //             this.formData.endDate != this.detail.news_end_date ||
-        //             this.formData.eventImg != this.detail.img_path ||
-        //             this.formData.eventInformation != this.detail.news_content ||
-        //             this.formData.eventState != this.detail.news_state) {
+         // 更新數據方法
+        reviseData() {
+            this.handleBeforeChange()
+            
+            .then(() => {
+                axios.post(`${import.meta.env.VITE_CARA_URL}/back/updateNewsInfo.php`, this.formData)
+                .then(response => {
+                    console.log(response.data);
+                    // 處理響應
 
-        //             // this.prepareConfirmData();
+                    // 提示成功新增資料
+                    alert('已成功新增資料!');
 
-        //             axios.post(`${import.meta.env.VITE_CARA_URL}/back/updateNewsInfo.php`, this.formData, {
-        //                 headers :{
-        //                     "Content-Type": "application/json"
-        //                 }
-        //             })
-        //                 .then(() => {
-        //                     // 提示成功新增資料
-        //                     alert('已成功修改資料!');
-
-        //                     // 關閉抽屜
-        //                     this.value = false;
-        //                 })
-        //                 .catch((error) => {
-        //                     console.error("Error fetching data:", error);
-        //                 });
-
-        //         }
-        //     } else {
-        //         alert("請填寫所有欄位")
-        //     }
-        // },
-
-
-        
+                    // 關閉抽屜
+                    this.value = false;
+                })
+                .catch(error => {
+                    console.error(error);
+                    // 處理錯誤
+                });
+            })
+            .catch(() => {
+                // 用户取消操作
+            });
+        },  
+        // 確認是否送出
+        handleBeforeChange() {
+            return new Promise((resolve, reject) => {
+                this.$Modal.confirm({
+                    title: '更改消息確認',
+                    content: '確定要更新消息嗎?',
+                    onOk: () => {
+                        resolve();
+                    },
+                    onCancel: () => {
+                        reject();
+                    }
+                });
+            });
+        },
     },
 }
+
+
 </script>
 
 <style lang="scss" scoped>

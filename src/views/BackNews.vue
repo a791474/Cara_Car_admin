@@ -94,6 +94,7 @@ export default {
     },
     created() { //在頁面載入時同時載入function
         this.getNewsData()
+        // 设置 formData 初始值
     },
     watch: {
         search(newVal, oldVal) {
