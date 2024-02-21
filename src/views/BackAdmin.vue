@@ -38,7 +38,7 @@ export default {
     },
     methods: {
         axiosData() {
-            axios.post(`${import.meta.env.VITE_CARA_URL}/back/backAdmin.php`)
+            axios.get(`${import.meta.env.VITE_CARA_URL}/back/backAdmin.php`)
                 .then((response) => {
                     this.adminData = response.data;
                     console.log(this.adminData);
