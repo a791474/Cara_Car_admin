@@ -35,10 +35,10 @@
                     <Col span="12">
                     <FormItem label="商品現況" label-position="top">
                         <Select v-model="formData.situation" placeholder="選擇商品現況">
-                            <!-- <Option :value="9">九成新</Option>
+                            <Option :value="9">九成新</Option>
                             <Option :value="8">八成新</Option>
-                            <Option value="9">七成新</Option>
-                            <Option value="9">六成新</Option> -->
+                            <Option value="7">七成新</Option>
+                            <Option value="6">六成新</Option>
                             <Option :value="5">五成新</Option>
                             <Option :value="4">四成新</Option>
                             <Option :value="3">三成新</Option>
@@ -93,19 +93,19 @@
                     商品介紹區
                     <FormItem label="商品介紹(簡述)" label-position="top">
                         <Input type="textarea" v-model="formData.desc" :rows="4"
-                            placeholder="please enter the description" />
+                            placeholder="請輸入商品介紹" />
                     </FormItem>
 
                     <FormItem label="商品規格" label-position="top">
                         <Input type="textarea" v-model="formData.descMore" :rows="4"
-                            placeholder="please enter the description" />
+                            placeholder="請輸入商品介紹" />
                     </FormItem>
                 </div>
             </Form>
             <div class="demo-drawer-footer">
                 <Button class="btnCancel" style="margin-right: 8px" @click="value = false">Cancel</Button>
                 <Button class="btnSubmit" type="primary" 
-                @click="submitData">
+                @click="reviseData">
                     <i class="fa-solid fa-screwdriver-wrench"></i>
                     確認修改
                 </Button>
@@ -119,11 +119,6 @@
 import axios from 'axios';
 
 export default {
-    props: {
-        detail: {
-            type: Object,
-        }
-    },
     data() {
         return {
             value: false,
@@ -137,61 +132,25 @@ export default {
                 name: '',
                 ename: '',
                 year: '',
-                url: '',
-                check: '',
-                price: '',
                 situation: '',
-                type: '',
-                approver: '',
+                price: '',
                 date: '',
                 desc: '',
                 descMore: '',
             },
-            // submitForm: null,
-            File: null,
+            
         }
     },
-    methods: {
-        closeDrawer() {
-            this.value = false;
-        },
-        submitData() {
-            // 数据提交逻辑，使用 Axios 发送数据到后端 API
-            const newState = this.detail.sh_pro_state == true ? 1 : 0;
-            const currentId = this.detail.sh_pro_id;
-            const newName = this.detail.sh_pro_name;
-            const newEName = this.detail.sh_pro_en_name;
-            const newSold = this.detail.sh_pro_sold;
-            const newDate = this.detail.launch_date;
-            const newPin = this.detail.sh_pro_pin;
-            console.log(this.detail);
-            const editItem = new FormData();
-            editItem.append("tableName", "sh_pro")
-            // editItem.append("sh_pro_state", newState)
-            editItem.append("sh_pro_state", newState.toString());
-            editItem.append("sh_pro_name", newName)
-            editItem.append("sh_pro_en_name", newEName)
-            editItem.append("sh_pro_sold", newSold)
-            editItem.append("launch_date", newDate)
-            editItem.append("sh_pro_pin", newPin)
-            editItem.append("sh_pro_id", currentId)
-            axios.post(`${import.meta.env.VITE_CARA_URL}/back/backSHProductRe.php`, editItem, {
-                headers: { "Content-Type": "multipart/form-data" },
-                
-            }).then(response => {
-                alert('確定修改?')
-                console.log(editItem);
-                // this.closeDrawer()
-            })
-            .catch(error => {
-                console.error('Error submitting data:', error);
-            });
-            // console.log(newState);
-        },
+    props: {
+        detail: {
+            type: Object,
+            required: true,
+        }
     },
     watch: {
-        value(nVal) {
-            if (nVal) {
+        // 抓資料庫的值，後面是.欄位名稱
+        value(newVal) {
+            if (newVal) {
                 this.formData.name = this.detail.sh_pro_name
                 this.formData.ename = this.detail.sh_pro_en_name
                 this.formData.year = this.detail.sh_pro_year
@@ -205,6 +164,51 @@ export default {
                 this.formData.descMore = this.detail.sh_pro_info
                 // this.formData.type = this.detail.promo_start_date
             }
+        },
+    },
+    methods: {
+        closeDrawer() {
+            this.value = false;
+        },
+                 // 更新數據方法
+        reviseData() {
+            this.handleBeforeChange()
+            
+            .then(() => {
+                axios.post(`${import.meta.env.VITE_CARA_URL}/back/backSHProductRe.php`, this.formData)
+                .then(response => {
+                    console.log(response.data);
+                    // 處理響應
+
+                    // 提示成功新增資料
+                    alert('已成功新增資料!');
+
+                    // 關閉抽屜
+                    this.value = false;
+                })
+                .catch(error => {
+                    console.error(error);
+                    // 處理錯誤
+                });
+            })
+            .catch(() => {
+                // 用户取消操作
+            });
+        },  
+        // 確認是否要更新商品資料
+        handleBeforeChange() {
+            return new Promise((resolve, reject) => {
+                this.$Modal.confirm({
+                    title: '更改消息確認',
+                    content: '確定要更新消息嗎?',
+                    onOk: () => {
+                        resolve();
+                    },
+                    onCancel: () => {
+                        reject();
+                    }
+                });
+            });
         },
     },
 }

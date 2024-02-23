@@ -10,14 +10,14 @@
         <button type="button" @click="checkState = 0" :class="{ 'checked': checkState === 0 }">下架</button>
       </div>
       <div class="searchBar">
+        <!-- //商品搜尋 -->
         <select v-model="selectedOption" id="selectedOption">
-          <option value="SHProductsNo">商品編號</option>
-          <option value="SHProductsTitle">商品名稱</option>
+          <option value="sh_pro_id">商品編號</option>
+          <option value="sh_pro_name">商品名稱</option>
         </select>
+        <input v-model.trim="searchText" :placeholder="placeholderText">
+        <!-- <button @click="performSearch" class="searchBtn">搜尋</button> -->
 
-        <input type="text" v-model="searchText" @input="searchData" :placeholder="placeholderText">
-        <button @click="performSearch" class="searchBtn">搜尋</button>
-        
         <SHPNewItemDrawer />
       </div>
       <!-- SHProducts -->
@@ -78,19 +78,25 @@ export default {
   data() {
     return {
       // searchBar placeholder切換
-      selectedOption: 'SHProductsNo',
+      selectedOption: 'sh_pro_id',
       searchText: '',
-      placeholderText: "請輸入搜尋內容", // placeholder 文字
+      // placeholderText: "請輸入搜尋內容", // placeholder 文字
 
-      // 頁數切換
+      // 頁數切換+上下架篩選後的頁數
       activeTab: "",
       currentPage: 1,
       perPage: 5,
       SHPro: [],
       checkState: -1,// -1, 0, 1
+
+      // 資料
+      SHProData: [],
+      displayData: [],
     };
   },
-  created() { //在頁面載入時同時載入function
+  created() { 
+    this.getSHProData()
+    //在頁面載入時同時載入function
     //axios的get方法(`$import.meta.env.{變數}/檔名.php`)用.env檔中寫的網址來判斷網址URL的前贅
     // 使用 Promise.all 來確保兩個請求都完成後再處理資料
     Promise.all([
@@ -116,30 +122,47 @@ export default {
     //   });
 
   },
-  methods: {
-    performSearch() {
-      if (this.searchText.trim() === '') {
-        // 如果搜尋框為空，還原顯示所有商品
-        this.paginated = this.SHPro.slice(0, this.perPage);
-      } else {
-        // 根據搜尋條件過濾商品
-        this.SHPro.filter(product => {
-  const searchProperty = this.selectedOption === 'SHProductsName' ? 'sh_pro_name' : 'sh_pro_id';
-  const regex = new RegExp(this.searchText, 'i');
-  return product[searchProperty].toLowerCase().includes(this.searchText.toLowerCase());
-}).slice(0, this.perPage);
+  watch: {
+    search(newVal, oldVal) {
+            console.log(this.search);
+            // console.log('new:'+newVal);
+            // console.log('old:'+oldVal);
 
-      }
+            // 可以調用下面的methods
+            this.filterHandle();
+        }
     },
-    loadData(url) {
-      axios.get(url)
+  methods: {
+    getSHProData() {
+      //axios的get方法(`$import.meta.env.{變數}/檔名.php`)用.env檔中寫的網址來判斷網址URL的前贅
+      axios.get(`${import.meta.env.VITE_CARA_URL}/back/backSHProduct.php`)
         .then((response) => {
-          this.SHPro = response.data;
+          // 成功取得資料後，將資料存入 member 陣列
+          this.SHProData = response.data;
+          this.displayData = response.data;
+          this.responseData = response.data;
         })
         .catch((error) => {
           console.error("Error fetching data:", error);
         });
     },
+        // search功能
+        filterHandle() {
+          if (this.searchText.trim() === '') {
+    this.displayData = this.SHProData;
+  } else {
+    this.displayData = this.SHProData.filter((SHProductsInfo) => {
+      switch (this.selectedOption) {
+        case 'sh_pro_id':
+          return SHProductsInfo.sh_pro_id.toString().includes(this.searchText);
+        case 'sh_pro_name':
+          return SHProductsInfo.sh_pro_name.includes(this.searchText);
+        default:
+          return false;
+      }
+    });
+  }
+        },
 
     // 頁碼
     toggleStatus(index) {
@@ -155,12 +178,16 @@ export default {
   computed: {
     placeholderText() {
       switch (this.selectedOption) {
-        case 'SHProductsName':
-          return '請輸入商品分類'
-        default:
-          return '請輸入商品編號'
-      }
+        case 'sh_pro_id':
+         return '請輸入商品編號';
+      case 'sh_pro_name':
+         return '請輸入商品名稱';
+      default:
+         return '請輸入商品名稱';
+   }
     },
+
+    // 上架/未上架
     SHPState() {
       return (SHPState) => SHPState === 1 ? "上架中" : "未上架";
     },
@@ -168,7 +195,7 @@ export default {
       if (this.checkState === -1) return this.SHPro
       return this.SHPro.filter(v => v.sh_pro_state === this.checkState);
     },
-    // 頁碼切換 (SHProAfterFilter 這樣才能根據塞選出來的筆數去分頁)
+    // 頁碼切換 (SHProAfterFilter 這樣才能根據篩選出來的筆數去分頁)
     paginated() {
       const start = (this.currentPage - 1) * this.perPage;
       const end = start + this.perPage;
@@ -185,3 +212,26 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/scss/page/backShProducts.scss';
 </style>
+<!-- filterHandle() {
+  if (this.searchText.trim() === '') {
+    // 如果搜尋框為空，還原顯示所有商品
+    this.paginated = this.SHPro.slice(0, this.perPage);
+  } else {
+    // 根據搜尋條件過濾商品
+    this.SHPro.filter(product => {
+      const searchProperty = this.selectedOption === 'SHProductsName' ? 'sh_pro_name' : 'sh_pro_id';
+      const regex = new RegExp(this.searchText, 'i');
+      return product[searchProperty].toLowerCase().includes(this.searchText.toLowerCase());
+    }).slice(0, this.perPage);
+
+  }
+},
+loadData(url) {
+  axios.get(url)
+    .then((response) => {
+      this.SHPro = response.data;
+    })
+    .catch((error) => {
+      console.error("Error fetching data:", error);
+    });
+}, -->
