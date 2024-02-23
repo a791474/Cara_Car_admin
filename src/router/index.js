@@ -83,10 +83,24 @@ const router = createRouter({
     },
   ]
 })
+const isAuthenticated = () => {
+  const userToken = localStorage.getItem("userToken")
+  return userToken? true: false
+}
+
 //以下為上方新增meta:{title:}去更改每個頁面的頁簽名稱才需要解開註解。
 router.beforeEach(async (to, from) => {
   if( to.meta && to.meta.title){
       document.title = to.meta.title
+  }
+
+  if(to.name == 'BackLogin' ){
+    return
+
+  }else if ( !isAuthenticated() && to.name !== 'BackLogin') {
+    // 檢查用戶是否已登錄
+    console.log(1);
+    return { name: 'BackLogin' }
   }
 })
 export default router
