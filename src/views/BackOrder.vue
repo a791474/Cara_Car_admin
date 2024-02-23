@@ -11,7 +11,7 @@ export default {
     },
     data() {
         return {
-            selectOption: 'orderno',
+            selectOption: 'ord_id',
             searchText: '',
             value: false,
             activeTab: "",
@@ -22,100 +22,49 @@ export default {
                 position: 'static'
             },
             formData: {
+                number: '',
+                productName: '',
+                quantity: '',
+                memberName: '',
+                time: '',
                 name: '',
-                url: '',
-                owner: '',
-                type: '',
-                approver: '',
-                date: '',
-                desc: ''
+                phone: '',
+                address: '',
+                pay: '',
+                payment: '',
+                price: '',
+                freight: '',
+                total: '',
+                remark: '',
             },
-            orderList:[
-            // {
-            //     orderNo: "1111",
-            //     memberNo: "20000221",
-            //     total:"$1,500",
-            //     time: "2023-12-31",
-            //     checked: true
-            // },
-            // {
-            //     orderNo: "2222",
-            //     memberNo: "20000222",
-            //     total:"$2,500",
-            //     time: "2023-12-31",
-            //     checked: true
-            // },
-            // {
-            //     orderNo: "3333",
-            //     memberNo: "20000223",
-            //     total:"$4,500",
-            //     time: "2023-12-31",
-            //     checked: true
-            // },
-            // {
-            //     orderNo: "4444",
-            //     memberNo: "20000223",
-            //     total:"$1,800",
-            //     time: "2023-12-31",
-            //     checked: true
-            // },
-            // {
-            //     orderNo: "5555",
-            //     memberNo: "20000223",
-            //     total:"$3,500",
-            //     time: "2023-12-31",
-            //     checked: true
-            // },
-            // {
-            //     orderNo: "6666",
-            //     memberNo: "20000223",
-            //     total:"$2,800",
-            //     time: "2023-12-31",
-            //     checked: true
-            // },
-            // {
-            //     orderNo: "7777",
-            //     memberNo: "20000223",
-            //     total:"$1,500",
-            //     time: "2023-12-31",
-            //     checked: true
-            // },
-            // {
-            //     orderNo: "8888",
-            //     memberNo: "20000223",
-            //     total:"$5,500",
-            //     time: "2023-12-31",
-            //     checked: true
-            // },
-            // {
-            //     orderNo: "9999",
-            //     memberNo: "20000223",
-            //     total:"$1,500",
-            //     time: "2023-12-31",
-            //     checked: true
-            // },
-        ],
+            orderList:[],
+            newOrderList:[],
             currentPage: 1,
             perPage: 8,
         };
     },
     created() {
-        axios.get(`${import.meta.env.VITE_CARA_URL}/back/backOrder.php`)
-        .then((response)=>{
-            this.orderList = response.data;
-            console.log(this.orderList);
-        })
-        .catch((error)=>{
-            console.error("Error fetching data:", error);
-        });
+        this.getOrderList();
+
+        
+    },
+    watch:{
+        searchText(){
+            console.log(this.searchText);
+            this.filterHandle()
+        },
+
     },
     computed:{
         placeholderText(){
             switch (this.selectOption){
-                case 'orderno':
-                    return '請輸入訂單編號'
-                case 'memberno':
+                case 'member_id':
                     return '請輸入會員編號'
+                case 'ord_id':
+                    return '請輸入訂單編號'
+                default:
+                    return '請輸入訂單編號'
+                    
             }
         },
         paginated(){
@@ -128,19 +77,59 @@ export default {
         },
     },
     methods: {
-        // toggleStatus(index) {
-        //     this.item[index].status = !this.item[index].status;
-        // },
+        getOrderList(){
+            axios.get(`${import.meta.env.VITE_CARA_URL}/back/backOrder.php`)
+        .then((response)=>{
+            this.orderList = response.data;
+            this.newOrderList = response.data;
+            this.formData = response.data;
+        })
+        .catch((error)=>{
+            console.error("Error fetching data:", error);
+        });
+        },
+        toggleStatus(index) {
+            this.item[index].status = !this.item[index].status;
+        },
         currentSidebar(item) {
             this.activeTab = item
         },
         changePage(page) {
             this.currentPage = page;
         },
+        //searchText
+        filterHandle(){
+            this.orderList = this.newOrderList.filter((item)=>{
+
+                switch (this.selectOption){
+                    case 'ord_id':
+                        return item.ord_id.toString().includes(this.searchText);
+                    case 'member_id':
+                        return item.member_id.toString().includes(this.searchText);
+                    default:
+                        return false;
+                }
+            })
+        },
+        showOrderDetails(item){
+            this.formData = {
+                number: item.ord_id,
+                productName: item.pro_name,
+                quantity: item.ord_qty,
+                memberName: item.m_name,
+                time: item.ord_date,
+                name: item.ord_reciever,
+                phone: item.ord_phone,
+                address: item.ord_city + item.ord_district + item.ord_address,
+                price: item.ord_sum,
+                freight: item.ord_ship,
+                total: item.ord_total,
+                remark: item.remark,
+            };
+            this.value = true;
+        },
     },
-    mounted() {
-        
-    },
+    
 }
 </script>
 
@@ -152,10 +141,10 @@ export default {
                 <BackTitle />
                 <div class="searchBar">
                     <select name="searchOption" id="searchOption" v-model="selectOption" >
-                        <option value="orderno">訂單編號</option>
-                        <option value="memberno">會員編號</option>
+                        <option value="ord_id">訂單編號</option>
+                        <option value="member_id">會員編號</option>
                     </select>
-                    <input type="text" v-model="searchText" :placeholder="placeholderText">
+                    <input v-model.trim="searchText" :placeholder="placeholderText">
                     <button class="searchBtn">搜尋</button>
                 </div>
                 <div class="orderTable">
@@ -171,10 +160,10 @@ export default {
                     </div>
                     <div class="orderListContent" v-for="(item,index) in paginated" :key="index">
                         <div class="searchButton">
-                            <button @click="value = true" type="primary" class="searchBtn">查詢</button>
+                            <button @click="showOrderDetails(item)" type="primary" class="searchBtn">查詢</button>
                         </div>
                         <p class="orderListContentP">{{item.ord_id}}</p>
-                        <p class="orderListContentP">{{item.member_id}}</p>
+                        <p class="memberId">{{item.member_id}}</p>
                         <p class="orderListContentP">{{item.ord_total}}</p>
                         <p class="orderListContentP">{{item.ord_date}}</p>
                     
@@ -216,31 +205,33 @@ export default {
         <Row :gutter="32">
             <Col span="24" >
                 <FormItem label="訂單編號" label-position="top">
-                    <Input v-model="formData.name" placeholder="please enter order number" />
+                    <Input v-model="formData.number" placeholder="please enter order number" />
                 </FormItem>
             </Col>
         </Row>
-        <Row :gutter="32">
+        <!-- <Row :gutter="32" v-for="item in formData" :key="item"> -->
+            <!-- 商品&數量會有多個，v-for怎麼寫 -->
+        <Row :gutter="32"> 
             <Col span="12">
                 <FormItem label="商品名稱" label-position="top">
-                    <Input v-model="formData.name" placeholder="please enter product name" />
+                    <Input v-model="formData.productName" placeholder="please enter product name" />
                 </FormItem>
             </Col>
             <Col span="12">
                 <FormItem label="數量" label-position="top">
-                    <Input v-model="formData.name" placeholder="please enter quantity" />
+                    <Input v-model="formData.quantity" placeholder="please enter quantity" />
                 </FormItem>
             </Col>
         </Row>
         <Row :gutter="32">
             <Col span="12">
                 <FormItem label="購買人" label-position="top">
-                    <Input v-model="formData.name" placeholder="please purchaser name" />
+                    <Input v-model="formData.memberName" placeholder="please purchaser name" />
                 </FormItem>
             </Col>
             <Col span="12">
                 <FormItem label="下單時間" label-position="top">
-                    <Input v-model="formData.name" placeholder="please purchaser name" />
+                    <Input v-model="formData.time" placeholder="please purchaser name" />
                 </FormItem>
             </Col>
         </Row>
@@ -252,52 +243,49 @@ export default {
             </Col>
             <Col span="12">
                 <FormItem label="收件人電話" label-position="top">
-                    <Input v-model="formData.name" placeholder="please enter recipient phone number" />
+                    <Input v-model="formData.phone" placeholder="please enter recipient phone number" />
                 </FormItem>
             </Col>
             <Col span="24">
                 <FormItem label="收件地址" label-position="top">
-                    <Input v-model="formData.name" placeholder="please enter recipient address" />
+                    <Input v-model="formData.address" placeholder="please enter recipient address" />
                 </FormItem>
             </Col>
         </Row>
         <Row :gutter="32">
             <Col span="12">
                 <FormItem label="付款方式" label-position="top">
-                    <Input v-model="formData.name" placeholder="please enter payment method" />
+                    <Input value="信用卡付款" placeholder="信用卡付款" />
                 </FormItem>
             </Col>
             <Col span="12">
                 <FormItem label="付款狀態" label-position="top">
-                    <Select v-model="formData.type" placeholder="please choose payment status">
-                        <Option value="YES">已付款</Option>
-                        <Option value="NO">未付款</Option>
-                    </Select>
+                    <Input value="已付款" placeholder="已付款" />
                 </FormItem>
             </Col>
         </Row>
         <Row :gutter="32">
             <Col span="12">
                 <FormItem label="商品金額" label-position="top">
-                    <Input v-model="formData.name" placeholder="please enter product price" />
+                    <Input v-model="formData.price" placeholder="please enter product price" />
                 </FormItem>
             </Col>
             <Col span="12">
                 <FormItem label="運費" label-position="top">
-                    <Input v-model="formData.name" placeholder="please enter freight" />
+                    <Input v-model="formData.freight" placeholder="please enter freight" />
                 </FormItem>
             </Col>
         </Row>
         <Row :gutter="32">
             <Col span="24">
                 <FormItem label="訂單總金額" label-position="top">
-                    <Input v-model="formData.name" placeholder="please enter order amount" />
+                    <Input v-model="formData.total" placeholder="please enter order amount" />
                 </FormItem>
             </Col>
             
         </Row>
         <FormItem label="備註欄" label-position="top">
-            <Input type="textarea" v-model="formData.desc" :rows="4" placeholder="please enter the remark" />
+            <Input type="textarea" v-model="formData.remark" :rows="4" placeholder="please enter the remark" />
         </FormItem>
     </Form>
     <div class="demo-drawer-footer">
