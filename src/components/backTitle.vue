@@ -9,6 +9,7 @@ export default {
         };
     },
     created() {
+        this.userData.admin_id = localStorage.getItem("userData") ? JSON.parse(localStorage.getItem("userData")).id:"";
         this.userData.admin_name = localStorage.getItem("userData") ? JSON.parse(localStorage.getItem("userData")).name:"";
         // 判斷有沒有登入過
         this.checkLogin();

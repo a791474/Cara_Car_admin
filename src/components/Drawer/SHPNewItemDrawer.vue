@@ -6,19 +6,23 @@
             新增
         </Button>
 
-        <Drawer title="新增商品" v-model="value" width="500" :mask-closable="false" :styles="styles">
+        <Drawer 
+        title="新增商品" 
+        v-model="value" 
+        width="500" :mask-closable="false" 
+        :styles="styles">
             <Form :model="formData">
                 <p>商品內容區</p>
                 <Row :gutter="32">
                     <Col span="12">
 
                     <FormItem label="商品名稱-中文" label-position="top">
-                        <Input v-model="formData.name" placeholder="請輸入商品名稱" />
+                        <Input v-model="formData.sh_pro_name" placeholder="請輸入商品名稱" />
                     </FormItem>
                     </Col>
                     <Col span="12">
                     <FormItem label="商品名稱-英文" label-position="top">
-                        <Input v-model="formData.ename" placeholder="請輸入商品名稱">
+                        <Input v-model="formData.sh_pro_en_name" placeholder="請輸入商品名稱">
                         <!-- <template #prepend>http://</template>
                             <template #append>.com</template> -->
                         </Input>
@@ -29,16 +33,12 @@
                     <Col span="12">
 
                     <FormItem label="商品年分" label-position="top">
-                        <Input v-model="formData.year" placeholder="請輸入商品年分" />
+                        <Input v-model="formData.sh_pro_year" placeholder="請輸入商品年分" />
                     </FormItem>
                     </Col>
                     <Col span="12">
                     <FormItem label="商品現況" label-position="top">
-                        <Select v-model="formData.situation" placeholder="選擇商品現況">
-                            <!-- <Option :value="9">九成新</Option>
-                            <Option :value="8">八成新</Option>
-                            <Option value="9">七成新</Option>
-                            <Option value="9">六成新</Option> -->
+                        <Select v-model="formData.sh_pro_situation" placeholder="選擇商品現況">
                             <Option :value="5">五成新</Option>
                             <Option :value="4">四成新</Option>
                             <Option :value="3">三成新</Option>
@@ -52,13 +52,13 @@
                     <Col span="12">
 
                     <FormItem label="商品定價" label-position="top">
-                        <Input v-model="formData.price" placeholder="請輸入商品定價" />
+                        <Input v-model="formData.sh_pro_price" placeholder="請輸入商品定價" />
                     </FormItem>
                     </Col>
                     <Col span="12">
                     <FormItem label="上架 / 下架" label-position="top" class="onOrRemoved">
-                        <input type="radio" name="ability[]" :value="0" v-model="formData.check">下架
-                        <input type="radio" name="ability[]" :value="1" v-model="formData.check">上架
+                        <input type="radio" name="ability[]" :value="0" v-model="formData.sh_pro_state">下架
+                        <input type="radio" name="ability[]" :value="1" v-model="formData.sh_pro_state">上架
                         <!-- <template #prepend>http://</template>
                             <template #append>.com</template> -->
                         <!-- </Input> -->
@@ -68,7 +68,7 @@
                 <Row :gutter="32">
                     <Col span="12">
                     <FormItem label="上架時間" label-position="top">
-                        <DatePicker v-model="formData.date" type="date" placeholder="請選擇上架時間" style="display: block"
+                        <DatePicker v-model="formData.launch_date" type="date" placeholder="請選擇上架時間" style="display: block"
                             placement="bottom-end"></DatePicker>
                     </FormItem>
                     </Col>
@@ -88,18 +88,18 @@
                 <div class="productsin">
                     商品介紹區
                     <FormItem label="商品介紹(簡述)" label-position="top">
-                        <Input type="textarea" v-model="formData.desc" :rows="4"
+                        <Input type="textarea" v-model="formData.sh_pro_intro" :rows="4"
                             placeholder="please enter the description" />
                     </FormItem>
 
                     <FormItem label="商品規格" label-position="top">
-                        <Input type="textarea" v-model="formData.desc" :rows="4"
+                        <Input type="textarea" v-model="formData.sh_pro_info" :rows="4"
                             placeholder="please enter the description" />
                     </FormItem>
                 </div>
             </Form>
             <div class="demo-drawer-footer">
-                <Button class="btnCancel" style="margin-right: 8px" @click="value = closeDrawer">Cancel</Button>
+                <Button class="btnCancel" style="margin-right: 8px" @click="value = false">Cancel</Button>
                 <Button class="btnSubmit" type="primary" @click="submitForm">
                     <i class="fa-solid fa-screwdriver-wrench"></i>
                     新增商品
@@ -125,69 +125,71 @@ export default {
                 position: 'static'
             },
             formData: {
-                name: '',
-                ename: '',
-                year: '',
+                sh_pro_name: '',
+                sh_pro_en_name: '',
+                sh_pro_year: '',
                 url: '',
-                check: '',
-                price: '',
-                situation: '',
+                sh_pro_state: '',
+                sh_pro_price: '',
+                sh_pro_situation: '',
                 type: '',
-                approver: '',
-                date: '',
-                desc: '',
+                launch_date: '',
+                sh_pro_intro: '',
+                sh_pro_info:'',
                 descMore: '',
+                sh_pro_pin:''
             },
         }
     },
     methods: {
-        
-        showDrawer() {
-            this.value = true;
-        },
-        closeDrawer() {
-            this.value = false;
-        },
-        addProduct() {
-            // 將商品資料送至後端保存
-            fetch('backSHProduct.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(this.formData),
-            })
-                .then(response => response.json())
-                .then(result => {
-                    if (!result.error) {
-                        alert("新增成功~");
-                        this.clearForm();
-                        this.closeDrawer();
-                    } else {
-                        alert("新增失敗: " + result.msg);
+            async submitForm() {
+                // 檢查欄位是否存在空值
+                let hasNonEmptyField = false;
+                for (const key in this.formData) {
+                    if (this.formData[key]) {
+                        hasNonEmptyField = true;
+                        break;
                     }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        },
-        clearForm() {
-            // 清空表單邏輯
-            this.formData = {
-                name: '',
-                ename: '',
-                year: '',
+                }
+
+                // 若沒有欄位為空值，則提交表單
+                if (hasNonEmptyField) {
+                    try {
+                        const response = await axios.post(`${import.meta.env.VITE_CARA_URL}/back/postbackSHProduct.php`, this.formData);
+                        console.log(response.data); // 可以在控制台中查看後端傳回的信息
+
+                        // 提示成功新增資料
+                        alert('已成功新增資料!');
+
+                        // 關閉抽屜
+                        this.value = false;
+                                
+                    } catch (error) {
+                        console.error(error);
+                    }
+                } else {
+                    // 若有欄位為空值，則顯示警告信息
+                    alert('所有欄位都必須填寫哦');
+                }
+            },
+            clearForm() {
+                // 清空表單邏輯
+                this.formData = {
+                sh_pro_name: '',
+                sh_pro_en_name: '',
+                sh_pro_year: '',
                 url: '',
-                check: '',
-                price: '',
-                situation: '',
+                sh_pro_state: '',
+                sh_pro_price: '',
+                sh_pro_situation: '',
                 type: '',
-                approver: '',
-                date: '',
-                desc: '',
+                launch_date: '',
+                sh_pro_intro: '',
+                sh_pro_info:'',
                 descMore: '',
-            };
-        },
+                sh_pro_pin:''
+                };
+            },
     },
 };
 

@@ -19,16 +19,12 @@ export default {
             currentPage: 1,
             perPage: 5,
             promoData: [],
+            displayData:[],
         };
     },
     created() {
-        axios.get(`${import.meta.env.VITE_CARA_URL}/back/backPromotion.php`)
-            .then((response) => {
-                this.promoData = response.data;
-            })
-            .catch((error) => {
-                console.error("Error fetching data:", error);
-            });
+        this.axiosGet()
+        
     },
     computed: {
         // 頁數切換
@@ -50,9 +46,19 @@ export default {
         },
     },
     methods: {
-        updateRatio(promoData) {
-            console.log('Updated ratio for promo ID:', promoData.promo_id, 'New ratio:', promoData.promo_ratio);
+        axiosGet(){
+            axios.get(`${import.meta.env.VITE_CARA_URL}/back/backPromotion.php`)
+            .then((res) => {
+                this.promoData = res.data;
+                this.displayData = res.data;
+            })
+            .catch((error) => {
+                console.error("Error fetching data:", error);
+            });
         },
+        // updateRatio(promoData) {
+        //     console.log('Updated ratio for promo ID:', promoData.promo_id, 'New ratio:', promoData.promo_ratio);
+        // },
         currentSidebar(item) {
             this.activeTab = item
         },
@@ -96,9 +102,9 @@ export default {
                     <li class="promo_name">{{ promo.promo_name }}</li>
                     <li class="promo_start_date">{{ promo.promo_start_date }}</li>
                     <li class="promo_end_date">{{ promo.promo_end_date }}</li>
-                    <li>
-                        <input id="promoRatio" type="number" class="ratio" v-model="promo.promo_ratio"
-                            @input="updateRatio(promo)"><span>%</span>
+                    <li class="promo_end_date">{{ promo.promo_ratio }}
+                        <!-- <input id="promoRatio" type="number" class="ratio" v-model="promo.promo_ratio"
+                            @input="updateRatio(promo)"><span>%</span> -->
                     </li>
                     <li><input id="promoState" type="text" :value="promoState(promo.promo_state)" readonly></li>
                 </ol>
