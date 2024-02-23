@@ -3,11 +3,13 @@ import axios from 'axios';
 import BackTitle from '@/components/backTitle.vue';
 import BackSidebar from '@/components/backSidebar.vue';
 import PageNumber from '@/components/PageNumber.vue';
+import ShOrderDrawer from '@/components/Drawer/ShOrderDrawer.vue';
 export default {
     components: {
         BackSidebar,
         BackTitle,
         PageNumber,
+        ShOrderDrawer
     },
     data () {
         return {
@@ -40,6 +42,7 @@ export default {
                 }
     },
     computed:{
+        // placceholder切換
         placeholderText() {
             switch (this.selectedOption) {
                 case 'productName':
@@ -50,6 +53,7 @@ export default {
                     return '請輸入會員編號'
             }
         },
+        // 頁數切換
         paginated(){
             const start = (this.currentPage - 1) * this.perPage;
             const end = start + this.perPage;
@@ -72,6 +76,7 @@ export default {
                 
     },
     methods: {
+        // 頁數切換
         toggleStatus(index) {
             this.item[index].status = !this.item[index].status;
         },
@@ -80,6 +85,23 @@ export default {
         },
         changePage(page) {
             this.currentPage = page;
+        },
+        //搜尋功能
+        filterHandle() {
+            this.displayData = this.newsData.filter((eventsInfo)=>{
+
+                switch (this.selectedOption) {
+                    case 'news_id':
+                        return eventsInfo.news_id.toString().includes(this.search);
+                    case 'news_title':
+                        return eventsInfo.news_title.includes(this.search);
+                    default:
+                        return false;
+                }
+            })
+        },
+        changeState(item){
+            return(item) => item === 1 ? "已出貨" : "未出貨";
         },
     },
 }
@@ -115,7 +137,9 @@ export default {
                 
                 <div class="orderContent" v-for="(item,index) in orderList" :key="index">
                     <div class="searchButton">
-                        <button @click="value = true" type="primary" class="searchBtn">查詢</button>
+                        <!-- <button @click="value = true" type="primary" class="searchBtn">查詢</button> -->
+                        <ShOrderDrawer 
+                        :detail="item" />
                     </div>
                     <!-- item.資料庫欄位名稱 -->
                     <p class="orderContentP">{{item.sh_ord_id}}</p>
@@ -125,19 +149,6 @@ export default {
                     <p class="orderContentP">{{item.sh_ord_date}}</p>
                 
                     <div class="switch">
-                        <!-- <Space direction="vertical">
-                            <Space>
-                                <Switch v-model="item.ord_del_state" size="large">
-                                    {{ item.ord_del_state }}<template v-if="item.ord_del_state === true" #open>
-                                    <span>已出</span>
-                                    </template>
-                                    <template v-else #close>
-                                    <span>未出</span>
-                                    </template>
-                                     {{ item.ord_del_state ? '已出' : '未出' }} 
-                                </Switch>
-                            </Space>
-                        </Space> -->
                         <Space>
                         <Switch size="large" v-model="item.ord_del_state" :true-value="1" :false-value="0"
                             @on-change="changeState(item)">
@@ -159,8 +170,9 @@ export default {
 </div>
     <!-- side bar -->
     <div class="newItemDrawer">
-
-    <Drawer
+        <ShOrderDrawer 
+        :detail="orderDetail" />
+    <!-- <Drawer
         title="訂單內容"
         v-model="value"
         width="720"
@@ -258,8 +270,8 @@ export default {
         <div class="demo-drawer-footer">
             <Button class="btnCancel" style="margin-right: 8px" @click="value = false" >關閉</Button>
         </div>
-    </Drawer>
-
+    </Drawer> -->
+    
     </div>
     
 </template>
