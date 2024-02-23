@@ -1,7 +1,7 @@
 <template>
   <main class="backSHProducts">
     <BackSidebar />
-
+    <!-- {{ SHPro }} -->
     <section class="backSHProductsInfo">
       <BackTitle />
       <div class="stateChange">
@@ -94,24 +94,15 @@ export default {
       displayData: [],
     };
   },
-  created() { 
+  created() {
     this.getSHProData()
     //在頁面載入時同時載入function
     //axios的get方法(`$import.meta.env.{變數}/檔名.php`)用.env檔中寫的網址來判斷網址URL的前贅
     // 使用 Promise.all 來確保兩個請求都完成後再處理資料
-    Promise.all([
+    // Promise.all([
       // axios.get(`${import.meta.env.VITE_CARA_URL}/back/backSHProduct.php`),
       // axios.post(`${import.meta.env.VITE_CARA_URL}/back/backSHProductRe.php`)
-    ])
-    axios.get(`${import.meta.env.VITE_CARA_URL}/back/backSHProduct.php`)
-      .then((response) => {
-        // 成功取得資料後，將資料存入陣列
-        this.SHPro = response.data;
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-
+    // ])
     // axios.get(`${import.meta.env.VITE_CARA_URL}/back/backSHProduct.php`)
     //   .then((response) => {
     //     // 成功取得資料後，將資料存入陣列
@@ -124,21 +115,21 @@ export default {
   },
   watch: {
     search(newVal, oldVal) {
-            console.log(this.search);
-            // console.log('new:'+newVal);
-            // console.log('old:'+oldVal);
+      console.log(this.search);
+      // console.log('new:'+newVal);
+      // console.log('old:'+oldVal);
 
-            // 可以調用下面的methods
-            this.filterHandle();
-        }
-    },
+      // 可以調用下面的methods
+      this.filterHandle();
+    }
+  },
   methods: {
     getSHProData() {
       //axios的get方法(`$import.meta.env.{變數}/檔名.php`)用.env檔中寫的網址來判斷網址URL的前贅
       axios.get(`${import.meta.env.VITE_CARA_URL}/back/backSHProduct.php`)
         .then((response) => {
           // 成功取得資料後，將資料存入 member 陣列
-          this.SHProData = response.data;
+          this.SHPro = response.data;
           this.displayData = response.data;
           this.responseData = response.data;
         })
@@ -146,23 +137,18 @@ export default {
           console.error("Error fetching data:", error);
         });
     },
-        // search功能
-        filterHandle() {
-          if (this.searchText.trim() === '') {
+    // search功能
+    filterHandle() {
+      console.log('filterHandle triggered');
+  if (this.searchText.trim() === '') {
     this.displayData = this.SHProData;
   } else {
+    const searchProperty = this.selectedOption;
     this.displayData = this.SHProData.filter((SHProductsInfo) => {
-      switch (this.selectedOption) {
-        case 'sh_pro_id':
-          return SHProductsInfo.sh_pro_id.toString().includes(this.searchText);
-        case 'sh_pro_name':
-          return SHProductsInfo.sh_pro_name.includes(this.searchText);
-        default:
-          return false;
-      }
+      return SHProductsInfo[searchProperty].toString().includes(this.searchText);
     });
   }
-        },
+    },
 
     // 頁碼
     toggleStatus(index) {
@@ -179,12 +165,12 @@ export default {
     placeholderText() {
       switch (this.selectedOption) {
         case 'sh_pro_id':
-         return '請輸入商品編號';
-      case 'sh_pro_name':
-         return '請輸入商品名稱';
-      default:
-         return '請輸入商品名稱';
-   }
+          return '請輸入商品編號';
+        case 'sh_pro_name':
+          return '請輸入商品名稱';
+        default:
+          return '請輸入商品名稱';
+      }
     },
 
     // 上架/未上架
