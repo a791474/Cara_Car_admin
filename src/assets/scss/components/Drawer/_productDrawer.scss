@@ -1,0 +1,93 @@
+// 商品新增修改抽屜通用部分起點
+.product-drawer-footer{
+	width: 100%;
+	bottom: 0;
+	left: 0;
+	border-top: 1px solid #e8e8e8;
+	padding: 10px 16px;
+	text-align: right;
+	background: #fff;
+
+	.btnCancel {
+		height: 45px;
+		padding: 0 10px;
+		border: none;
+		border-radius: $borr2;
+		background-color: $whiteWord;
+		color: $blackWord;
+		font-size: $mp;
+
+		&:hover {
+			background-color: $grey_2;
+		}
+	}
+	
+	.btnSubmit {
+		height: 50px;
+		padding: 0 10px;
+		border: none;
+		border-radius: $borr2;
+		font-size: $mp;
+		i {
+			margin-left: 3px;
+		}
+	}
+
+	.newItemSubmit{
+		background-color: $yellow;
+		color: $blackWord;
+		&:hover {
+			background-color: $orange ;
+		}
+	}
+	.reviseItemSubmit{
+		background-color: $blue;
+		color: $whiteWord;
+		&:hover {
+			background-color: $navy ;
+		}
+	}
+}
+// 商品新增修改抽屜通用部分起點
+
+// 修改商品抽屜專用起點
+.reviseItemDrawer Button {
+	height: 45px;
+	padding: 0 10px;
+	border: none;
+	border-radius: $borr2;
+	background-color: $whiteWord;
+	color: $blackWord;
+	font-size: $mp;
+	i {
+		margin-left: 3px;
+	}
+	
+	&:hover {
+		background-color: $blue;
+		color: $whiteWord;
+	}
+	
+}
+// 修改商品抽屜專用終點
+
+// 新增商品抽屜專用起點
+.newItemDrawer button {
+	height: 50px;
+	padding: 0 10px;
+	border: none;
+	border-radius: $borr2;
+	background-color: $yellow;
+	color: $blackWord;
+	font-size: $mp;
+
+	i {
+		margin-left: 3px;
+	}
+
+	&:hover {
+		background-color: $orange ;
+	}
+
+}
+// 新增商品抽屜專用終點

@@ -72,5 +72,5 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/scss/page/BackLogin.scss'
+@import '@/assets/scss/page/backLogin.scss';
 </style>
