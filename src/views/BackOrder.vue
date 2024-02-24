@@ -255,7 +255,7 @@ export default {
         <Row :gutter="32">
             <Col span="12">
                 <FormItem label="付款方式" label-position="top">
-                    <Input value="信用卡付款" placeholder="信用卡付款" />
+                    <Input v-bind="信用卡付款"  />
                 </FormItem>
             </Col>
             <Col span="12">
