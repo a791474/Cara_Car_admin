@@ -40,11 +40,6 @@ export default {
     this.getProductData()
   },
   watch:{ //監聽
-    searchText(newVal, oldVal) { //監聽searchText資料變化
-      console.log(this.searchText);
-      // 執行下面的函式
-
-    }
   },
   methods: {
     getProductData(){
@@ -61,7 +56,16 @@ export default {
     },
     //搜尋功能
     filterHandle(){
-      this.displayData = this.productsData((pro))
+      this.displayData = this.productsData.filter((everySingleProduct)=>{
+        switch(this.selectedOption){
+          case 'pro_id':
+            return everySingleProduct.pro_id.toString().includes(this.searchText);
+          case 'pro_category':
+            return everySingleProduct.pro_category.includes(this.searchText);
+          default:
+            return false;
+        }
+      })
     },
     // 取得圖片的路徑函式
     getProductImgSrc(imgName){
@@ -136,7 +140,7 @@ export default {
           <option value="pro_category">商品分類</option>
         </select>
         <input type="text" v-model="searchText" :placeholder="placeholderText">
-        <button @click="search" class="searchBtn">搜尋</button>
+        <button @click="filterHandle" class="searchBtn">搜尋</button>
         <NewItemDrawer />
       </div>
 
@@ -155,31 +159,31 @@ export default {
         <div v-if="errorMessage" class="error-message">
           {{ errorMessage }}
         </div>
-        <ul class="productInfoList" v-for="(item, index) in paginated" :key="index">
-          <li class="productNo"> {{ item.pro_id }} </li>
-          <li class="ReviseItemDrawer"><ReviseItemDrawer :form-data="formData"/></li>
+        <ul class="productInfoList" v-for="(productInfo, index) in paginated" :key="index">
+          <li class="productNo"> {{ productInfo.pro_id }} </li>
+          <li class="ReviseItemDrawer"><ReviseItemDrawer :detail="productInfo"/></li>
           <li class="picture">
-            <img :src="getProductImgSrc(item.img_name)" alt="">
+            <img :src="getProductImgSrc(productInfo.img_name)" alt="">
           </li>
-          <li class="classify"> {{ item.pro_category }} </li>
-          <li class="productName"> {{ item.pro_name }} </li>
+          <li class="classify"> {{ productInfo.pro_category }} </li>
+          <li class="productName"> {{ productInfo.pro_name }} </li>
           <li class="productPriceAndSale">
             <div class="productPrice">
-              {{ item.pro_price }}
+              {{ productInfo.pro_price }}
             </div>
             <div class="productSale">
-              {{ item.pro_sale }}
+              {{ productInfo.pro_sale }}
             </div>
           </li>
           <li class="promo_state">
-            {{ item.promo_name }}
+            {{ productInfo.promo_name }}
           </li>
           <li class="productStateAndPin">
             <div class="productState">
-              {{ converPro_stateToText(item.pro_state) }}
+              {{ converPro_stateToText(productInfo.pro_state) }}
             </div>
             <div class="productPin">
-              {{ converPro_pinToText(item.pro_pin) }}
+              {{ converPro_pinToText(productInfo.pro_pin) }}
             </div>
           </li>
         </ul>
