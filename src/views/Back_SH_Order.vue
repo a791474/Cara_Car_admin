@@ -38,7 +38,7 @@ export default {
              //頁面切換
             activeTab: "",
             currentPage: 1,
-            perPage: 8,
+            perPage: 7,
                 }
     },
     computed:{
