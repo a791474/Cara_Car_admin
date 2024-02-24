@@ -175,7 +175,7 @@ export default {
             this.handleBeforeChange()
 
                 .then(() => {
-                    axios.post(`${import.meta.env.VITE_PHP_URL}/back/updateSHProduct.php`, this.formData)
+                    axios.post(`${import.meta.env.VITE_LPHP_URL}/back/updateSHProduct.php`, this.formData)
                         .then(response => {
                             console.log(response.data);
                             location.reload()
