@@ -40,7 +40,7 @@ export default {
             orderList:[],
             newOrderList:[],
             currentPage: 1,
-            perPage: 8,
+            perPage: 7,
         };
     },
     created() {
