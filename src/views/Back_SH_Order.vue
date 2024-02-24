@@ -33,6 +33,8 @@ export default {
             // placehoder切換
             selectedOption: 'memberNo',  //select預設值
             orderList: [],
+            newOrderList:[],
+            orderDetail:[],
             searchText: '',
 
              //頁面切換
@@ -65,17 +67,29 @@ export default {
     },
     created() { //在頁面載入時同時載入function
         //axios的get方法(`$import.meta.env.{變數}/檔名.php`)用.env檔中寫的網址來判斷網址URL的前贅
-        axios.get(`${import.meta.env.VITE_LPHP_URL}/back/backShOrder.php`)
-                .then((response) => {
-                    this.orderList = response.data;
-                    console.log(response);
-                })
-                .catch((error) => {
-                    console.error("Error fetching data:", error);
-                });
-                
+        // axios.get(`${import.meta.env.VITE_LPHP_URL}/back/backShOrder.php`)
+        //     .then((response) => {
+        //         this.orderList = response.data;
+        //         console.log(response);
+        //     })
+        //     .catch((error) => {
+        //         console.error("Error fetching data:", error);
+        //     });
+        this.getOrderList();
     },
     methods: {
+        getOrderList() {
+        axios.get(`${import.meta.env.VITE_LPHP_URL}/back/backShOrder.php`)
+            .then((response) => {
+            this.orderList = response.data;
+            this.newOrderList = response.data;
+            this.formData = response.data;
+            })
+            .catch((error) => {
+                console.error("獲取數據時出錯:", error);
+            });
+        },
+
         // 頁數切換
         toggleStatus(index) {
             this.item[index].status = !this.item[index].status;
@@ -103,6 +117,23 @@ export default {
         changeState(item){
             return(item) => item === 1 ? "已出貨" : "未出貨";
         },
+        showOrderDetails(item){
+            this.formData = {
+                number: item.sh_ord_id,
+                productName: item.sh_pro_name,
+                quantity: item.sh_ord_qty,
+                memberName: item.m_name,
+                time: item.sh_ord_date,
+                name: item.sh_ord_reciever,
+                phone: item.sh_ord_phone,
+                address: item.sh_ord_city + item.sh_ord_district + item.sh_ord_address,
+                price: item.sh_ord_sum,
+                freight: item.sh_ord_ship,
+                total: item.sh_ord_total,
+                remark: item.remark,
+            };
+            this.value = true;
+        },
     },
 }
 </script>
@@ -129,28 +160,29 @@ export default {
                         <li class="order">訂單編號</li>
                         <li>會員編號</li>
                         <li>商品名稱</li>
-                        <!-- <li>數量</li> -->
                         <li>時間</li>
                         <li>出貨狀態</li>
                     </ul>
                 </div>
                 
-                <div class="orderContent" v-for="(item,index) in orderList" :key="index">
+                <div class="orderContent" >
                     <div class="searchButton">
                         <!-- <button @click="value = true" type="primary" class="searchBtn">查詢</button> -->
                         <ShOrderDrawer 
                         :detail="item" />
                     </div>
                     <!-- item.資料庫欄位名稱 -->
-                    <p class="orderContentP">{{item.sh_ord_id}}</p>
-                    <p class="orderContentP">{{item.member_id}}</p>
-                    <p class="orderContentP">{{item.sh_pro_name}}</p>
-                    <!-- <p class="orderContentP">{{item.quantity}}</p> -->
-                    <p class="orderContentP">{{item.sh_ord_date}}</p>
+                    <div class="orderContent" v-for="(item,index) in paginated" :key="index">
+                        <p class="orderContentP">{{item.sh_ord_id}}</p>
+                        <p class="orderContentP">{{item.member_id}}</p>
+                        <p class="orderContentP">{{item.sh_pro_name}}</p>
+                        <p class="orderContentP">{{item.sh_ord_date}}</p>
+                    </div>
+                    
                 
                     <div class="switch">
                         <Space>
-                        <Switch size="large" v-model="item.ord_del_state" :true-value="1" :false-value="0"
+                        <Switch size="large"  :true-value="1" :false-value="0"
                             @on-change="changeState(item)">
                             <template #open>
                                 <span>已出貨</span>
@@ -171,106 +203,7 @@ export default {
     <!-- side bar -->
     <div class="newItemDrawer">
         <ShOrderDrawer 
-        :detail="orderDetail" />
-    <!-- <Drawer
-        title="訂單內容"
-        v-model="value"
-        width="720"
-        :mask-closable="false"
-        :styles="styles"
-    >
-        <Form :model="formData">
-            <Row :gutter="32">
-            <Col span="24" >
-                <FormItem label="訂單編號" label-position="Left">
-                    <Input v-model="formData.name" placeholder="please enter order number" />
-                </FormItem>
-            </Col>
-        </Row>
-            <Row :gutter="32">
-                <Col span="12">
-                    <FormItem label="商品名稱" label-position="top">
-                        <Input v-model="formData.name" placeholder="please enter product name" />
-                    </FormItem>
-                </Col>
-                <Col span="12">
-                    <FormItem label="數量" label-position="top">
-                        <Input v-model="formData.name" placeholder="please enter quantity" />
-                    </FormItem>
-                </Col>
-            </Row>
-            <Row :gutter="32">
-                <Col span="12">
-                    <FormItem label="購買人" label-position="top">
-                        <Input v-model="formData.name" placeholder="please purchaser name" />
-                    </FormItem>
-                </Col>
-                <Col span="12">
-                    <FormItem label="下單時間" label-position="top">
-                        <Input v-model="formData.name" placeholder="please purchaser name" />
-                    </FormItem>
-                </Col>
-            </Row>
-            <Row :gutter="32">
-                <Col span="12">
-                    <FormItem label="收件人" label-position="top">
-                        <Input v-model="formData.name" placeholder="please enter recipient name" />
-                    </FormItem>
-                </Col>
-                <Col span="12">
-                    <FormItem label="收件人電話" label-position="top">
-                        <Input v-model="formData.name" placeholder="please enter recipient phone number" />
-                    </FormItem>
-                </Col>
-                <Col span="24">
-                    <FormItem label="收件地址" label-position="top">
-                        <Input v-model="formData.name" placeholder="please enter recipient address" />
-                    </FormItem>
-                </Col>
-            </Row>
-            <Row :gutter="32">
-                <Col span="12">
-                    <FormItem label="付款方式" label-position="top">
-                        <Input v-model="formData.name" placeholder="please enter payment method" />
-                    </FormItem>
-                </Col>
-                <Col span="12">
-                    <FormItem label="付款狀態" label-position="top">
-                        <Select v-model="formData.type" placeholder="please choose payment status">
-                            <Option value="YES">已付款</Option>
-                            <Option value="NO">未付款</Option>
-                        </Select>
-                    </FormItem>
-                </Col>
-            </Row>
-            <Row :gutter="32">
-                <Col span="12">
-                    <FormItem label="商品金額" label-position="top">
-                        <Input v-model="formData.name" placeholder="please enter product price" />
-                    </FormItem>
-                </Col>
-                <Col span="12">
-                    <FormItem label="運費" label-position="top">
-                        <Input v-model="formData.name" placeholder="please enter freight" />
-                    </FormItem>
-                </Col>
-            </Row>
-            <Row :gutter="32">
-                <Col span="24">
-                    <FormItem label="訂單總金額" label-position="top">
-                        <Input v-model="formData.name" placeholder="please enter order amount" />
-                    </FormItem>
-                </Col>
-                
-            </Row>
-            <FormItem label="備註欄" label-position="top">
-                <Input type="textarea" v-model="formData.desc" :rows="4" placeholder="please enter the remark" />
-            </FormItem>
-        </Form>
-        <div class="demo-drawer-footer">
-            <Button class="btnCancel" style="margin-right: 8px" @click="value = false" >關閉</Button>
-        </div>
-    </Drawer> -->
+        :detail="orderList" />
     
     </div>
     
