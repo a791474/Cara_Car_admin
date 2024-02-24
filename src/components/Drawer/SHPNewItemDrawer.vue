@@ -160,7 +160,7 @@ export default {
                 // 若沒有欄位為空值，則提交表單
                 if (hasNonEmptyField) {
                     try {
-                        const response = await axios.post(`${import.meta.env.VITE_LPHP_URL}/back/postbackSHProduct.php`, this.formData);
+                        const response = await axios.post(`${import.meta.env.VITE_PHP_URL}/back/postbackSHProduct.php`, this.formData);
                         console.log(response.data); // 可以在控制台中查看後端傳回的信息
                         location.reload()
                         // 提示成功新增資料

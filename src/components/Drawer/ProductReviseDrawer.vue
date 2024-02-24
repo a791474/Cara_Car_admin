@@ -161,7 +161,7 @@ export default {
             this.handleBeforeChange()
             
             .then(() => {
-                axios.post(`${import.meta.env.VITE_LPHP_URL}/back/updateProductInfo.php`, this.formData)
+                axios.post(`${import.meta.env.VITE_PHP_URL}/back/updateProductInfo.php`, this.formData)
                 .then(response => {
                     console.log(response.data);
                     // 處理響應
