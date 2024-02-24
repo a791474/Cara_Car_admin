@@ -7,12 +7,11 @@
         </Button>
 
         <Drawer title="修改商品" v-model="value" width="500" :mask-closable="false" :styles="styles">
-            <h2>商品編號：{{ detail.sh_pro_id }}</h2>
+            <h3>商品編號：{{ detail.sh_pro_id }}</h3>
             <Form :model="formData">
-                <p>商品內容區</p>
+                <!-- <p>商品內容區</p> -->
                 <Row :gutter="32">
                     <Col span="12">
-
                     <FormItem label="商品名稱-中文" label-position="top">
                         <Input v-model="formData.sh_pro_name" placeholder="請輸入商品名稱" />
                     </FormItem>
@@ -21,14 +20,13 @@
                     <FormItem label="商品名稱-英文" label-position="top">
                         <Input v-model="formData.sh_pro_en_name" placeholder="請輸入商品名稱">
                         <!-- <template #prepend>http://</template>
-                            <template #append>.com</template> -->
+                                <template #append>.com</template> -->
                         </Input>
                     </FormItem>
                     </Col>
                 </Row>
                 <Row :gutter="32">
                     <Col span="12">
-
                     <FormItem label="商品年分" label-position="top">
                         <Input v-model="formData.sh_pro_year" placeholder="請輸入商品年分" />
                     </FormItem>
@@ -47,15 +45,14 @@
                 </Row>
                 <Row :gutter="32">
                     <Col span="12">
-
                     <FormItem label="商品定價" label-position="top">
                         <Input v-model="formData.sh_pro_price" placeholder="請輸入商品定價" />
                     </FormItem>
                     </Col>
                     <Col span="12">
                     <FormItem label="上架 / 下架" label-position="top" class="onOrRemoved">
-                        <input type="radio" name="ability[]" :value="0" v-model="formData.sh_pro_state">下架
-                        <input type="radio" name="ability[]" :value="1" v-model="formData.sh_pro_state">上架
+                        <input type="radio" name="state" :value="0" v-model="formData.sh_pro_state">下架中
+                        <input type="radio" name="state" :value="1" v-model="formData.sh_pro_state">上架中
                     </FormItem>
                     </Col>
                 </Row>
@@ -72,34 +69,40 @@
                         <input type="radio" name="sold" :value="1" v-model="formData.sh_pro_sold">已售出
                     </FormItem>
                     </Col>
+                    <Col span="12">
+                    <FormItem label="置頂商品" label-position="top" class="pin">
+                        <input type="checkbox" name="pin" :true-value="1" :false-value="0" v-model="formData.sh_pro_pin">置頂
+                    </FormItem>
+                    </Col>
                 </Row>
                 <FormItem label="商品圖片" label-position="top">
                     <!-- <Button class="btnUpload" type="file" multiple="multiple" v-model="File" @click="value = false">點我上傳
-                    </Button> -->
+                        </Button> -->
                     <!-- <Input class="btnUpload" type="text" v-model="File" @click="value = false">點我上傳</Input> -->
-
                     <Input class="btnUpload" type="file" multiple="multiple" @click="value = false">點我上傳</Input>
-
                     <!-- <Input class="btnUpload" type="file" multiple="multiple" v-model="File" :rows="4"
-                        placeholder="please enter the description" /> -->
+                            placeholder="please enter the description" /> -->
+                    <!-- <div class="upload_pic">
+                                    <input type="file" id="picture" name="uploadPic" placeholder="" style="display: none;">
+                                    <label for="picture">
+                                        <img src="../../assets/imgs/SecondHandSale/uploadPic.png" alt="upFile"
+                                            style="cursor: pointer;">
+                                    </label>
+                                </div> -->
                 </FormItem>
                 <div class="productsin">
                     商品介紹區
                     <FormItem label="商品介紹(簡述)" label-position="top">
-                        <Input type="textarea" v-model="formData.sh_pro_intro" :rows="4"
-                            placeholder="請輸入商品介紹" />
+                        <Input type="textarea" v-model="formData.sh_pro_intro" :rows="4" placeholder="請輸入商品介紹" />
                     </FormItem>
-
                     <FormItem label="商品規格" label-position="top">
-                        <Input type="textarea" v-model="formData.sh_pro_info" :rows="4"
-                            placeholder="請輸入商品介紹" />
+                        <Input type="textarea" v-model="formData.sh_pro_info" :rows="4" placeholder="請輸入商品介紹" />
                     </FormItem>
                 </div>
             </Form>
             <div class="demo-drawer-footer">
                 <Button class="btnCancel" style="margin-right: 8px" @click="value = false">Cancel</Button>
-                <Button class="btnSubmit" type="primary" 
-                @click="reviseData">
+                <Button class="btnSubmit" type="primary" @click="reviseData">
                     <i class="fa-solid fa-screwdriver-wrench"></i>
                     確認修改
                 </Button>
@@ -119,22 +122,21 @@ export default {
             styles: {
                 height: 'calc(100% - 55px)',
                 overflow: 'auto',
-                paddingBottom: '53px',
                 position: 'static'
             },
             formData: {
-                sh_pro_id:'',
+                sh_pro_id: '',
                 sh_pro_name: '',
                 sh_pro_en_name: '',
                 sh_pro_year: '',
                 sh_pro_price: '',
                 sh_pro_intro: '',
-                sh_pro_info:'',
+                sh_pro_info: '',
                 sh_pro_situation: '',
                 sh_pro_state: '',
                 launch_date: '',
-                sh_pro_sold:'',
-                // sh_pro_pin:''
+                sh_pro_sold: '',
+                sh_pro_pin: ''
                 //url: '', //DB要新增欄位
             },
         }
@@ -160,6 +162,7 @@ export default {
                 this.formData.sh_pro_state = this.detail.sh_pro_state
                 this.formData.sh_pro_sold = this.detail.sh_pro_sold
                 this.formData.launch_date = this.detail.launch_date
+                this.formData.sh_pro_pin = this.detail.sh_pro_pin
             }
         },
     },
@@ -167,31 +170,32 @@ export default {
         closeDrawer() {
             this.value = false;
         },
-                 // 更新數據方法
+        // 更新數據方法
         reviseData() {
             this.handleBeforeChange()
-            
-            .then(() => {
-                axios.post(`${import.meta.env.VITE_CARA_URL}/back/updateSHProduct.php`, this.formData)
-                .then(response => {
-                    console.log(response.data);
-                    // 處理響應
 
-                    // 提示成功新增資料
-                    alert('已成功修改資料!');
+                .then(() => {
+                    axios.post(`${import.meta.env.VITE_CARA_URL}/back/updateSHProduct.php`, this.formData)
+                        .then(response => {
+                            console.log(response.data);
+                            location.reload()
+                            // 處理響應
 
-                    // 關閉抽屜
-                    this.value = false;
+                            // 提示成功新增資料
+                            alert('已成功修改資料!');
+
+                            // 關閉抽屜
+                            this.value = false;
+                        })
+                        .catch(error => {
+                            console.error(error);
+                            // 處理錯誤
+                        });
                 })
-                .catch(error => {
-                    console.error(error);
-                    // 處理錯誤
+                .catch(() => {
+                    // 用户取消操作
                 });
-            })
-            .catch(() => {
-                // 用户取消操作
-            });
-        },  
+        },
         // 確認是否要更新商品資料
         handleBeforeChange() {
             return new Promise((resolve, reject) => {
