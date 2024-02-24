@@ -47,8 +47,6 @@
         </ul>
       </div>
 
-
-
       <PageNumber :totalPages="totalPages" :currentPage="currentPage" @pageChange="changePage" />
 
     </section>
@@ -100,8 +98,8 @@ export default {
     //axios的get方法(`$import.meta.env.{變數}/檔名.php`)用.env檔中寫的網址來判斷網址URL的前贅
     // 使用 Promise.all 來確保兩個請求都完成後再處理資料
     // Promise.all([
-      // axios.get(`${import.meta.env.VITE_CARA_URL}/back/backSHProduct.php`),
-      // axios.post(`${import.meta.env.VITE_CARA_URL}/back/backSHProductRe.php`)
+    // axios.get(`${import.meta.env.VITE_CARA_URL}/back/backSHProduct.php`),
+    // axios.post(`${import.meta.env.VITE_CARA_URL}/back/backSHProductRe.php`)
     // ])
     // axios.get(`${import.meta.env.VITE_CARA_URL}/back/backSHProduct.php`)
     //   .then((response) => {
@@ -114,8 +112,8 @@ export default {
 
   },
   watch: {
-    search(newVal, oldVal) {
-      console.log(this.search);
+    searchText(newVal, oldVal) {
+      console.log(this.searchText);
       // console.log('new:'+newVal);
       // console.log('old:'+oldVal);
 
@@ -140,14 +138,14 @@ export default {
     // search功能
     filterHandle() {
       console.log('filterHandle triggered');
-  if (this.searchText.trim() === '') {
-    this.displayData = this.SHProData;
-  } else {
-    const searchProperty = this.selectedOption;
-    this.displayData = this.SHProData.filter((SHProductsInfo) => {
-      return SHProductsInfo[searchProperty].toString().includes(this.searchText);
-    });
-  }
+      if (this.searchText.trim() === '') {
+        this.displayData = [...this.SHPro];
+      } else {
+        const searchProperty = this.selectedOption;
+        this.displayData = this.SHPro.filter((SHProductsInfo) => {
+          return SHProductsInfo[searchProperty].toString().includes(this.searchText);
+        });
+      }
     },
 
     // 頁碼
@@ -178,8 +176,8 @@ export default {
       return (SHPState) => SHPState === 1 ? "上架中" : "未上架";
     },
     SHProAfterFilter() {
-      if (this.checkState === -1) return this.SHPro
-      return this.SHPro.filter(v => v.sh_pro_state === this.checkState);
+      if (this.checkState === -1) return this.displayData
+      return this.displayData.filter(v => v.sh_pro_state === this.checkState);
     },
     // 頁碼切換 (SHProAfterFilter 這樣才能根據篩選出來的筆數去分頁)
     paginated() {

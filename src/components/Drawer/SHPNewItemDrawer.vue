@@ -57,8 +57,8 @@
                     </Col>
                     <Col span="12">
                     <FormItem label="上架 / 下架" label-position="top" class="onOrRemoved">
-                        <input type="radio" name="ability[]" :value="0" v-model="formData.sh_pro_state">下架
-                        <input type="radio" name="ability[]" :value="1" v-model="formData.sh_pro_state">上架
+                        <input type="radio" name="state" :value="0" v-model="formData.sh_pro_state">下架
+                        <input type="radio" name="state" :value="1" v-model="formData.sh_pro_state">上架
                         <!-- <template #prepend>http://</template>
                             <template #append>.com</template> -->
                         <!-- </Input> -->
@@ -72,29 +72,36 @@
                             placement="bottom-end"></DatePicker>
                     </FormItem>
                     </Col>
-                    <!-- <Col span="12">
-                    <FormItem label="下架時間" label-position="top">
-                        <DatePicker v-model="formData.date" type="date" placeholder="請選擇下架時間" style="display: block"
-                            placement="bottom-end"></DatePicker>
+                    <Col span="12">
+                        <FormItem label="未售出 / 已售出" label-position="top" class="onOrRemoved">
+                            <input type="radio" name="sold" :value="0" v-model="formData.sh_pro_sold">未售出
+                            <input type="radio" name="sold" :value="1" v-model="formData.sh_pro_sold">已售出
+                        </FormItem>
+                    </Col>
+                    <Col span="12">
+                        <FormItem label="置頂商品" label-position="top" class="pin">
+                        <input type="checkbox" name="pin" :true-value="1" :false-value="0" v-model="formData.sh_pro_pin">置頂
                     </FormItem>
-                    </Col> -->
+                    </Col>
                 </Row>
+
                 <FormItem label="商品圖片" label-position="top">
                     <Button class="btnUpload" type="file" multiple="multiple" v-model="File" @click="value = false">點我上傳
                     </Button>
                     <Input class="btnUpload" type="file" multiple="multiple" v-model="File" :rows="4"
                         placeholder="please enter the description" />
                 </FormItem>
+
                 <div class="productsin">
                     商品介紹區
                     <FormItem label="商品介紹(簡述)" label-position="top">
                         <Input type="textarea" v-model="formData.sh_pro_intro" :rows="4"
-                            placeholder="please enter the description" />
+                            placeholder="請輸入商品介紹" />
                     </FormItem>
 
                     <FormItem label="商品規格" label-position="top">
                         <Input type="textarea" v-model="formData.sh_pro_info" :rows="4"
-                            placeholder="please enter the description" />
+                            placeholder="請輸入商品介紹" />
                     </FormItem>
                 </div>
             </Form>
@@ -121,23 +128,21 @@ export default {
             styles: {
                 height: 'calc(100% - 55px)',
                 overflow: 'auto',
-                paddingBottom: '53px',
                 position: 'static'
             },
             formData: {
                 sh_pro_name: '',
                 sh_pro_en_name: '',
                 sh_pro_year: '',
-                url: '',
-                sh_pro_state: '',
                 sh_pro_price: '',
-                sh_pro_situation: '',
-                type: '',
-                launch_date: '',
                 sh_pro_intro: '',
                 sh_pro_info:'',
-                descMore: '',
+                sh_pro_situation: '',
+                sh_pro_state: '',
+                launch_date: '',
+                sh_pro_sold: '',
                 sh_pro_pin:''
+                // url: '',
             },
         }
     },
@@ -157,7 +162,7 @@ export default {
                     try {
                         const response = await axios.post(`${import.meta.env.VITE_CARA_URL}/back/postbackSHProduct.php`, this.formData);
                         console.log(response.data); // 可以在控制台中查看後端傳回的信息
-
+                        location.reload()
                         // 提示成功新增資料
                         alert('已成功新增資料!');
 
@@ -178,16 +183,15 @@ export default {
                 sh_pro_name: '',
                 sh_pro_en_name: '',
                 sh_pro_year: '',
-                url: '',
-                sh_pro_state: '',
                 sh_pro_price: '',
-                sh_pro_situation: '',
-                type: '',
-                launch_date: '',
                 sh_pro_intro: '',
                 sh_pro_info:'',
-                descMore: '',
+                sh_pro_situation: '',
+                sh_pro_state: '',
+                launch_date: '',
+                sh_pro_sold: '',
                 sh_pro_pin:''
+                // url: '',
                 };
             },
     },
