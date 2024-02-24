@@ -48,8 +48,10 @@
             </div>
             
 
+            <div class="pageNumber">
+                <PageNumber :totalPages="totalPages" :currentPage="currentPage" @pageChange="changePage" />
 
-            <PageNumber :totalPages="totalPages" :currentPage="currentPage" @pageChange="changePage" />
+            </div>
 
         </section>
     </main>

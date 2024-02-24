@@ -141,10 +141,20 @@ import axios from 'axios'
                         console.log(response.data); // 可以在控制台中查看後端傳回的信息
 
                         // 提示成功新增資料
-                        alert('已成功新增資料!');
+                        this.$Modal.confirm({
+                            title: '新增消息確認',
+                            content: '確定要新增消息嗎?',
+                            onOk: () => {
+                                location.reload()
+                                resolve();
+                            },
+                            onCancel: () => {
+                                reject();
+                            }
+                        });
 
                         // 關閉抽屜
-                        this.value = false;
+                        // this.value = false;
                                 
                     } catch (error) {
                         console.error(error);

@@ -1,5 +1,6 @@
 .backNews {
     display: flex;
+    // min-height: 500px;
     max-height: 100vh;
 
     .backNewsPart {
@@ -44,7 +45,9 @@
 
     .eventsList {
         font-size: $mh6;
-        height: 60vh;
+        // height: 60vh;
+        height: 500px;
+        // background-color: #aaa;
         // overflow: scroll;
 
         ul {
@@ -89,5 +92,9 @@
         .eventDate {
             color: $whiteWord;
         }
+    }
+    .pageNumber {
+        position: relative;
+        
     }
 }
