@@ -38,7 +38,7 @@ export default {
     },
     methods: {
         axiosData() {
-            axios.get(`${import.meta.env.VITE_CARA_URL}/back/backAdmin.php`)
+            axios.get(`${import.meta.env.VITE_LPHP_URL}/back/backAdmin.php`)
                 .then((response) => {
                     this.adminData = response.data;
                     console.log(this.adminData);
@@ -59,7 +59,7 @@ export default {
             // console.log(editItem);
             try {
                 // 發送請求更新admin_state 到後端
-                axios.post(`${import.meta.env.VITE_CARA_URL}/back/backAdminState.php`, editItem, {
+                axios.post(`${import.meta.env.VITE_LPHP_URL}/back/backAdminState.php`, editItem, {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
                 console.log('Updated admin state:', newState);

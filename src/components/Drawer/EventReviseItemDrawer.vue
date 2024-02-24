@@ -155,7 +155,7 @@ export default {
             this.handleBeforeChange()
             
             .then(() => {
-                axios.post(`${import.meta.env.VITE_CARA_URL}/back/updateNewsInfo.php`, this.formData)
+                axios.post(`${import.meta.env.VITE_LPHP_URL}/back/updateNewsInfo.php`, this.formData)
                 .then(response => {
                     console.log(response.data);
                     // 處理響應

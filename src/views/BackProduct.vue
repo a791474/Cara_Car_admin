@@ -44,7 +44,7 @@ export default {
   methods: {
     getProductData(){
       //axios的get方法(`$import.meta.env.{變數}/檔名.php`)用.env檔中寫的網址來判斷網址URL的前贅
-      axios.get(`${import.meta.env.VITE_CARA_URL}/back/backDisplayAllProductList.php`)
+      axios.get(`${import.meta.env.VITE_LPHP_URL}/back/backDisplayAllProductList.php`)
         .then((response) => {
         // 成功取得資料後，將資料存入 member 陣列
           this.productsData = response.data;

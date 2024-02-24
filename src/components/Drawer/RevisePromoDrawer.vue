@@ -125,7 +125,7 @@ export default {
         revisePromo(){
             this.handleBeforeChange()
             .then(() => {
-                axios.post(`${import.meta.env.VITE_CARA_URL}/back/updatePromoDetail.php`, this.formData)
+                axios.post(`${import.meta.env.VITE_LPHP_URL}/back/updatePromoDetail.php`, this.formData)
                 .then(res=>{
                     console.log(res.data);
                     location.reload()

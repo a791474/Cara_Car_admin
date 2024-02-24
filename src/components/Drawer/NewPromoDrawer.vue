@@ -128,7 +128,7 @@ export default {
                 this.handleBeforeSubmit()
                     // .then(() => {
                         try {
-                            const response = await axios.post(`${import.meta.env.VITE_CARA_URL}/back/postNewPromo.php`, this.formData);
+                            const response = await axios.post(`${import.meta.env.VITE_LPHP_URL}/back/postNewPromo.php`, this.formData);
                             // const response = axios.post(`${import.meta.env.VITE_CARA_URL}/back/postNewPromo.php`, this.formData,{
                             //     headers: { "Content-Type": "multipart/form-data" },
                             // });

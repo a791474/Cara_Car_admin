@@ -65,7 +65,7 @@ export default {
     },
     created() { //在頁面載入時同時載入function
         //axios的get方法(`$import.meta.env.{變數}/檔名.php`)用.env檔中寫的網址來判斷網址URL的前贅
-        axios.get(`${import.meta.env.VITE_CARA_URL}/back/backShOrder.php`)
+        axios.get(`${import.meta.env.VITE_LPHP_URL}/back/backShOrder.php`)
                 .then((response) => {
                     this.orderList = response.data;
                     console.log(response);

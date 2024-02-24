@@ -78,7 +78,7 @@ export default {
     },
     methods: {
         getOrderList(){
-            axios.get(`${import.meta.env.VITE_CARA_URL}/back/backOrder.php`)
+            axios.get(`${import.meta.env.VITE_LPHP_URL}/back/backOrder.php`)
         .then((response)=>{
             this.orderList = response.data;
             this.newOrderList = response.data;

@@ -47,7 +47,7 @@ export default {
     },
     methods: {
         axiosGet(){
-            axios.get(`${import.meta.env.VITE_CARA_URL}/back/backPromotion.php`)
+            axios.get(`${import.meta.env.VITE_LPHP_URL}/back/backPromotion.php`)
             .then((res) => {
                 this.promoData = res.data;
                 this.displayData = res.data;

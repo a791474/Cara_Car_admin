@@ -137,7 +137,7 @@ import axios from 'axios'
                 // 若沒有欄位為空值，則提交表單
                 if (hasNonEmptyField) {
                     try {
-                        const response = await axios.post(`${import.meta.env.VITE_CARA_URL}/back/postNewsArticle.php`, this.formData);
+                        const response = await axios.post(`${import.meta.env.VITE_LPHP_URL}/back/postNewsArticle.php`, this.formData);
                         console.log(response.data); // 可以在控制台中查看後端傳回的信息
 
                         // 提示成功新增資料
