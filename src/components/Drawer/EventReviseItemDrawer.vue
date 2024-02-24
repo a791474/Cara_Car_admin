@@ -160,9 +160,6 @@ export default {
                     console.log(response.data);
                     // 處理響應
 
-                    // 提示成功新增資料
-                    alert('已成功新增資料!');
-
                     // 關閉抽屜
                     this.value = false;
                 })
@@ -182,6 +179,7 @@ export default {
                     title: '更改消息確認',
                     content: '確定要更新消息嗎?',
                     onOk: () => {
+                        location.reload()
                         resolve();
                     },
                     onCancel: () => {
