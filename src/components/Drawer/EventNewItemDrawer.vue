@@ -36,14 +36,17 @@
                     </Col>
                 </Row>
 
-                <!-- 是否下架 -->
-                <!-- <Row :gutter="32">
+            <!-- 是否下架 -->
+            <Row :gutter="32">
                     <Col span="12">
                         <FormItem label="是否下架" label-position="top">
-                                <Checkbox v-model="formData.disLaunch" label="下架"></Checkbox>
+                            <RadioGroup v-model="formData.eventState">
+                                <Radio label="0">消息上架</Radio>
+                                <Radio label="1">消息下架</Radio>
+                            </RadioGroup>
                         </FormItem>
                     </Col>
-                </Row> -->
+                </Row>
 
 
                 <!-- 上下架時間 -->
@@ -71,7 +74,7 @@
 
                 <!-- 消息內容 -->
                 <FormItem label="消息內容" label-position="top">
-                    <Input type="textarea" v-model="formData.eventInformation" :rows="10" placeholder="請輸入消息介紹資訊" />
+                    <Input class="eventInformation" type="textarea" v-model="formData.eventInformation" :rows="10" placeholder="請輸入消息介紹資訊" />
                 </FormItem>
             </Form>
 
@@ -145,14 +148,13 @@ import axios from 'axios'
                             title: '新增消息確認',
                             content: '確定要新增消息嗎?',
                             onOk: () => {
-                                location.reload()
                                 resolve();
                             },
                             onCancel: () => {
                                 reject();
                             }
                         });
-
+                        // this.$emit('getNewsData');
                         // 關閉抽屜
                         // this.value = false;
                                 

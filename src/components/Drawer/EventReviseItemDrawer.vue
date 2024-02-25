@@ -36,14 +36,19 @@
         </Col>
     </Row>
     
+
     <!-- 是否下架 -->
-    <!-- <Row :gutter="32">
+    <Row :gutter="32">
+        {{ formData.eventState }}
         <Col span="12">
             <FormItem label="是否下架" label-position="top">
-                    <Checkbox v-model="formData.eventState" label="下架"></Checkbox>
+                <RadioGroup v-model="formData.eventState">
+                    <Radio :label="0">消息上架</Radio>
+                    <Radio :label="1">消息下架</Radio>
+                </RadioGroup>
             </FormItem>
         </Col>
-    </Row> -->
+    </Row>
 
     <!-- 上下架時間 -->
     <Row :gutter="32">
@@ -62,14 +67,18 @@
     <!-- 圖片檔 -->
     <FormItem label="消息圖片" label-position="top">
         <Input type="text" 
-        @change="handleFileUpload" 
+        @change="handleFileUpload"
         v-model="formData.eventImg" 
         :rows="10" />
     </FormItem>
 
+    <div class="preview-image" v-if="formData.eventImg">
+        <img :src="getNewsImgSrc(formData.eventImg)" alt="圖片預覽" width="50%">
+    </div>
+
     <!-- 內文 -->
     <FormItem label="消息內容" label-position="top">
-        <Input type="textarea" v-model="formData.eventInformation" :rows="10" placeholder="請輸入消息介紹資訊" />
+        <Input class="eventInformation" type="textarea" v-model="formData.eventInformation" :rows="10" placeholder="請輸入消息介紹資訊" />
     </FormItem>
         </Form>
 
@@ -105,11 +114,11 @@ export default {
                 newsId: '',
                 eventTitle: '',
                 classify: '',
+                eventState: '',
                 startDate: '',
                 endDate: '',
                 eventImg: '',
                 eventInformation: '',
-                // eventState: '',
                 // disLaunch: '',
                 // launch: '',
                 // date: '',
@@ -136,32 +145,41 @@ export default {
                 this.formData.endDate = this.detail.news_end_date;
                 this.formData.eventImg = this.detail.img_path;
                 this.formData.eventInformation = this.detail.news_content;
-                // this.formData.eventState = this.detail.news_state;
+                this.formData.eventState = this.detail.news_state;
+
             } 
         },
     },
     methods: {
+        // 取得圖片的路徑函式
+        getNewsImgSrc(imgName) {
+            return new URL(`../../../../imgs/event/${imgName}`, import.meta.url).href
+        },
         // 處理圖片上傳
         handleFileUpload(event) {
             const file = event.target.files[0];
-            // 從完整路徑中提取圖片名
-            const fileName = file.name;
-            // 將圖片名存儲到 formData 中
-            this.formData.eventImg = fileName;
+            const formData = new FormData();
+            formData.append('file', file);
         },
+
 
          // 更新數據方法
         reviseData() {
             this.handleBeforeChange()
-            
             .then(() => {
-                axios.post(`${import.meta.env.VITE_LPHP_URL}/back/updateNewsInfo.php`, this.formData)
+
+                axios.post(`${import.meta.env.VITE_LPHP_URL}/back/updateNewsInfo.php`, this.formData,{
+                    headers: { "Content-Type": "multipart/form-data" },
+                })
                 .then(response => {
-                    console.log(response.data);
                     // 處理響應
+                    console.log(response.data);
 
                     // 關閉抽屜
                     this.value = false;
+                    
+                    // 將資料傳給父層更新
+                    this.$emit('getNewsData');
                 })
                 .catch(error => {
                     console.error(error);
@@ -179,7 +197,7 @@ export default {
                     title: '更改消息確認',
                     content: '確定要更新消息嗎?',
                     onOk: () => {
-                        location.reload()
+                        
                         resolve();
                     },
                     onCancel: () => {
