@@ -13,7 +13,9 @@
                 </select>
                 <input v-model.trim="search" :placeholder="placeholderText">
                 <!-- <button @click="search" class="searchBtn">搜尋</button> -->
-                <EventNewItemDrawer />
+                <!-- <EventNewItemDrawer /> -->
+                <EventNewItemDrawer
+                @getNewsData="getNewsData" />
             </div>
 
             <div class="eventsList">
@@ -32,8 +34,10 @@
 
                     <li class="EventReviseItemDrawer"> 
 
+                        <!-- <EventReviseItemDrawer 
+                        :detail="eventsInfo" /> -->
                         <EventReviseItemDrawer 
-                        :detail="eventsInfo" />
+                        :detail="eventsInfo" @getNewsData="getNewsData"/>
 
 
                     </li>
