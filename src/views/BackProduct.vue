@@ -3,7 +3,7 @@ import axios from 'axios'; //引用axios才可以把api內容取出來
 import BackTitle from '@/components/backTitle.vue';
 import BackSidebar from '@/components/backSidebar.vue';
 import PageNumber from '@/components/PageNumber.vue';
-import NewItemDrawer from '@/components/Drawer/NewItemDrawer.vue';
+import NewItemDrawer from '@/components/Drawer/NewProductDrawer.vue';
 import ReviseItemDrawer from '@/components/Drawer/ProductReviseDrawer.vue';
 
 export default {
@@ -47,6 +47,7 @@ export default {
       axios.get(`${import.meta.env.VITE_LPHP_URL}/back/backDisplayAllProductList.php`)
         .then((response) => {
         // 成功取得資料後，將資料存入 member 陣列
+          console.log(response.data);
           this.productsData = response.data;
           this.displayData = response.data;
         })
@@ -141,7 +142,7 @@ export default {
         </select>
         <input type="text" v-model="searchText" :placeholder="placeholderText">
         <button @click="filterHandle" class="searchBtn">搜尋</button>
-        <NewItemDrawer />
+        <NewItemDrawer @refreshGetProductData="getProductData" />
       </div>
 
       <!-- 商品列表 -->
@@ -161,7 +162,7 @@ export default {
         </div>
         <ul class="productInfoList" v-for="(productInfo, index) in paginated" :key="index">
           <li class="productNo"> {{ productInfo.pro_id }} </li>
-          <li class="ReviseItemDrawer"><ReviseItemDrawer :detail="productInfo"/></li>
+          <li class="ReviseItemDrawer"><ReviseItemDrawer @refreshGetProductData="getProductData" :detail="productInfo"/></li>
           <li class="picture">
             <img :src="getProductImgSrc(productInfo.img_name)" alt="">
           </li>

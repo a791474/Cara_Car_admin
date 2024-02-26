@@ -48,6 +48,14 @@
 		}
 	}
 }
+.onOrRemoved{
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	input{
+		margin: 10px;
+	};
+}
 // 商品新增修改抽屜通用部分起點
 
 // 修改商品抽屜專用起點
