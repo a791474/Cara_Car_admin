@@ -13,6 +13,7 @@
         :mask-closable="false"
         :styles="styles"
     >
+    {{ this.formData.newsId }}
         <Form :model="formData">
 
     <!-- 消息標題 -->
@@ -65,30 +66,28 @@
 
     <!-- 圖片檔 -->
     <FormItem label="消息圖片" label-position="top">
-        <!-- <Input type="text" 
-        @change="handleFileUpload"
-        v-model="formData.eventImg" 
-        :rows="10" /> -->
 
-        <Upload
-            :before-upload="handleUpload"
+        <input type="file" name="upFile" id="upFile" style="display: none;" accept="image/*" @change="uploadImg">
+        <Button class="upLoad" @click="changeFile">選擇圖片</Button>
+        <!-- <Upload
+            :before-upload="uploadImg"
             action=""
         >
             <Button icon="ios-camera"
                 >選擇圖片上傳</Button
             >
-        </Upload>
-        <div v-if="newImgFile.length > 0">
+        </Upload> -->
+        <!-- <div v-if="newImgFile.length > 0">
             已選擇的圖片:
             <ul>
                 <li v-for="image in newImgFile">
                     {{ image.title }}
                 </li>
             </ul>
-        </div>
+        </div> -->
     </FormItem>
 
-    <div class="preview-image" v-if="formData.eventImg">
+    <div class="preview-image" v-if="formData.eventImg && imgPreview">
         <img :src="getNewsImgSrc(formData.eventImg)" alt="圖片預覽" width="50%">
     </div>
 
@@ -117,6 +116,7 @@ import axios from 'axios';
 export default {
     data () {
         return {
+            imgPreview: true,
             value: false,
             styles: {
                 height: 'calc(100% - 55px)',
@@ -168,10 +168,21 @@ export default {
             } 
         },
     },
+    mounted() {
+        // document.getElementById('upFile').addEventListener("change", this.uploadImg);
+    },
+    updated() {
+        // alert()
+        // document.getElementById('upFile').addEventListener("change", this.uploadImg);
+    },
     methods: {
         // 取得圖片的路徑函式
-        getNewsImgSrc(imgName) {
-            return new URL(`../../../../imgs/event/${imgName}`, import.meta.url).href
+        getNewsImgSrc() {
+            // console.log(imgName);
+            return new URL(`${import.meta.env.VITE_LIMG_BASE_URL}/event/${this.formData.eventImg}`).href
+        },
+        changeFile(){
+            document.getElementById("upFile").click();
         },
         // 處理圖片上傳
         // handleFileUpload(event) {
@@ -181,42 +192,80 @@ export default {
         // },
 
         // 處理圖片上傳
-		handleUpload(file) {
-            this.newImgFile = []
-			// 新增圖片到 newImgFile 陣列中
-			const reader = new FileReader();
-			reader.readAsDataURL(file);
-			this.newImgFile.push({
-				title: file.name,
-				image: file,
-				newsId: this.formData.news_id,
-			});
-			return false;
-		},
+		// handleUpload(file) {
+        //     this.newImgFile = []
+		// 	// 新增圖片到 newImgFile 陣列中
+		// 	const reader = new FileReader();
+		// 	reader.readAsDataURL(file);
+		// 	this.newImgFile.push({
+		// 		title: file.name,
+		// 		image: file,
+		// 		newsId: this.formData.newsId,
+		// 	});
+		// 	return false;
+		// },
+        uploadImg(e) {
+      // console.log(e.target.files[0])
+      if (e.target.files[0]) {
+        const formData = new FormData();
+        formData.append('file', e.target.files[0]);
+        formData.append("news_id", this.formData.newsId);
+        // 統一規範檔名為member_img_userId
+        formData.append('img_path', `news_img_${this.formData.newsId}.jpg`);
+
+        // call api
+        axios
+          .post(
+            `${import.meta.env.VITE_LPHP_URL}/back/addNewsImgs.php?`,
+            this.formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          )
+          .then((res) => {
+            this.imgPreview = false
+            // console.log(res.data)
+            if (res.data.msg === 'Y') {
+                alert(this.formData.eventImg)
+              alert("已更新消息圖片！");
+              this.imgPreview = true;
+              this.formData.eventImg = `news_img_${this.formData.newsId}.jpg`
+              // 更新圖
+            } else {
+              alert("更新圖片失敗！");
+            }
+          })
+          .catch((error) => {
+            console.error("錯誤", error);
+          });
+      }
+    },
 		//執行圖片上傳
-		upload () {
-			// 建立 FormData 物件，用於傳送表單資料
-			const imgFormData = new FormData();
-			// 將 newImgFile 中的每張圖片(每張圖片在以下的foreach叫做image)加入 FormData 中
-			this.newImgFile.forEach(image => {
-				imgFormData.append('image[]', image.image); // images[]  PHP 中接收圖片資料的陣列參數名稱
-				imgFormData.append('news_id', image.newsId); // PHP 中接收圖片資料的陣列參數名稱
-			});
+		// upload () {
+		// 	// 建立 FormData 物件，用於傳送表單資料
+		// 	const imgFormData = new FormData();
+		// 	// 將 newImgFile 中的每張圖片(每張圖片在以下的foreach叫做image)加入 FormData 中
+		// 	this.newImgFile.forEach(image => {
+		// 		imgFormData.append('image[]', image.image); // images[]  PHP 中接收圖片資料的陣列參數名稱
+		// 		imgFormData.append('news_id', image.newsId); // PHP 中接收圖片資料的陣列參數名稱
+		// 	});
 
-			axios.post(`${import.meta.env.VITE_LPHP_URL}/back/addProductImgs.php`, imgFormData)
-				.then(response => {
-						// 成功處理回應
-						console.log('圖片上傳成功', response.data);
-						this.$Message.success('圖片上傳成功');
-						this.newImgFile = [];
-				})
-				.catch(error => {
-						// 處理錯誤
-						console.error('圖片上傳失敗', error);
-						this.$Message.error('圖片上傳失敗');
-				});
+		// 	axios.post(`${import.meta.env.VITE_LPHP_URL}/back/addNewsImgs.php`, imgFormData)
+		// 		.then(response => {
+		// 				// 成功處理回應
+		// 				console.log('圖片上傳成功', response.data);
+		// 				this.$Message.success('圖片上傳成功');
+		// 				this.newImgFile = [];
+		// 		})
+		// 		.catch(error => {
+		// 				// 處理錯誤
+		// 				console.error('圖片上傳失敗', error);
+		// 				this.$Message.error('圖片上傳失敗');
+		// 		});
 
-		},
+		// },
 
 
          // 更新數據方法
@@ -224,7 +273,7 @@ export default {
             this.handleBeforeChange()
             .then(() => {
 
-                axios.post(`${import.meta.env.VITE_LPHP_URL}/back/addNewsImgs.php`, this.formData,{
+                axios.post(`${import.meta.env.VITE_LPHP_URL}/back/updateNewsInfo.php`, this.formData,{
                     headers: { "Content-Type": "multipart/form-data" },
                 })
                 .then(response => {
