@@ -224,10 +224,11 @@ export default {
             this.handleBeforeChange()
 
                 .then(() => {
+                    this.upload()
                     axios.post(`${import.meta.env.VITE_LPHP_URL}/back/updateSHProduct.php`, this.formData)
                         .then(response => {
                             console.log(response.data);
-                            location.reload()
+                            // location.reload()
                             // 處理響應
 
                             // 提示成功新增資料
@@ -235,6 +236,8 @@ export default {
 
                             // 關閉抽屜
                             this.value = false;
+                            this.$emit('refreshSHProData')
+
                         })
                         .catch(error => {
                             console.error(error);

@@ -18,7 +18,9 @@
         <input v-model.trim="searchText" :placeholder="placeholderText">
         <!-- <button @click="performSearch" class="searchBtn">搜尋</button> -->
 
-        <SHPNewItemDrawer />
+        <SHPNewItemDrawer 
+        @refreshSHProData="getSHProData"
+        />
       </div>
       <!-- SHProducts -->
       <div class="SHProductsList">
@@ -34,7 +36,7 @@
         <ul class="SHProductsInfoList" v-for="(SHProductsInfo, index) in paginated" :key="index">
           <li class="SHProductsNo"> {{ SHProductsInfo.sh_pro_id }} </li>
           <li class="SHPReviseItemDrawer">
-            <SHPReviseItemDrawer :detail="SHProductsInfo" />
+            <SHPReviseItemDrawer :detail="SHProductsInfo" @refreshSHProData="getSHProData"/>
           </li>
           <li class="picture"> {{ SHProductsInfo.picture }} </li>
           <li class="SHProductsName"> {{ SHProductsInfo.sh_pro_name }} </li>
