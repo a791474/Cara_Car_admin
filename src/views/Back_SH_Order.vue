@@ -20,16 +20,7 @@ export default {
                 paddingBottom: '53px',
                 position: 'static'
             },
-            formData: {
-                name: '',
-                url: '',
-                owner: '',
-                type: '',
-                approver: '',
-                date: '',
-                desc: ''
-            },
-
+            
             // placehoder切換
             selectedOption: 'memberNo',  //select預設值
             orderList: [],
@@ -69,6 +60,7 @@ export default {
     created() { 
         this.getOrderList();
     },
+    
     methods: {
         getOrderList() {
         axios.get(`${import.meta.env.VITE_LPHP_URL}/back/backShOrder.php`)
@@ -163,7 +155,7 @@ export default {
                         <div class="orderContent" v-for="(item,index) in paginated" :key="index">
                             <div class="newItemDrawer">
                                 <ShOrderDrawer 
-                                :detail="orderList" />
+                                :detail="item" />
     
                             </div>
                             <p class="orderContentP">{{item.sh_ord_id}}</p>
