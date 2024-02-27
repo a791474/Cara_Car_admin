@@ -18,7 +18,7 @@ export default {
         //console.log(this.userData); //確定有抓到
 
         //獲取PHP資料之前先傳入admin_id，執行完PHP檔之後將資料傳入user.js內的userData陣列中，而Pinia定義的陣列由下方的mapState獲取
-        axios.get(`${import.meta.env.VITE_CARA_URL}/back/getUsername.php?admin_id=${admin_id}`) 
+        axios.get(`${import.meta.env.VITE_LPHP_URL}/back/getUsername.php?admin_id=${admin_id}`) 
             .catch((error) => {
                 console.error("Error fetching data:", error);
             });

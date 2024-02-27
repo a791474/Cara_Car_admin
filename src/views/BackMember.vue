@@ -190,9 +190,9 @@ export default {
                 axios.post(`${import.meta.env.VITE_LPHP_URL}/back/backMemberState.php`, editItem, {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
-                console.log('Updated admin state:', newState);
+                console.log('Updated member state:', newState);
             } catch (error) {
-                console.error('Failed to update admin state:', error);
+                console.error('Failed to update member state:', error);
             }
         },
         
