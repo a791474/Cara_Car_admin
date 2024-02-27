@@ -70,7 +70,7 @@ export default {
     },
     // 取得圖片的路徑函式
     getProductImgSrc(imgName){
-      return new URL(`../assets/imgs/product/new_products/${imgName}`, import.meta.url).href
+      return new URL(`${import.meta.env.VITE_LIMG_BASE_URL}/new_products/${imgName}`, import.meta.url).href
     },
     //將商品上下架狀態從數值轉換成文字
     converPro_stateToText(Pro_state){

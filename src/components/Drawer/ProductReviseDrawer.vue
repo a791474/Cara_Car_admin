@@ -16,6 +16,9 @@
 				<Row :gutter="32">
 					<!-- 商品名稱 -->
 					<Col span="24">
+						<p style="font-size: 20px;">商品編號 : {{ formData.pro_id }}</p>
+					</Col>
+					<Col span="24">
 						<FormItem label="商品名稱-中文" label-position="top">
 							<Input
 								v-model="formData.pro_name"
@@ -101,6 +104,13 @@
 				<Row :gutter="32">
 					<Col span="24">
 						<FormItem label="新增圖片" label-position="top">
+							<!-- <Upload 暫時沒用
+								multiple
+								:format="['jpg','jpeg','png']" 
+								:on-format-error="handleFormatError"
+								:before-upload="handleUpload"
+								action=""
+							> -->
 							<Upload
 								multiple
 								:before-upload="handleUpload"
@@ -226,13 +236,19 @@ export default {
 			axios.get(`${import.meta.env.VITE_LPHP_URL}/front/thisproductimgs.php?pageId=${pro_id}`)
 				.then((response) => {
 					this.imgfiles = response.data;
-					console.log(this.imgfiles);
 				})
 				.catch((error) => {
 					console.error("Error fetching data:", error);
 					this.errorMessage = "執行失敗: " + error.message; // 存儲錯誤訊息
 				});
 		},
+		// 預防白癡上傳錯誤檔案  //暫時無用
+		// handleFormatError(){
+		// 	this.$Notice.warning({
+    //     title: '檔案格式錯誤',
+    //     content: "僅限上傳jpg、jpeg、png"
+    //   });
+		// },
 		// 處理圖片上傳
 		handleUpload(file) {
 			// 新增圖片到 newImgFile 陣列中
@@ -258,7 +274,8 @@ export default {
 			axios.post(`${import.meta.env.VITE_LPHP_URL}/back/addProductImgs.php`, imgFormData)
 				.then(response => {
 						// 成功處理回應
-						console.log('圖片上傳成功', response.data);
+						// console.log('圖片上傳成功', response.data);
+						//$Message用在iview的套件上
 						this.$Message.success('圖片上傳成功');
 						this.newImgFile = [];
 				})
@@ -288,6 +305,9 @@ export default {
 								// 關閉抽屜
 								this.value = false;
 
+								// 清空暫存圖片
+								this.newImgFile = [];
+
 								//更新畫面資料
 								this.$emit("refreshGetProductData");
 							})
@@ -304,29 +324,41 @@ export default {
 			}
 		},
 		// 確認是否要更新物件
-		handleBeforeChange() {
-      const keys = Object.keys(this.formData);
-      const hasEmptyValue = keys.some(key => {
-        return !this.formData[key];
+    // 除了pro_id pro_pin pro_state以外，所有資料皆有值
+    handleBeforeChange() {
+      return new Promise((resolve, reject) => {
+        const requiredKeys = [
+          "pro_name",
+          "pro_en_name",
+          "pro_category",
+          "pro_price",
+          "pro_intro",
+          "pro_info",
+          "launch_date",
+          "end_date",
+        ];
+        const emptyKeys = requiredKeys.filter((key) => {
+          return !this.formData[key];
+        });
+
+        if (emptyKeys.length > 0) {
+          const emptyKeyNames = emptyKeys.join(", ");
+          this.$Message.error(`請填寫以下屬性的值: ${emptyKeyNames}`);
+          reject();
+        } else {
+          this.$Modal.confirm({
+            title: "新增商品確認",
+            content: "確定要新增商品嗎?",
+            onOk: () => {
+              resolve();
+            },
+            onCancel: () => {
+              reject();
+            },
+          });
+        }
       });
-      if (hasEmptyValue){
-        this.$Message.error('請填寫所有商品資訊');
-        reject();
-      } else {
-        return new Promise((resolve, reject) => {
-				this.$Modal.confirm({
-					title: "新增商品確認",
-					content: "確定要新增商品嗎?",
-					onOk: () => {
-						resolve();
-					},
-					onCancel: () => {
-						reject();
-					},
-				});
-			});
-      }
-		},
+    },
 	},
 };
 </script>
