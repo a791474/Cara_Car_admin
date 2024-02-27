@@ -3,7 +3,7 @@
 export default {
     props: {
         detail: {
-            type: Object,
+            type: Object
         }
     },
     data () {
@@ -51,6 +51,9 @@ export default {
             }
         },
     },
+    methods:{
+        
+    }
 }
 </script>
 
@@ -160,3 +163,14 @@ export default {
 
         </div>
 </template>
+
+<style lang="scss" scoped>
+    .searchBtn{
+        background-color: $yellow;
+        border: none;
+        padding: 3px 10px;
+        border-radius: 20px;
+        cursor: pointer;
+        margin-right: 30px;
+    }
+</style>

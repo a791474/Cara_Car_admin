@@ -64,17 +64,9 @@ export default {
         totalPages() {
             return Math.ceil(this.orderList.length / this.perPage);
         },
+    
     },
-    created() { //在頁面載入時同時載入function
-        //axios的get方法(`$import.meta.env.{變數}/檔名.php`)用.env檔中寫的網址來判斷網址URL的前贅
-        // axios.get(`${import.meta.env.VITE_LPHP_URL}/back/backShOrder.php`)
-        //     .then((response) => {
-        //         this.orderList = response.data;
-        //         console.log(response);
-        //     })
-        //     .catch((error) => {
-        //         console.error("Error fetching data:", error);
-        //     });
+    created() { 
         this.getOrderList();
     },
     methods: {
@@ -166,33 +158,36 @@ export default {
                 </div>
                 
                 <div class="orderContent" >
-                    <div class="searchButton">
-                        <!-- <button @click="value = true" type="primary" class="searchBtn">查詢</button> -->
-                        <ShOrderDrawer 
-                        :detail="item" />
-                    </div>
                     <!-- item.資料庫欄位名稱 -->
-                    <div class="orderContent" v-for="(item,index) in paginated" :key="index">
-                        <p class="orderContentP">{{item.sh_ord_id}}</p>
-                        <p class="orderContentP">{{item.member_id}}</p>
-                        <p class="orderContentP">{{item.sh_pro_name}}</p>
-                        <p class="orderContentP">{{item.sh_ord_date}}</p>
+                    <div class="orderContent-wrap">
+                        <div class="orderContent" v-for="(item,index) in paginated" :key="index">
+                            <div class="newItemDrawer">
+                                <ShOrderDrawer 
+                                :detail="orderList" />
+    
+                            </div>
+                            <p class="orderContentP">{{item.sh_ord_id}}</p>
+                            <p class="orderContentP">{{item.member_id}}</p>
+                            <p class="orderContentP">{{item.sh_pro_name}}</p>
+                            <p class="orderContentP">{{item.sh_ord_date}}</p>
+                            <div class="switch">
+                                <Space>
+                                <Switch size="large"  :true-value="1" :false-value="0"
+                                    @on-change="changeState(item)">
+                                    <template #open>
+                                        <span>已出貨</span>
+                                    </template>
+                                    <template #close>
+                                        <span>未出貨</span>
+                                    </template>
+                                </Switch>
+                            </Space>
+                            </div>
+                        </div>
                     </div>
                     
+                    
                 
-                    <div class="switch">
-                        <Space>
-                        <Switch size="large"  :true-value="1" :false-value="0"
-                            @on-change="changeState(item)">
-                            <template #open>
-                                <span>已出貨</span>
-                            </template>
-                            <template #close>
-                                <span>未出貨</span>
-                            </template>
-                        </Switch>
-                    </Space>
-                    </div>
                 </div>
             </div>
             <PageNumber :totalPages="totalPages" :currentPage="currentPage" @pageChange="changePage" />
@@ -201,11 +196,7 @@ export default {
     </div>
 </div>
     <!-- side bar -->
-    <div class="newItemDrawer">
-        <ShOrderDrawer 
-        :detail="orderList" />
     
-    </div>
     
 </template>
 

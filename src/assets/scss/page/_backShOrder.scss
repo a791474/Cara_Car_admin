@@ -13,9 +13,7 @@
             width: 80%;
             margin: 0 auto;
             margin-top: 40px;
-            // .paginator{
-            //     margin-top:70px;
-            // }
+            
         }
     }
     .searchBar{
@@ -65,34 +63,46 @@
     .orderTable{
         height: 55vh;
     }
-    .orderContent{
+    .orderContent-wrap{
+        
+        width: 100%;
+        margin: 0 auto;
         display: flex;
-        // justify-content: space-between;
-        margin: 10px 0;
-        align-items: center;
-        .searchButton{
+        justify-content: center;
+        flex-direction: column;
+        
+        .orderContent{
+            padding-left: 60px;
             display: flex;
-            width: 17%;
             justify-content: center;
-        }
-        .searchBtn{
-            background-color: $yellow;
-            border: none;
-            padding: 3px 10px;
-            border-radius: 20px;
-            cursor: pointer;
-        }
-        .switch{
-            display: flex;
-            width: 17%;
-            justify-content: center;
-            .ivu-switch{
-                background-color: $blue;
+            margin: 6px 0;
+            align-items: center;
+            .orderContentP{
+                display: inline-block;
+                width: 18%;
+                padding-left: 30px;
+                text-align: center;
+                display: flex;
+                justify-content: center;
             }
-            .ivu-switch-checked {
-                background-color: 
-                $grey_3;
-                border: 1px solid $grey_3;
+            .searchButton{
+                display: flex;
+                width: 17%;
+                justify-content: center;
+            }
+            .switch{
+                display: flex;
+                padding-left: 24px;
+                width: 17%;
+                justify-content: center;
+                .ivu-switch{
+                    background-color: $blue;
+                }
+                .ivu-switch-checked {
+                    background-color: 
+                    $grey_3;
+                    border: 1px solid $grey_3;
+                }
             }
         }
     }
