@@ -2,7 +2,7 @@
 export default {
     data() {
         return {
-            activeTab:"",
+            activeTab: "",
         };
     },
     created() {
@@ -12,11 +12,11 @@ export default {
     methods: {
         updateActiveTab() {
             // 從路由名稱中提取選項名稱
-            const tabName = this.$route.name.replace('Back','')
+            const tabName = this.$route.name.replace('Back', '')
             // 根據提取的選項名稱設置activeTab
             this.activeTab = tabName;
         },
-        currentSidebar(item){
+        currentSidebar(item) {
             this.activeTab = item;
             switch (item) {
                 case 'Member':
@@ -44,15 +44,15 @@ export default {
                     this.$router.push({ name: 'BackAdmin' });
                     break;
                 default: break;
-                }
+            }
         }
     },
 }
 </script>
 
 <template>
-        <section class="sidebarFather">
-            <div class="backSidebar">
+    <section class="sidebarFather">
+        <div class="backSidebar">
             <div class="sidebarLogo">
                 <img src="../assets/imgs/sidebar-logo.png" alt="logo">
             </div>
@@ -74,7 +74,7 @@ export default {
                         二手訂單管理
                     </li>
                     <li @click="currentSidebar('Promotion')" :class="{ active: activeTab === 'Promotion' }">
-                        促銷商品管理
+                        促銷方案管理
                     </li>
                     <li @click="currentSidebar('News')" :class="{ active: activeTab === 'News' }">
                         最新消息管理
@@ -88,7 +88,7 @@ export default {
         <div class="drawBgHello">
             <img src="../assets/imgs/sidebar-bg-hello.png" alt="sidebarBg">
         </div>
-        </section>
+    </section>
 </template>
 
 <style lang="scss" scoped>
