@@ -76,19 +76,17 @@
                     </Col>
                 </Row>
                 <FormItem label="商品圖片" label-position="top">
-                    <!-- <Button class="btnUpload" type="file" multiple="multiple" v-model="File" @click="value = false">點我上傳
-                        </Button> -->
-                    <!-- <Input class="btnUpload" type="text" v-model="File" @click="value = false">點我上傳</Input> -->
-                    <Input class="btnUpload" type="file" multiple="multiple" @click="value = false">點我上傳</Input>
-                    <!-- <Input class="btnUpload" type="file" multiple="multiple" v-model="File" :rows="4"
-                            placeholder="please enter the description" /> -->
-                    <!-- <div class="upload_pic">
-                                    <input type="file" id="picture" name="uploadPic" placeholder="" style="display: none;">
-                                    <label for="picture">
-                                        <img src="../../assets/imgs/SecondHandSale/uploadPic.png" alt="upFile"
-                                            style="cursor: pointer;">
-                                    </label>
-                                </div> -->
+                    <Upload multiple :before-upload="handleUpload" action="">
+                        <Button icon="ios-camera">選擇圖片上傳</Button>
+                    </Upload>
+                    <div v-if="newImgFile.length > 0">
+                        已選擇的圖片:
+                        <ul>
+                            <li v-for="image in newImgFile">
+                                {{ image.title }}
+                            </li>
+                        </ul>
+                    </div>
                 </FormItem>
                 <div class="productsin">
                     商品介紹區
@@ -139,12 +137,14 @@ export default {
                 sh_pro_pin: ''
                 //url: '', //DB要新增欄位
             },
+            // imgfiles: [],
+            newImgFile: [],
         }
     },
     props: {
         detail: {
             type: Object,
-            // required: true,
+            required: true,
         }
     },
     watch: {
@@ -170,6 +170,55 @@ export default {
         closeDrawer() {
             this.value = false;
         },
+        // 取得這一份商品的全部圖片名稱
+        getThisProductAllImgs(sh_pro_id) {
+            axios.get(`${import.meta.env.VITE_LPHP_URL}/front/thisproductimgs.php?pageId=${sh_pro_id}`)
+                .then((response) => {
+                    this.imgfiles = response.data;
+                    console.log(this.imgfiles);
+                })
+                .catch((error) => {
+                    console.error("Error fetching data:", error);
+                    this.errorMessage = "執行失敗: " + error.message; // 存儲錯誤訊息
+                });
+        },
+        // 處理圖片上傳
+        handleUpload(file) {
+            // 新增圖片到 newImgFile 陣列中
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            this.newImgFile.push({
+                title: file.name,
+                image: file,
+                sh_pro_id: this.formData.sh_pro_id,
+            });
+            return false;
+        },
+        //執行圖片上傳
+        upload() {
+            // 建立 FormData 物件，用於傳送表單資料
+            const imgFormData = new FormData();
+            // 將 newImgFile 中的每張圖片(每張圖片在以下的foreach叫做image)加入 FormData 中
+            this.newImgFile.forEach(image => {
+                imgFormData.append('image[]', image.image); // images[]  PHP 中接收圖片資料的陣列參數名稱
+                imgFormData.append('sh_pro_id', image.sh_pro_id); // PHP 中接收圖片資料的陣列參數名稱
+            });
+
+            axios.post(`${import.meta.env.VITE_LPHP_URL}/back/addSHProductImgs.php`, imgFormData)
+                .then(response => {
+                    // 成功處理回應
+                    console.log('圖片上傳成功', response.data);
+                    this.$Message.success('圖片上傳成功');
+                    this.newImgFile = [];
+                })
+                .catch(error => {
+                    // 處理錯誤
+                    console.error('圖片上傳失敗', error);
+                    this.$Message.error('圖片上傳失敗');
+                });
+
+        },
+
         // 更新數據方法
         reviseData() {
             this.handleBeforeChange()
