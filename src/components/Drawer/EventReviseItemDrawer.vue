@@ -169,17 +169,16 @@ export default {
         },
     },
     mounted() {
-        // document.getElementById('upFile').addEventListener("change", this.uploadImg);
+        
     },
     updated() {
-        // alert()
-        // document.getElementById('upFile').addEventListener("change", this.uploadImg);
+        
     },
     methods: {
         // 取得圖片的路徑函式
         getNewsImgSrc() {
             // console.log(imgName);
-            return new URL(`${import.meta.env.VITE_LIMG_BASE_URL}/event/${this.formData.eventImg}`).href
+            return new URL(`${import.meta.env.VITE_IMG_BASE_URL}/event/${this.formData.eventImg}`).href
         },
         changeFile(){
             document.getElementById("upFile").click();
@@ -216,7 +215,7 @@ export default {
         // call api
         axios
           .post(
-            `${import.meta.env.VITE_LPHP_URL}/back/addNewsImgs.php?`,
+            `${import.meta.env.VITE_PHP_URL}/back/addNewsImgs.php?`,
             this.formData,
             {
               headers: {
@@ -252,7 +251,7 @@ export default {
 		// 		imgFormData.append('news_id', image.newsId); // PHP 中接收圖片資料的陣列參數名稱
 		// 	});
 
-		// 	axios.post(`${import.meta.env.VITE_LPHP_URL}/back/addNewsImgs.php`, imgFormData)
+		// 	axios.post(`${import.meta.env.VITE_PHP_URL}/back/addNewsImgs.php`, imgFormData)
 		// 		.then(response => {
 		// 				// 成功處理回應
 		// 				console.log('圖片上傳成功', response.data);
@@ -273,7 +272,7 @@ export default {
             this.handleBeforeChange()
             .then(() => {
 
-                axios.post(`${import.meta.env.VITE_LPHP_URL}/back/updateNewsInfo.php`, this.formData,{
+                axios.post(`${import.meta.env.VITE_PHP_URL}/back/updateNewsInfo.php`, this.formData,{
                     headers: { "Content-Type": "multipart/form-data" },
                 })
                 .then(response => {

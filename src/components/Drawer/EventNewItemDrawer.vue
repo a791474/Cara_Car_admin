@@ -115,7 +115,7 @@ export default {
                 // call api
                 axios
                     .post(
-                        `${import.meta.env.VITE_LPHP_URL}/back/addNewsImgs.php?`,
+                        `${import.meta.env.VITE_PHP_URL}/back/addNewsImgs.php?`,
                         formData,
                         {
                             headers: {
@@ -159,7 +159,7 @@ export default {
             // 若沒有欄位為空值，則提交表單
             if (hasNonEmptyField) {
                 try {
-                    const response = await axios.post(`${import.meta.env.VITE_LPHP_URL}/back/postNewsArticle.php`, this.formData);
+                    const response = await axios.post(`${import.meta.env.VITE_PHP_URL}/back/postNewsArticle.php`, this.formData);
                     console.log(response.data); // 可以在控制台中查看後端傳回的信息
                     
                     // 提示成功新增資料

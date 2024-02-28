@@ -207,7 +207,7 @@ export default {
     handleProductInfoApi() {
       axios
 				.post(
-					`${import.meta.env.VITE_LPHP_URL}/back/postNewProductInfo.php`,
+					`${import.meta.env.VITE_PHP_URL}/back/postNewProductInfo.php`,
           this.formData
         )
 				.then((response) => {
@@ -238,7 +238,7 @@ export default {
 				imgFormData.append('pro_id', this.newImgFile.pro_id); // PHP 中接收圖片資料的陣列參數名稱
 			});
 
-			axios.post(`${import.meta.env.VITE_LPHP_URL}/back/addProductImgs.php`, imgFormData)
+			axios.post(`${import.meta.env.VITE_PHP_URL}/back/addProductImgs.php`, imgFormData)
 				.then(response => {
 					// 成功處理回應
 					console.log('圖片上傳成功', response.data);
