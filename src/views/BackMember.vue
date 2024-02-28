@@ -190,7 +190,7 @@ export default {
                 axios.post(`${import.meta.env.VITE_PHP_URL}/back/backMemberState.php`, editItem, {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
-                console.log('Updated member state:', newState);
+                // console.log('Updated member state:', newState);
             } catch (error) {
                 console.error('Failed to update member state:', error);
             }

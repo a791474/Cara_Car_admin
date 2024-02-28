@@ -92,7 +92,7 @@ export default {
                 axios.post(`${import.meta.env.VITE_LPHP_URL}/back/backOrder.php`, editItem, {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
-                console.log('Updated ord state:', newState);
+                // console.log('Updated ord state:', newState);
             } catch (error) {
                 console.error('Failed to update ord state:', error);
             }
@@ -201,8 +201,8 @@ export default {
                 remark: item.remark,
                 products: [],
             };
-            console.log(item);
-            console.log(this.formData);
+            // console.log(item);
+            // console.log(this.formData);
             this.formData.products = [];
             
             for (const product of item.products) {

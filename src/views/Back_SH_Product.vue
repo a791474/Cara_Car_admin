@@ -115,7 +115,7 @@ export default {
   },
   watch: {
     searchText(newVal, oldVal) {
-      console.log(this.searchText);
+      // console.log(this.searchText);
       // console.log('new:'+newVal);
       // console.log('old:'+oldVal);
 

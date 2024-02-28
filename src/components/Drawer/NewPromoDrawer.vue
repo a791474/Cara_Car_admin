@@ -132,7 +132,7 @@ export default {
                             // const response = axios.post(`${import.meta.env.VITE_CARA_URL}/back/postNewPromo.php`, this.formData,{
                             //     headers: { "Content-Type": "multipart/form-data" },
                             // });
-                            console.log(response.data);
+                            // console.log(response.data);
 
                             
                         } catch (error) {

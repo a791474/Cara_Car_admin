@@ -160,7 +160,7 @@ export default {
             axios.get(`${import.meta.env.VITE_PHP_URL}/front/thisproductimgs.php?pageId=${sh_pro_id}`)
                 .then((response) => {
                     this.imgfiles = response.data;
-                    console.log(this.imgfiles);
+                    // console.log(this.imgfiles);
                 })
                 .catch((error) => {
                     console.error("Error fetching data:", error);
@@ -183,10 +183,10 @@ export default {
         handleNewSHProductInfo() {
             axios.post(`${import.meta.env.VITE_PHP_URL}/back/postbackSHProduct.php`, this.formData)
                 .then((response) => {
-                    console.log(response.data); // 可以在控制台中查看後端傳回的信息
-                    console.log(response.data.sh_pro_id);
+                    // console.log(response.data); // 可以在控制台中查看後端傳回的信息
+                    // console.log(response.data.sh_pro_id);
                     this.newImgFile.sh_pro_id = response.data.sh_pro_id;
-                    console.log("成功新增的 sh_pro_id:", this.newImgFile.sh_pro_id);
+                    // console.log("成功新增的 sh_pro_id:", this.newImgFile.sh_pro_id);
 
                     if (this.newImgFile.sh_pro_id) {
                         this.upload()

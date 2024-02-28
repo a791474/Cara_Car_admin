@@ -36,7 +36,7 @@ export default {
     watch: {
         value(nVal) {
             if(nVal) {
-                console.log(this.detail.sh_ord_id);
+                // console.log(this.detail.sh_ord_id);
                 this.formData.id = this.detail.sh_ord_id
                 this.formData.name = this.detail.sh_pro_name
                 this.formData.purchaser = this.detail.m_name

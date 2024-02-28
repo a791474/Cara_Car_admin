@@ -41,7 +41,7 @@ export default {
             axios.get(`${import.meta.env.VITE_PHP_URL}/back/backAdmin.php`)
                 .then((response) => {
                     this.adminData = response.data;
-                    console.log(this.adminData);
+                    // console.log(this.adminData);
                 })
                 .catch((error) => {
                     console.error("Error fetching data:", error);

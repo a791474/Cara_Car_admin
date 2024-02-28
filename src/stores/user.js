@@ -25,7 +25,7 @@ export default defineStore('userStore', {
             }
         },
         updateUserData(val) {
-            console.log(val);
+            // console.log(val);
             this.userData = {
                 id: val.admin_id,
                 name: val.admin_name,

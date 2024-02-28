@@ -175,7 +175,7 @@ export default {
             axios.get(`${import.meta.env.VITE_PHP_URL}/front/thisproductimgs.php?pageId=${sh_pro_id}`)
                 .then((response) => {
                     this.imgfiles = response.data;
-                    console.log(this.imgfiles);
+                    // console.log(this.imgfiles);
                 })
                 .catch((error) => {
                     console.error("Error fetching data:", error);
@@ -207,7 +207,7 @@ export default {
             axios.post(`${import.meta.env.VITE_PHP_URL}/back/addSHProductImgs.php`, imgFormData)
                 .then(response => {
                     // 成功處理回應
-                    console.log('圖片上傳成功', response.data);
+                    // console.log('圖片上傳成功', response.data);
                     this.$Message.success('圖片上傳成功');
                     this.newImgFile = [];
                 })
@@ -227,7 +227,7 @@ export default {
                     this.upload()
                     axios.post(`${import.meta.env.VITE_PHP_URL}/back/updateSHProduct.php`, this.formData)
                         .then(response => {
-                            console.log(response.data);
+                            // console.log(response.data);
                             // location.reload()
                             // 處理響應
 

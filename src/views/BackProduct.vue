@@ -47,7 +47,7 @@ export default {
       axios.get(`${import.meta.env.VITE_PHP_URL}/back/backDisplayAllProductList.php`)
         .then((response) => {
         // 成功取得資料後，將資料存入 member 陣列
-          console.log(response.data);
+          // console.log(response.data);
           this.productsData = response.data;
           this.displayData = response.data;
         })

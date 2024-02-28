@@ -190,7 +190,7 @@ export default {
     // 處理圖片上傳
     handleUpload(file) {
       // 新增圖片到 newImgFile 陣列中
-      console.log(file);
+      // console.log(file);
       const reader = new FileReader();
       reader.readAsDataURL(file);
       this.newImgFile.push({
@@ -207,11 +207,11 @@ export default {
           this.formData
         )
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           if (response.data.pro_id) {
             // 將 pro_id 存儲在前端狀態中，以供後續使用
             this.newImgFile.pro_id = response.data.pro_id;
-            console.log("成功新增的 pro_id:", this.newImgFile.pro_id);
+            // console.log("成功新增的 pro_id:", this.newImgFile.pro_id);
             this.handleProducImgstApi()
           } else {
             console.error("未收到 pro_id");
@@ -235,7 +235,7 @@ export default {
 			axios.post(`${import.meta.env.VITE_PHP_URL}/back/addProductImgs.php`, imgFormData)
 				.then(response => {
 					// 成功處理回應
-					console.log('圖片上傳成功', response.data);
+					// console.log('圖片上傳成功', response.data);
 					this.$Message.success('圖片上傳成功');
 					this.newImgFile = [];
 				})

@@ -299,7 +299,7 @@ export default {
 								this.formData
 							)
 							.then((response) => {
-								console.log(response.data);
+								// console.log(response.data);
 								// 處理響應
 
 								// 關閉抽屜

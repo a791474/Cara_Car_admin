@@ -127,7 +127,7 @@ export default {
             .then(() => {
                 axios.post(`${import.meta.env.VITE_PHP_URL}/back/updatePromoDetail.php`, this.formData)
                 .then(res=>{
-                    console.log(res.data);
+                    // console.log(res.data);
                     location.reload()
                 })
                 .catch(error => {
