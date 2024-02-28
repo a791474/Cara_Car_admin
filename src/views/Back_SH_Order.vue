@@ -63,7 +63,7 @@ export default {
     
     methods: {
         getOrderList() {
-        axios.get(`${import.meta.env.VITE_LPHP_URL}/back/backShOrder.php`)
+        axios.get(`${import.meta.env.VITE_PHP_URL}/back/backShOrder.php`)
             .then((response) => {
             this.orderList = response.data;
             this.newOrderList = response.data;

@@ -233,7 +233,7 @@ export default {
 	methods: {
 		// 取得這一份商品的全部圖片名稱
 		getThisProductAllImgs(pro_id){
-			axios.get(`${import.meta.env.VITE_LPHP_URL}/front/thisproductimgs.php?pageId=${pro_id}`)
+			axios.get(`${import.meta.env.VITE_PHP_URL}/front/thisproductimgs.php?pageId=${pro_id}`)
 				.then((response) => {
 					this.imgfiles = response.data;
 				})
@@ -271,7 +271,7 @@ export default {
 				imgFormData.append('pro_id', image.pro_id); // PHP 中接收圖片資料的陣列參數名稱
 			});
 
-			axios.post(`${import.meta.env.VITE_LPHP_URL}/back/addProductImgs.php`, imgFormData)
+			axios.post(`${import.meta.env.VITE_PHP_URL}/back/addProductImgs.php`, imgFormData)
 				.then(response => {
 						// 成功處理回應
 						// console.log('圖片上傳成功', response.data);
@@ -295,7 +295,7 @@ export default {
 					this.upload()
 						axios
 							.post(
-								`${import.meta.env.VITE_LPHP_URL}/back/updateProductInfo.php`,
+								`${import.meta.env.VITE_PHP_URL}/back/updateProductInfo.php`,
 								this.formData
 							)
 							.then((response) => {

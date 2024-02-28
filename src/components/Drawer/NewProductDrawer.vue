@@ -202,8 +202,8 @@ export default {
     },
     handleProductInfoApi() {
       axios
-        .post(
-          `${import.meta.env.VITE_LPHP_URL}/back/postNewProductInfo.php`,
+				.post(
+					`${import.meta.env.VITE_PHP_URL}/back/postNewProductInfo.php`,
           this.formData
         )
         .then((response) => {
@@ -232,23 +232,18 @@ export default {
         imgFormData.append("pro_id", this.newImgFile.pro_id); // PHP 中接收商品id，請注意這裡格式不同
       });
 
-      axios
-        .post(
-          `${import.meta.env.VITE_LPHP_URL}/back/addProductImgs.php`,
-          imgFormData
-        )
-        .then((response) => {
-          // 成功處理回應
-          console.log("圖片上傳成功", response.data);
-          this.$Message.success("圖片上傳成功");
-          this.newImgFile = [];
-          imgFormData = new FormData(); // 清空 imgFormData
-        })
-        .catch((error) => {
-          // 處理錯誤
-          console.error("圖片上傳失敗", error);
-          this.$Message.error("圖片上傳失敗");
-        });
+			axios.post(`${import.meta.env.VITE_PHP_URL}/back/addProductImgs.php`, imgFormData)
+				.then(response => {
+					// 成功處理回應
+					console.log('圖片上傳成功', response.data);
+					this.$Message.success('圖片上傳成功');
+					this.newImgFile = [];
+				})
+				.catch(error => {
+					// 處理錯誤
+					console.error('圖片上傳失敗', error);
+					this.$Message.error('圖片上傳失敗');
+				});
     },
 
     addData() {

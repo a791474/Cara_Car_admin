@@ -155,7 +155,7 @@ export default {
         },
         memberData() {
             //axios的get方法(`$import.meta.env.{變數}/檔名.php`)用.env檔中寫的網址來判斷網址URL的前贅
-            axios.get(`${import.meta.env.VITE_LPHP_URL}/back/backMember.php`)
+            axios.get(`${import.meta.env.VITE_PHP_URL}/back/backMember.php`)
                 .then((response) => {
                     // 成功取得資料後，將資料存入 member 陣列
                     this.memData = response.data;
@@ -187,7 +187,7 @@ export default {
             editItem.append("member_id", currentId)
             // console.log(editItem);
             try {
-                axios.post(`${import.meta.env.VITE_LPHP_URL}/back/backMemberState.php`, editItem, {
+                axios.post(`${import.meta.env.VITE_PHP_URL}/back/backMemberState.php`, editItem, {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
                 console.log('Updated member state:', newState);
