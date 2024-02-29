@@ -13,6 +13,7 @@ export default {
     },
     data() {
         return {
+            isAdmin:false,
             activeTab: "",
             currentPage: 1,
             perPage: 10,
@@ -22,6 +23,7 @@ export default {
     },
     created() {
         this.axiosData();
+        this.checkAdmin();
     },
     computed: {
         authority() {
@@ -58,25 +60,35 @@ export default {
                     console.error("Error fetching data:", error);
                 });
         },
-        changeState(admin) {
-            const newState = admin.admin_state == true ? 1 : 0;
-            const currentId = admin.admin_id;
-            // console.log(newState);
-
-            const editItem = new FormData();
-            editItem.append("tableName", "admin")
-            editItem.append("admin_state", newState)
-            editItem.append("admin_id", currentId)
-            // console.log(editItem);
-            try {
-                // 發送請求更新admin_state 到後端
-                axios.post(`${import.meta.env.VITE_PHP_URL}/back/backAdminState.php`, editItem, {
-                    headers: { "Content-Type": "multipart/form-data" },
-                });
-                console.log('Updated admin state:', newState);
-            } catch (error) {
-                console.error('Failed to update admin state:', error);
+        async checkAdmin(){
+            let userData = JSON.parse(localStorage.getItem('userData'));
+            if (userData && userData.authority == 0) {
+                this.isAdmin = true;
             }
+        },
+        async changeState(admin) {
+            if(!this.isAdmin){
+                alert('你沒有操作權限！');
+                return
+            }
+                let newState = admin.admin_state == true ? 1 : 0;
+                let currentId = admin.admin_id;
+
+                let editItem = new FormData();
+                editItem.append("tableName", "admin")
+                editItem.append("admin_state", newState)
+                editItem.append("admin_id", currentId)
+
+                try {
+                // 發送請求更新admin_state 到後端
+                    await axios.post(`${import.meta.env.VITE_PHP_URL}/back/backAdminState.php`, editItem, {
+                        headers: { "Content-Type": "multipart/form-data" },
+                    });
+                    alert('成功更新管理員登入權限！')
+                    console.log('Updated admin state:', newState);
+                } catch (error) {
+                    console.error('Failed to update admin state:', error);
+                }
         },
         currentSidebar(item) {
             this.activeTab = item
@@ -109,7 +121,7 @@ export default {
                 <input id="authority" type="text" :value="authority(admin.admin_authority)" readonly>
                 <Space direction="vertical">
                     <Space>
-                        <Switch size="large" v-model="admin.admin_state" :true-value="1" :false-value="0"
+                        <Switch size="large" v-model="admin.admin_state" :true-value="1" :false-value="0" :disabled="!isAdmin"
                             @on-change="changeState(admin)">
                             <template #open>
                                 <span>啟用</span>

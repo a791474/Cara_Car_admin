@@ -19,7 +19,7 @@ export default {
             currentPage: 1,
             perPage: 5,
             promoData: [],
-            displayData:[],
+            // displayData:[],
         };
     },
     created() {
@@ -38,19 +38,24 @@ export default {
         },
         Checkboxes() {
             return this.paginated.map(promo => {
-                return promo.promo_state === 1;
+                return promo.promo_state == 1;
             });
         },
         promoState() {
-            return (promoState) => promoState === 1 ? "啟用中" : "未啟用";
+            return (promoState) => promoState == 1 ? "啟用中" : "未啟用";
         },
     },
     methods: {
         axiosGet(){
             axios.get(`${import.meta.env.VITE_PHP_URL}/back/backPromotion.php`)
             .then((res) => {
-                this.promoData = res.data;
-                this.displayData = res.data;
+                this.promoData = res.data.map(item=>{
+                    return{
+                        ...item,
+                        promo_state: parseInt(item.promo_state)
+                    }
+                });
+                // this.displayData = res.data;
             })
             .catch((error) => {
                 console.error("Error fetching data:", error);

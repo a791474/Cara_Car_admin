@@ -34,10 +34,14 @@ export default {
         }).then(res=>{
             if(res && res.data){
                 if(res.data.code == 1){
-                    this.updateToken(res.data.session_id)
-                    this.updateUserData(res.data.adminInfo)
-                    this.$router.push('/BackAdmin')
-
+                    if(res.data.adminInfo.admin_state == 0){
+                        alert('請聯絡管理人員！')
+                    }else if(res.data.adminInfo.admin_state == 1){
+                        this.updateToken(res.data.session_id)
+                        this.updateUserData(res.data.adminInfo)
+                        alert('登入成功！')
+                        this.$router.push('/BackAdmin')
+                    }
                 }else{
                     alert('請輸入正確帳號或密碼')
                 }
@@ -63,8 +67,8 @@ export default {
                 <input type="email" placeholder="使用者名稱" v-model="account">
                 <input :type="passwordVisible ? 'text' : 'password'" v-model="psw8888" placeholder="●●●●●●●●">
                 <div id="errorMessage" class="error-message"></div>
-                <img v-if="passwordVisible" src="../assets/imgs/login/open-eye.svg" alt="closeEye" class="eye" @click="togglePswVisbility">
-                <img v-else src="../assets/imgs/login/close-eye.svg" alt="closeOpen" class="eye" @click="togglePswVisbility">
+                <img v-if="passwordVisible" src="@/assets/imgs/login/open-eye.svg" alt="closeEye" class="eye" @click="togglePswVisbility">
+                <img v-else src="@/assets/imgs/login/close-eye.svg" alt="closeOpen" class="eye" @click="togglePswVisbility">
                 <button class="loginBtn" @click="login">登入</button>
             </fieldset>
         </div>

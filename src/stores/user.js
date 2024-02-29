@@ -30,6 +30,8 @@ export default defineStore('userStore', {
                 id: val.admin_id,
                 name: val.admin_name,
                 email: val.admin_account,
+                status: val.admin_state,
+                authority: val.admin_authority,
             }
             localStorage.setItem('userData',JSON.stringify(this.userData));
         },
