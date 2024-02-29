@@ -97,6 +97,8 @@ export default {
                 eventImg: '',
                 eventInformation: '',
             },
+            // 添加一個用於生成圖片路徑數字的計數變量
+            imgPathCounter: 10,
         }
     },
     methods: {
@@ -108,9 +110,14 @@ export default {
             if (e.target.files[0]) {
                 const formData = new FormData();
                 formData.append('file', e.target.files[0]);
-                formData.append("news_id", this.formData.newsId);
+                // formData.append("news_id", this.formData.newsId);
                 // 統一規範檔名為member_img_userId
-                formData.append('img_path', `news_img_${this.formData.newsId}.jpg`);
+                // formData.append('img_path', `news_img_${this.formData.newsId}.jpg`);
+                
+
+                // 使用時間戳記生成唯一的圖片路徑數字
+                const timestamp = Date.now();
+                formData.append('img_path', `infoCard${timestamp}.jpg`);
 
                 // call api
                 axios
@@ -126,11 +133,18 @@ export default {
                     .then((res) => {
                         // console.log(res.data)
                         if (res.data.msg === 'Y') {
+                            console.log()
 
-                            this.formData.eventImg = `news_img_${this.formData.newsId}.jpg`
+                            // this.formData.eventImg = `news_img_${this.formData.newsId}.jpg`
                             // 更新圖
+
+                            this.formData.eventImg = `infoCard${timestamp}.jpg`;
+                            // 更新圖片
+                        
+
+
                         } else {
-                            // alert("更新圖片失敗！");
+                            alert("更新圖片失敗！");
                         }
                     })
                     .catch((error) => {
