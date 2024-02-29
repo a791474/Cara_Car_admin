@@ -156,7 +156,7 @@ export default {
         // searchBar placeholder切換
         placeholderText() {
             switch(this.selectedOption) {
-                case 'eventTitle' :
+                case 'news_title' :
                     return '請輸入消息標題'
                 default :
                     return '請輸入消息編號'
