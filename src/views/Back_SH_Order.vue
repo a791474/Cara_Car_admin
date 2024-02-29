@@ -86,17 +86,19 @@ export default {
         },
         //搜尋功能
         filterHandle() {
-            this.displayData = this.newsData.filter((eventsInfo)=>{
 
+            this.orderList = this.newOrderList.filter((item) => {
                 switch (this.selectedOption) {
-                    case 'news_id':
-                        return eventsInfo.news_id.toString().includes(this.search);
-                    case 'news_title':
-                        return eventsInfo.news_title.includes(this.search);
+                    case 'productName':
+                        return item.sh_pro_name.includes(this.searchText);
+                    case 'orderNo':
+                        return item.sh_ord_id.includes(this.searchText);
+                    case 'memberNo':
+                        return item.member_id.toString().includes(this.searchText);
                     default:
                         return false;
                 }
-            })
+            });
         },
         changeState(item){
             return(item) => item === 1 ? "已出貨" : "未出貨";
@@ -135,7 +137,7 @@ export default {
                     <option value="productName">商品名稱</option>
                 </select>
                 <input type="text" v-model="searchText" :placeholder="placeholderText">
-                <button @click="search" class="searchBtn">搜尋</button>
+                <button @click="filterHandle" class="searchBtn">搜尋</button>
             </div>
             <div class="orderTable">
                 <div class="listTitle">
