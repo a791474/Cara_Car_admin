@@ -99,7 +99,7 @@ router.beforeEach(async (to, from) => {
 
   }else if ( !isAuthenticated() && to.name !== 'BackLogin') {
     // 檢查用戶是否已登錄
-    console.log(1);
+    // console.log(1);
     return { name: 'BackLogin' }
   }
 })

@@ -56,12 +56,6 @@ export default {
                 console.error("Error fetching data:", error);
             });
         },
-        // updateRatio(promoData) {
-        //     console.log('Updated ratio for promo ID:', promoData.promo_id, 'New ratio:', promoData.promo_ratio);
-        // },
-        currentSidebar(item) {
-            this.activeTab = item
-        },
         changePage(page) {
             this.currentPage = page;
         },
@@ -103,8 +97,6 @@ export default {
                     <li class="promo_start_date">{{ promo.promo_start_date }}</li>
                     <li class="promo_end_date">{{ promo.promo_end_date }}</li>
                     <li class="promo_end_date">{{ promo.promo_ratio }}
-                        <!-- <input id="promoRatio" type="number" class="ratio" v-model="promo.promo_ratio"
-                            @input="updateRatio(promo)"><span>%</span> -->
                     </li>
                     <li><input id="promoState" type="text" :value="promoState(promo.promo_state)" readonly></li>
                 </ol>

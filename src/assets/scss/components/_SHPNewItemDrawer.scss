@@ -97,3 +97,14 @@
     }
 
 }
+.uploadImgShow{
+	padding: 10px 0;
+	display: flex;
+	justify-content: space-between;
+	align-self: center;
+    align-items: center;
+	img{
+		width: 150px;
+		vertical-align: top;
+	}
+}

@@ -3,10 +3,11 @@
     max-height: 100vh;
 }
 .orderContent{
+    display: flex;
     flex-direction: column;
-    width: 75%;
-    margin: 0 auto;
-    padding-top: 40px;
+    width: 80%;
+    margin: 20px;
+    justify-content: space-between;
 }
 .searchBar{
     display: flex;

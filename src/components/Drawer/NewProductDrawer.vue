@@ -101,22 +101,26 @@
         <Row :gutter="32">
           <Col span="24">
             <FormItem label="新增圖片" label-position="top">
-              <Upload 
-              multiple 
-              :before-upload="handleUpload" 
-
-              action="">
-                <Button icon="ios-camera">選擇圖片上傳</Button>
-              </Upload>
-              <div v-if="newImgFile.length > 0">
-                已選擇的圖片:
-                <ul>
-                  <li v-for="image in newImgFile">
-                    <img :src="image" alt="">
-                    {{ image.title }}
-                  </li>
-                </ul>
-              </div>
+              <Upload
+								multiple
+								:accept="['.jpg','.jpeg','.png']"
+								:before-upload="handleUpload"
+								action=""
+							>
+								<Button icon="ios-camera"
+									>選擇圖片上傳</Button
+								>
+							</Upload>
+							<div v-if="newImgFile.length > 0">
+								已選擇的圖片:
+								<ul>
+									<li class="uploadedImgBox" v-for="image in newImgFile" :key="index">
+										<img :src="image.previewImage" alt="">
+										{{ image.title }}
+										<Button type="error" @click="cancelUpload(index)">取消</Button>
+									</li>
+								</ul>
+							</div>
             </FormItem>
           </Col>
           <Col span="24">
@@ -189,16 +193,23 @@ export default {
   methods: {
     // 處理圖片上傳
     handleUpload(file) {
-      // 新增圖片到 newImgFile 陣列中
-      console.log(file);
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      this.newImgFile.push({
-        title: file.name,
-        image: file,
-        pro_id: "",
-      });
-      return false;
+			// 新增圖片到 newImgFile 陣列中
+			const reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = (e) => {
+        // 將圖片 Data URL 添加到 newImgFile 中
+        this.newImgFile.push({
+          title: file.name,
+          image: file, // 將 Data URL 分配給圖片的 src
+					previewImage: e.target.result,
+          pro_id: this.formData.pro_id,
+        });
+    };
+			return false;
+		},
+		// 取消上傳錯誤的圖片
+		cancelUpload(index) {
+        this.newImgFile.splice(index, 1);
     },
     handleProductInfoApi() {
       axios
@@ -207,11 +218,11 @@ export default {
           this.formData
         )
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           if (response.data.pro_id) {
             // 將 pro_id 存儲在前端狀態中，以供後續使用
             this.newImgFile.pro_id = response.data.pro_id;
-            console.log("成功新增的 pro_id:", this.newImgFile.pro_id);
+            // console.log("成功新增的 pro_id:", this.newImgFile.pro_id);
             this.handleProducImgstApi()
           } else {
             console.error("未收到 pro_id");
@@ -235,7 +246,7 @@ export default {
 			axios.post(`${import.meta.env.VITE_PHP_URL}/back/addProductImgs.php`, imgFormData)
 				.then(response => {
 					// 成功處理回應
-					console.log('圖片上傳成功', response.data);
+					// console.log('圖片上傳成功', response.data);
 					this.$Message.success('圖片上傳成功');
 					this.newImgFile = [];
 				})
