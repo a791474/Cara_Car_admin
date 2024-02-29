@@ -40,7 +40,18 @@ export default {
         axiosData() {
             axios.get(`${import.meta.env.VITE_PHP_URL}/back/backAdmin.php`)
                 .then((response) => {
-                    this.adminData = response.data;
+                    this.adminData = response.data.map(item => {
+                        return {
+                            ...item,
+                            admin_state: parseInt(item.admin_state)
+                        }
+                    });
+                    //用來確認我傳出去的是否為數字型態
+                    // if (isNaN(this.adminData[0].admin_state)) {
+                    // console.log("admin_state 不是數字");
+                    // } else {
+                    // console.log("admin_state 是數字");
+                    // }
                     // console.log(this.adminData);
                 })
                 .catch((error) => {
@@ -49,7 +60,7 @@ export default {
         },
         changeState(admin) {
             const newState = admin.admin_state == true ? 1 : 0;
-            const currentId =admin.admin_id;
+            const currentId = admin.admin_id;
             // console.log(newState);
 
             const editItem = new FormData();

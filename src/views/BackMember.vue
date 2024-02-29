@@ -35,13 +35,9 @@
                     <li class="switch">
                         <Space direction="vertical">
                             <Space>
-                                {{ memInfo.m_state }} 
-                                <Switch size="large" class="switchButton"
-                                v-model="memInfo.m_state"
-                                :true-value="1"
-                                :false-value="0"
-                                @on-change="changeState(memInfo)"
-                                :before-change="handleBeforeChange">
+                                {{ memInfo.m_state }}
+                                <Switch size="large" class="switchButton" v-model="memInfo.m_state" :true-value="1"
+                                    :false-value="0" @on-change="changeState(memInfo)" :before-change="handleBeforeChange">
                                     <template #open>
                                         <span>正常</span>
                                     </template>
@@ -86,11 +82,10 @@ export default {
             currentPage: 1,
             perPage: 5,
 
-            
+
             //從後端member表單接資料
             memData: [],
             displayData: [],
-            // responseData: [],
 
             // 會員帳號狀態
             memberState: null,
@@ -114,7 +109,7 @@ export default {
     },
     methods: {
         // 帳號狀態切換確認
-        handleBeforeChange () {
+        handleBeforeChange() {
             return new Promise((resolve) => {
                 this.$Modal.confirm({
                     title: '更改狀態確認',
@@ -125,28 +120,26 @@ export default {
                 });
             });
         },
-        
+
         // search功能
         filterHandle() {
-            this.displayData = this.memData.filter((memInfo)=>{
-
-                switch (this.selectedOption) {
-                    case 'member_id':
-                        return memInfo.member_id.toString().includes(this.search);
-                    case 'm_name':
-                        return memInfo.m_name.includes(this.search);
-                    case 'm_email':
-                        return memInfo.m_email.includes(this.search);
-                    default:
-                        return false;
+            this.displayData = this.memData.filter((memInfo) => {
+                if (memInfo.m_email !== null && memInfo.m_email !== undefined) {
+                    switch (this.selectedOption) {
+                        case 'member_id':
+                            return memInfo.member_id.toString().includes(this.search);
+                        case 'm_name':
+                            return memInfo.m_name.includes(this.search);
+                        case 'm_email':
+                            return memInfo.m_email.includes(this.search);
+                        default:
+                            return false;
+                    }
+                } else {
+                    return false;
                 }
             })
         },
-
-        // 頁數切換
-        // toggleStatus(index) {
-        //     this.memData[index].m_state = !this.memData[index].m_state;
-        // },
         currentSidebar(item) {
             this.activeTab = item
         },
@@ -158,9 +151,13 @@ export default {
             axios.get(`${import.meta.env.VITE_PHP_URL}/back/backMember.php`)
                 .then((response) => {
                     // 成功取得資料後，將資料存入 member 陣列
-                    this.memData = response.data;
-                    this.displayData = response.data;
-                    this.responseData = response.data;
+                    this.memData = response.data.map(item => {
+                        return {
+                            ...item,
+                            m_state: parseInt(item.m_state)
+                        }
+                    });
+                    this.displayData = this.memData;
                 })
                 .catch((error) => {
                     console.error("Error fetching data:", error);
@@ -178,7 +175,7 @@ export default {
         },
         changeState(memInfo) {
             const newState = memInfo.m_state == true ? 1 : 0;
-            const currentId =memInfo.member_id;
+            const currentId = memInfo.member_id;
             // console.log(newState);
 
             const editItem = new FormData();
@@ -195,7 +192,7 @@ export default {
                 console.error('Failed to update member state:', error);
             }
         },
-        
+
     },
     computed: {
         // searchBar placeholder切換
@@ -212,13 +209,13 @@ export default {
         },
 
         // 頁數切換
-        paginated(){
+        paginated() {
             const start = (this.currentPage - 1) * this.perPage; //將當前頁數-1再乘以頁面顯示內容筆數得到start值
             const end = start + this.perPage;//計算此頁面中的內容是否達到perPage中的數字最後索引值來得到end值
             return this.displayData.slice(start, end);//用JS的.slice()方法獲取vue data中的member陣列內容顯示內容
         },
         totalPages() {
-            return Math.ceil(this.memData.length / this.perPage);//用Math.ceil()無條件進位，值則是用member陣列物件長度除以顯示內容筆數取得
+            return Math.ceil(this.displayData.length / this.perPage);//用Math.ceil()無條件進位，值則是用member陣列物件長度除以顯示內容筆數取得
         },
     },
 
