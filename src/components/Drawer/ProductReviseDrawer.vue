@@ -254,7 +254,7 @@ export default {
         // 將圖片 Data URL 添加到 newImgFile 中
         this.newImgFile.push({
           title: file.name,
-          image: e.target.result, // 將 Data URL 分配給圖片的 src
+          image: file, // 將 Data URL 分配給圖片的 src
 					previewImage: e.target.result,
           pro_id: this.formData.pro_id,
         });

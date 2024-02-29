@@ -101,22 +101,26 @@
         <Row :gutter="32">
           <Col span="24">
             <FormItem label="新增圖片" label-position="top">
-              <Upload 
-              multiple 
-              :before-upload="handleUpload" 
-
-              action="">
-                <Button icon="ios-camera">選擇圖片上傳</Button>
-              </Upload>
-              <div v-if="newImgFile.length > 0">
-                已選擇的圖片:
-                <ul>
-                  <li v-for="image in newImgFile">
-                    <img :src="image" alt="">
-                    {{ image.title }}
-                  </li>
-                </ul>
-              </div>
+              <Upload
+								multiple
+								:accept="['.jpg','.jpeg','.png']"
+								:before-upload="handleUpload"
+								action=""
+							>
+								<Button icon="ios-camera"
+									>選擇圖片上傳</Button
+								>
+							</Upload>
+							<div v-if="newImgFile.length > 0">
+								已選擇的圖片:
+								<ul>
+									<li class="uploadedImgBox" v-for="image in newImgFile" :key="index">
+										<img :src="image.previewImage" alt="">
+										{{ image.title }}
+										<Button type="error" @click="cancelUpload(index)">取消</Button>
+									</li>
+								</ul>
+							</div>
             </FormItem>
           </Col>
           <Col span="24">
@@ -189,16 +193,23 @@ export default {
   methods: {
     // 處理圖片上傳
     handleUpload(file) {
-      // 新增圖片到 newImgFile 陣列中
-      // console.log(file);
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      this.newImgFile.push({
-        title: file.name,
-        image: file,
-        pro_id: "",
-      });
-      return false;
+			// 新增圖片到 newImgFile 陣列中
+			const reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = (e) => {
+        // 將圖片 Data URL 添加到 newImgFile 中
+        this.newImgFile.push({
+          title: file.name,
+          image: file, // 將 Data URL 分配給圖片的 src
+					previewImage: e.target.result,
+          pro_id: this.formData.pro_id,
+        });
+    };
+			return false;
+		},
+		// 取消上傳錯誤的圖片
+		cancelUpload(index) {
+        this.newImgFile.splice(index, 1);
     },
     handleProductInfoApi() {
       axios
