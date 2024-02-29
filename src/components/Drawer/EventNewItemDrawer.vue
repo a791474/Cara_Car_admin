@@ -153,13 +153,13 @@ export default {
             }
         },
         // 處理圖片上傳
-        handleFileUpload(event) {
-            const file = event.target.files[0];
-            // 從完整路徑中提取圖片名
-            const fileName = file.name;
-            // 將圖片名存儲到 formData 中
-            this.formData.eventImg = fileName;
-        },
+        // handleFileUpload(event) {
+        //     const file = event.target.files[0];
+        //     // 從完整路徑中提取圖片名
+        //     const fileName = file.name;
+        //     // 將圖片名存儲到 formData 中
+        //     this.formData.eventImg = fileName;
+        // },
         async submitForm() {
             // 檢查欄位是否存在空值
             let hasNonEmptyField = false;
