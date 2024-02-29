@@ -89,7 +89,7 @@ export default {
             // console.log(editItem);
             try {
                 // 發送請求更新admin_state 到後端
-                axios.post(`${import.meta.env.VITE_LPHP_URL}/back/backOrder.php`, editItem, {
+                axios.post(`${import.meta.env.VITE_PHP_URL}/back/backOrder.php`, editItem, {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
                 // console.log('Updated ord state:', newState);
@@ -121,7 +121,7 @@ export default {
             })
         },
         getOrderList(){
-        axios.get(`${import.meta.env.VITE_LPHP_URL}/back/backOrder.php`)
+        axios.get(`${import.meta.env.VITE_PHP_URL}/back/backOrder.php`)
         .then((response)=>{
             const rawData = response.data;
             const orderMap = new Map();
