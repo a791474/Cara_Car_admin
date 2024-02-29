@@ -35,7 +35,6 @@
                     <li class="switch">
                         <Space direction="vertical">
                             <Space>
-                                {{ memInfo.m_state }}
                                 <Switch size="large" class="switchButton" v-model="memInfo.m_state" :true-value="1"
                                     :false-value="0" @on-change="changeState(memInfo)" :before-change="handleBeforeChange">
                                     <template #open>
