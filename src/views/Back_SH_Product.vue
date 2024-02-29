@@ -38,7 +38,7 @@
           <li class="SHPReviseItemDrawer">
             <SHPReviseItemDrawer :detail="SHProductsInfo" @refreshSHProData="getSHProData"/>
           </li>
-          <li class="picture"> {{ SHProductsInfo.picture }} </li>
+          <li class="picture">            <img :src="getProductImgSrc(SHProductsInfo.img_name)" alt="pic"></li>
           <li class="SHProductsName"> {{ SHProductsInfo.sh_pro_name }} </li>
           <li class="SHProductsPrice"> {{ SHProductsInfo.sh_pro_price }} </li>
           <li class="SHProductsDate"> {{ SHProductsInfo.launch_date }} </li>
@@ -96,21 +96,6 @@ export default {
   },
   created() {
     this.getSHProData()
-    //在頁面載入時同時載入function
-    //axios的get方法(`$import.meta.env.{變數}/檔名.php`)用.env檔中寫的網址來判斷網址URL的前贅
-    // 使用 Promise.all 來確保兩個請求都完成後再處理資料
-    // Promise.all([
-    // axios.get(`${import.meta.env.VITE_CARA_URL}/back/backSHProduct.php`),
-    // axios.post(`${import.meta.env.VITE_CARA_URL}/back/backSHProductRe.php`)
-    // ])
-    // axios.get(`${import.meta.env.VITE_CARA_URL}/back/backSHProduct.php`)
-    //   .then((response) => {
-    //     // 成功取得資料後，將資料存入陣列
-    //     this.SHPro = response.data;
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error fetching data:", error);
-    //   });
 
   },
   watch: {
@@ -128,10 +113,10 @@ export default {
       //axios的get方法(`$import.meta.env.{變數}/檔名.php`)用.env檔中寫的網址來判斷網址URL的前贅
       axios.get(`${import.meta.env.VITE_PHP_URL}/back/backSHProduct.php`)
         .then((response) => {
+          console.log(response.data);
           // 成功取得資料後，將資料存入 member 陣列
           this.SHPro = response.data;
           this.displayData = response.data;
-          this.responseData = response.data;
         })
         .catch((error) => {
           console.error("Error fetching data:", error);
@@ -148,6 +133,10 @@ export default {
           return SHProductsInfo[searchProperty].toString().includes(this.searchText);
         });
       }
+    },
+    // 取得圖片的路徑函式
+    getProductImgSrc(imgName){
+      return new URL(`${import.meta.env.VITE_IMG_BASE_URL}/sh_products/${imgName}`).href
     },
 
     // 頁碼
