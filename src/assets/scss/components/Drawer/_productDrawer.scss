@@ -56,6 +56,16 @@
 		margin: 10px;
 	};
 }
+.uploadedImgBox{
+	padding: 10px 0;
+	display: flex;
+	justify-content: space-between;
+	align-self: center;
+	img{
+		width: 100px;
+		vertical-align: top;
+	}
+}
 // 商品新增修改抽屜通用部分起點
 
 // 修改商品抽屜專用起點
