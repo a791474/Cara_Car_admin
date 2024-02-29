@@ -74,14 +74,20 @@
                     </Col>
                 </Row>
                 <FormItem label="商品圖片" label-position="top">
-                    <Upload multiple :before-upload="handleUpload" action="">
-                        <Button icon="ios-camera">選擇圖片上傳</Button>
+                    <Upload
+                    multiple 
+                    :accept="['.jpg','.jpeg','.png']"
+                    :before-upload="handleUpload" 
+                    action="">
+                    <Button><i class="fa-regular fa-image" style="margin: 2px;"></i>選擇圖片上傳</Button>
                     </Upload>
                     <div v-if="newImgFile.length > 0">
                         已選擇的圖片:
                         <ul>
-                            <li v-for="image in newImgFile">
-                                {{ image.title }}
+                            <li class="uploadImgShow" v-for="image in newImgFile" :key="index" >
+                                <img :src="image.previewImage" alt="">
+								{{ image.title }}
+								<Button type="error" @click="cancelUpload(index)">取消</Button>
                             </li>
                         </ul>
                     </div>
@@ -184,16 +190,24 @@ export default {
         },
         // 處理圖片上傳
         handleUpload(file) {
-            // 新增圖片到 newImgFile 陣列中
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            this.newImgFile.push({
-                title: file.name,
-                image: file,
-                sh_pro_id: this.formData.sh_pro_id,
-            });
-            return false;
-        },
+			// 新增圖片到 newImgFile 陣列中
+			const reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = (e) => {
+        // 將圖片 Data URL 添加到 newImgFile 中
+        this.newImgFile.push({
+          title: file.name,
+          image: file, // 將 Data URL 分配給圖片的 src
+					previewImage: e.target.result,
+          sh_pro_id: this.formData.sh_pro_id,
+        });
+    };
+			return false;
+		},
+		// 取消上傳錯誤的圖片
+		cancelUpload(index) {
+        this.newImgFile.splice(index, 1);
+    },
         //執行圖片上傳
         upload() {
             // 建立 FormData 物件，用於傳送表單資料
