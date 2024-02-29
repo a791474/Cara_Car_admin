@@ -34,12 +34,14 @@ export default {
         }).then(res=>{
             if(res && res.data){
                 if(res.data.code == 1){
-                    
+                    if(res.data.adminInfo.admin_state == 0){
+                        alert('請聯絡管理人員！')
+                    }else if(res.data.adminInfo.admin_state == 1){
                         this.updateToken(res.data.session_id)
                         this.updateUserData(res.data.adminInfo)
                         alert('登入成功！')
                         this.$router.push('/BackAdmin')
-                    
+                    }
                 }else{
                     alert('請輸入正確帳號或密碼')
                 }
