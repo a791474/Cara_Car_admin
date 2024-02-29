@@ -1,11 +1,11 @@
 <template>
     <div class="reviseItemDrawer">
-
+        <!-- 觸發打開修改商品抽屜的按鈕 -->
         <Button @click="value = true" type="primary">
             <i class="fa-solid fa-screwdriver-wrench"></i>
             修改
         </Button>
-
+        <!-- 修改商品的抽屜組件 -->
         <Drawer title="修改商品" v-model="value" width="500" :mask-closable="false" :styles="styles">
             <h3>商品編號：{{ detail.sh_pro_id }}</h3>
             <Form :model="formData">
@@ -19,8 +19,6 @@
                     <Col span="12">
                     <FormItem label="商品名稱-英文" label-position="top">
                         <Input v-model="formData.sh_pro_en_name" placeholder="請輸入商品名稱">
-                        <!-- <template #prepend>http://</template>
-                                <template #append>.com</template> -->
                         </Input>
                     </FormItem>
                     </Col>
@@ -135,7 +133,6 @@ export default {
                 launch_date: '',
                 sh_pro_sold: '',
                 sh_pro_pin: ''
-                //url: '', //DB要新增欄位
             },
             // imgfiles: [],
             newImgFile: [],
@@ -148,9 +145,11 @@ export default {
         }
     },
     watch: {
+        // 監視 value屬性，當其改變時執行相應操作
         // 抓資料庫的值，後面是.欄位名稱
         value(newVal) {
             if (newVal) {
+                // 將父組件傳遞的商品填入表單
                 this.formData.sh_pro_id = this.detail.sh_pro_id
                 this.formData.sh_pro_name = this.detail.sh_pro_name
                 this.formData.sh_pro_en_name = this.detail.sh_pro_en_name
@@ -167,6 +166,7 @@ export default {
         },
     },
     methods: {
+        // 關閉抽屜
         closeDrawer() {
             this.value = false;
         },
@@ -204,6 +204,7 @@ export default {
                 imgFormData.append('sh_pro_id', image.sh_pro_id); // PHP 中接收圖片資料的陣列參數名稱
             });
 
+            //發送圖片上傳請求
             axios.post(`${import.meta.env.VITE_PHP_URL}/back/addSHProductImgs.php`, imgFormData)
                 .then(response => {
                     // 成功處理回應
@@ -221,21 +222,22 @@ export default {
 
         // 更新數據方法
         reviseData() {
+            // 處理修改前的確認。包括彈出彈窗等。
             this.handleBeforeChange()
 
                 .then(() => {
+                    //確認修改，執行圖片上傳和商品更新的操作
                     this.upload()
                     axios.post(`${import.meta.env.VITE_PHP_URL}/back/updateSHProduct.php`, this.formData)
                         .then(response => {
                             // console.log(response.data);
                             // location.reload()
-                            // 處理響應
-
+                            // 處理回應
                             // 提示成功新增資料
                             alert('已成功修改資料!');
-
                             // 關閉抽屜
                             this.value = false;
+                            // 通知父組件更新商品數據
                             this.$emit('refreshSHProData')
 
                         })
@@ -245,20 +247,21 @@ export default {
                         });
                 })
                 .catch(() => {
-                    // 用户取消操作
+                    // 用戶取消操作
                 });
         },
         // 確認是否要更新商品資料
         handleBeforeChange() {
             return new Promise((resolve, reject) => {
+                // 使用 iview Modal 的 confirm 彈窗，提醒用戶確認修改
                 this.$Modal.confirm({
                     title: '修改二手商品資訊確認',
                     content: '確定要二手商品資訊嗎?',
                     onOk: () => {
-                        resolve();
+                        resolve(); //用戶確認修改
                     },
                     onCancel: () => {
-                        reject();
+                        reject(); //用戶取消操作
                     }
                 });
             });
