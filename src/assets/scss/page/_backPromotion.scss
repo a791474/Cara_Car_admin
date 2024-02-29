@@ -1,18 +1,21 @@
 .promotion{
     display: flex;
+    width: 100%;
 }
 .promoContent{
+    width: 80%;
+    height: 100vh;
+    margin: 20px;
     display: flex;
     flex-direction: column;
-    width: 80%;
-    padding: 0 10px;
+    justify-content: space-between;
 }
 .subtitle{
     ol{
         display: flex;
         align-items: center;
         text-align: center;
-        font-size: $h4;
+        font-size: $mh6;
         padding: 0 20px;
         li{
             width:calc(100% / 7);
@@ -20,19 +23,15 @@
     }
 }
 .subtitle_line {
-    border: $bor1 solid $blackWord;
-    width: 100%;
-    height: 0;
-    margin-bottom: 15px;
+    border-bottom: 1px solid $grey_3;
 }
 .promoCard{
     position: relative;
     display: flex;
     align-items: center;
     text-align: center;
-    font-size: $h5;
-    padding: 20px;
-    margin-bottom: 10px;
+    font-size: $mh6;
+    padding: 15px;
     border-radius: $borr2 + 10px;
     background-color: $lightBlue;
     ol{
@@ -41,12 +40,14 @@
         width: 100%;
         li{
             width:calc(100% / 7);
+            border-radius: $borr1
         }
         .promo_id, .promo_name, .promo_start_date, .promo_end_date{
             background-color: $whiteWord;
         }
         .promo_name, .promo_start_date, .promo_end_date{
             margin: 0 5px;
+            
         }
         #promoRatio{
             width: 50%;
@@ -63,7 +64,7 @@
             text-align: center;
             padding: 10px 0;
             border: none;
-            font-size: $mp;
+            font-size: $mh6;
             border-radius: $borr1;
         }
     }
@@ -73,5 +74,5 @@
     display: flex;
     align-items: center;
     justify-content: end;
-    padding: 5px;
+    padding: 0 5px;
 }

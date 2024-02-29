@@ -148,11 +148,11 @@ export default {
       <!-- 商品列表 -->
       <div class="productsList">
         <ul class="productsTitle">
-          <li style="width: 60px;">商品編號</li>
-          <li style="width: 60px;">修改商品</li>
+          <li style="width: 80px;">商品編號</li>
+          <li style="width: 80px;">修改商品</li>
           <li style="width: 150px;">商品圖片</li>
-          <li style="width: 250px;">商品分類</li>
-          <li style="width: 250px;">商品名稱</li>
+          <li style="width: 200px;">商品分類</li>
+          <li style="width: 200px;">商品名稱</li>
           <li style="width: 90px;">定價/售價</li>
           <li style="width: 100px;">促銷狀態</li>
           <li style="width: 80px;">商品狀態</li>
@@ -170,10 +170,10 @@ export default {
           <li class="productName"> {{ productInfo.pro_name }} </li>
           <li class="productPriceAndSale">
             <div class="productPrice">
-              {{ productInfo.pro_price }}
+              定價:{{ productInfo.pro_price }}
             </div>
             <div class="productSale">
-              {{ productInfo.pro_sale }}
+              售價:{{ productInfo.pro_sale }}
             </div>
           </li>
           <li class="promo_state">
