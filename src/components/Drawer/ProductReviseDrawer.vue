@@ -104,13 +104,6 @@
 				<Row :gutter="32">
 					<Col span="24">
 						<FormItem label="新增圖片" label-position="top">
-							<!-- <Upload 暫時沒用
-								multiple
-								:format="['jpg','jpeg','png']" 
-								:on-format-error="handleFormatError"
-								:before-upload="handleUpload"
-								action=""
-							> -->
 							<Upload
 								multiple
 								:accept="['.jpg','.jpeg','.png']"
@@ -225,7 +218,7 @@ export default {
 				this.formData.launch_date = this.detail.launch_date;
 				this.formData.end_date = this.detail.end_date;
 				this.formData.pro_state = this.detail.pro_state;
-				this.formData.pro_pin = this.detail.pro_pin === "1" ? true : false;
+				this.formData.pro_pin = this.detail.pro_pin == 1 ? true : false;
 				this.getThisProductAllImgs(this.formData.pro_id);
 			}
 		},
