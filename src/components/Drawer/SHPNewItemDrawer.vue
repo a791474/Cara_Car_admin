@@ -1,17 +1,20 @@
 <template>
     <div class="SHPNewItemDrawer">
-
+        <!-- 觸發打開新增商品抽屜的按鈕 -->
         <Button @click="value = true" type="primary">
             <i class="fa-solid fa-plus"></i>
             新增
         </Button>
-
+        <!-- 新增商品的抽屜組件 -->
         <Drawer title="新增商品" v-model="value" width="500" :mask-closable="false" :styles="styles">
+
+            <!-- 商品資訊表單 -->
             <Form :model="formData">
+
                 <p>商品內容區</p>
+                <!-- 商品名稱的輸入欄 -->
                 <Row :gutter="32">
                     <Col span="12">
-
                     <FormItem label="商品名稱-中文" label-position="top">
                         <Input v-model="formData.sh_pro_name" placeholder="請輸入商品名稱" />
                     </FormItem>
@@ -19,15 +22,13 @@
                     <Col span="12">
                     <FormItem label="商品名稱-英文" label-position="top">
                         <Input v-model="formData.sh_pro_en_name" placeholder="請輸入商品名稱">
-                        <!-- <template #prepend>http://</template>
-                            <template #append>.com</template> -->
                         </Input>
                     </FormItem>
                     </Col>
                 </Row>
+                <!-- 商品年份和狀態的輸入欄 -->
                 <Row :gutter="32">
                     <Col span="12">
-
                     <FormItem label="商品年分" label-position="top">
                         <Input v-model="formData.sh_pro_year" placeholder="請輸入商品年分" />
                     </FormItem>
@@ -44,9 +45,9 @@
                     </FormItem>
                     </Col>
                 </Row>
+                <!-- 商品定價和上架狀態的輸入欄 -->
                 <Row :gutter="32">
                     <Col span="12">
-
                     <FormItem label="商品定價" label-position="top">
                         <Input v-model="formData.sh_pro_price" placeholder="請輸入商品定價" />
                     </FormItem>
@@ -55,12 +56,10 @@
                     <FormItem label="上架 / 下架" label-position="top" class="onOrRemoved">
                         <input type="radio" name="state" :value="0" v-model="formData.sh_pro_state">下架
                         <input type="radio" name="state" :value="1" v-model="formData.sh_pro_state">上架
-                        <!-- <template #prepend>http://</template>
-                            <template #append>.com</template> -->
-                        <!-- </Input> -->
                     </FormItem>
                     </Col>
                 </Row>
+                <!-- 上架時間、售出狀態和置頂的輸入欄 -->
                 <Row :gutter="32">
                     <Col span="12">
                     <FormItem label="上架時間" label-position="top">
@@ -80,7 +79,7 @@
                     </FormItem>
                     </Col>
                 </Row>
-
+                <!-- 商品圖片上傳 -->
                 <FormItem label="商品圖片" label-position="top">
                     <Upload multiple :before-upload="handleUpload" action="">
                         <Button icon="ios-camera">選擇圖片上傳</Button>
@@ -94,7 +93,7 @@
                         </ul>
                     </div>
                 </FormItem>
-
+                <!-- 商品介紹區 -->
                 <div class="productsin">
                     商品介紹區
                     <FormItem label="商品介紹(簡述)" label-position="top">
@@ -106,6 +105,7 @@
                     </FormItem>
                 </div>
             </Form>
+            <!-- 抽屜底部按鈕 -->
             <div class="demo-drawer-footer">
                 <Button class="btnCancel" style="margin-right: 8px" @click="value = false">Cancel</Button>
                 <Button class="btnSubmit" type="primary" @click="submitForm">
@@ -149,6 +149,8 @@ export default {
             newImgFile: [],
         }
     },
+
+    // 監視器，當 value 改變時執行清空表單的方法
     watch: {
         value() {
             this.clearForm()
@@ -224,6 +226,7 @@ export default {
                 });
 
         },
+        // 提交表單
         async submitForm() {
 
             // 檢查欄位是否存在空值
@@ -245,8 +248,9 @@ export default {
 
                     // 關閉抽屜
                     this.value = false;
-
+                    // 發送事件通知父組件更新商品數據
                     this.$emit("refreshSHProData")
+
                 } catch (error) {
                     console.error(error);
                 }
@@ -255,8 +259,8 @@ export default {
                 alert('所有欄位都必須填寫哦');
             }
         },
+        // 清空表單
         clearForm() {
-            // 清空表單邏輯
             this.formData = {
                 sh_pro_name: '',
                 sh_pro_en_name: '',
@@ -277,4 +281,6 @@ export default {
 
 </script>
 
-<style lang="scss" scoped>@import '@/assets/scss/components/SHPNewItemDrawer.scss'</style>
+<style lang="scss" scoped>
+@import '@/assets/scss/components/SHPNewItemDrawer.scss'
+</style>
