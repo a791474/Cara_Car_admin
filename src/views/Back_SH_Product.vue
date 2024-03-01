@@ -5,14 +5,14 @@
 
     <!-- 顯示{{ SHPro }}資料的區塊 -->
     <section class="backSHProductsInfo">
-    <!-- 標題組件 -->
+      <!-- 標題組件 -->
       <BackTitle />
 
       <!-- 全部、上架、下架的按鈕 -->
       <div class="stateChange">
-        <button type="button" @click="checkState = -1" :class="{ 'checked': checkState === -1 }">全部</button>
-        <button type="button" @click="checkState = 1" :class="{ 'checked': checkState === 1 }">上架</button>
-        <button type="button" @click="checkState = 0" :class="{ 'checked': checkState === 0 }">下架</button>
+        <button type="button" @click="checkState = -1" :class="{ 'checked': checkState == -1 }">全部</button>
+        <button type="button" @click="checkState = 1" :class="{ 'checked': checkState == 1 }">上架</button>
+        <button type="button" @click="checkState = 0" :class="{ 'checked': checkState == 0 }">下架</button>
       </div>
 
       <!-- 商品搜尋條件 -->
@@ -22,7 +22,7 @@
           <option value="sh_pro_name">商品名稱</option>
         </select>
         <input v-model.trim="searchText" :placeholder="placeholderText">
-        
+
         <!-- 新增商品的抽屜組件 -->
         <SHPNewItemDrawer @refreshSHProData="getSHProData" />
       </div>
@@ -132,7 +132,7 @@ export default {
     // search功能
     filterHandle() {
       console.log('filterHandle triggered');
-      if (this.searchText.trim() === '') {
+      if (this.searchText.trim() == '') {
         this.displayData = [...this.SHPro];
       } else {
         const searchProperty = this.selectedOption;
@@ -174,12 +174,12 @@ export default {
 
     // 顯示 上架/未上架 狀態 的屬性 (SHPState)
     SHPState() {
-      return (SHPState) => SHPState === 1 ? "上架中" : "未上架";
+      return (SHPState) => SHPState == 1 ? "上架中" : "未上架";
     },
     //經過過濾後的SHPro
     SHProAfterFilter() {
-      if (this.checkState === -1) return this.displayData
-      return this.displayData.filter(v => v.sh_pro_state === this.checkState);
+      if (this.checkState == -1) return this.displayData
+      return this.displayData.filter(v => v.sh_pro_state == this.checkState);
     },
     // 分頁切換 (SHProAfterFilter 這樣才能根據篩選出來的筆數去分頁)
     paginated() {
