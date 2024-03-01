@@ -91,7 +91,7 @@ export default {
       // 頁數切換+上下架篩選後的頁數
       activeTab: "",
       currentPage: 1,
-      perPage: 5,
+      perPage: 3,
       SHPro: [],
       checkState: -1,// -1(全部), 0(下架), 1(上架) 
       // 設定上下架的值type="button" @click="checkState=-1

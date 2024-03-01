@@ -73,7 +73,7 @@
 
     .SHProductsList {
         font-size: $mh6;
-        height: 62vh;
+        height: 550px;
         letter-spacing: 1.5px;
 
         ul {
@@ -109,7 +109,7 @@
 
         .SHProductsInfoList {
             margin-bottom: 5px;
-            height: 15%;
+            // height: 15%;
             border-radius: $borr2;
             background-color: $lightBlue;
 
@@ -146,8 +146,11 @@
             margin: 1%;
         }
 
-        .picture {
+        .SHProductsInfoList .picture img{
+            width: 100%;
             height: 90%;
+            vertical-align: top;
+            overflow: hidden;
         }
 
         .SHProductsDate {
