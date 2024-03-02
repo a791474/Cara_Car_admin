@@ -57,8 +57,8 @@
                 <Row :gutter="32">
                     <Col span="12">
                     <FormItem label="上架時間" label-position="top">
-                        <DatePicker v-model="formData.launch_date" type="date" placeholder="請選擇上架時間" style="display: block"
-                            placement="bottom-end"></DatePicker>
+                        <DatePicker v-model="formData.launch_date" type="date" placeholder="請選擇上架時間"
+                            style="display: block" placement="bottom-end"></DatePicker>
                     </FormItem>
                     </Col>
                     <Col span="12">
@@ -69,25 +69,22 @@
                     </Col>
                     <Col span="12">
                     <FormItem label="置頂商品" label-position="top" class="pin">
-                        <input type="checkbox" name="pin" :true-value="1" :false-value="0" v-model="formData.sh_pro_pin">置頂
+                        <input type="checkbox" name="pin" :true-value="1" :false-value="0"
+                            v-model="formData.sh_pro_pin">置頂
                     </FormItem>
                     </Col>
                 </Row>
                 <FormItem label="商品圖片" label-position="top">
-                    <Upload
-                    multiple 
-                    :accept="['.jpg','.jpeg','.png']"
-                    :before-upload="handleUpload" 
-                    action="">
-                    <Button><i class="fa-regular fa-image" style="margin: 2px;"></i>選擇圖片上傳</Button>
+                    <Upload multiple :accept="['.jpg', '.jpeg', '.png']" :before-upload="handleUpload" action="">
+                        <Button><i class="fa-regular fa-image" style="margin: 2px;"></i>選擇圖片上傳</Button>
                     </Upload>
                     <div v-if="newImgFile.length > 0">
                         已選擇的圖片:
                         <ul>
-                            <li class="uploadImgShow" v-for="image in newImgFile" :key="index" >
+                            <li class="uploadImgShow" v-for="image in newImgFile" :key="image">
                                 <img :src="image.previewImage" alt="">
-								{{ image.title }}
-								<Button type="error" @click="cancelUpload(index)">取消</Button>
+                                {{ image.title }}
+                                <Button type="error" @click="cancelUpload(index)">取消</Button>
                             </li>
                         </ul>
                     </div>
@@ -112,7 +109,7 @@
         </Drawer>
 
     </div>
-</template>    
+</template>
 
 <script>
 import axios from 'axios';
@@ -190,24 +187,26 @@ export default {
         },
         // 處理圖片上傳
         handleUpload(file) {
-			// 新增圖片到 newImgFile 陣列中
-			const reader = new FileReader();
-			reader.readAsDataURL(file);
-			reader.onload = (e) => {
-        // 將圖片 Data URL 添加到 newImgFile 中
-        this.newImgFile.push({
-          title: file.name,
-          image: file, // 將 Data URL 分配給圖片的 src
-					previewImage: e.target.result,
-          sh_pro_id: this.formData.sh_pro_id,
-        });
-    };
-			return false;
-		},
-		// 取消上傳錯誤的圖片
-		cancelUpload(index) {
-        this.newImgFile.splice(index, 1);
-    },
+            // 新增圖片到 newImgFile 陣列中
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = (e) => {
+                // 將圖片 Data URL 添加到 newImgFile 中
+                this.newImgFile.push({
+                    title: file.name,
+                    image: file, // 將 Data URL 分配給圖片的 src
+                    previewImage: e.target.result,
+                    sh_pro_id: this.formData.sh_pro_id,
+                });
+            };
+            return false;
+        },
+        // 取消上傳錯誤的圖片
+        cancelUpload(index) {
+            this.newImgFile.splice(index, 1);
+            //我隨便放一個function裡面拿來console.log這個數值的型別是什麼
+            // console.log(typeof this.formData.sh_pro_situation);
+        },
         //執行圖片上傳
         upload() {
             // 建立 FormData 物件，用於傳送表單資料

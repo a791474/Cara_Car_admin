@@ -92,13 +92,14 @@ export default {
       activeTab: "",
       currentPage: 1,
       perPage: 3,
-      SHPro: [],
-      checkState: -1,// -1(全部), 0(下架), 1(上架) 
+
       // 設定上下架的值type="button" @click="checkState=-1
+      checkState: -1,// -1(全部), 0(下架), 1(上架) 
 
       // 資料陣列
-      SHProData: [],
-      displayData: [],
+      // SHProData: [], //這個陣列沒用到哦~~~
+      SHPro: [], //backSHProduct的php拿出來的資料
+      displayData: [], // 拿來搜尋的陣列
     };
   },
   created() {
@@ -121,9 +122,32 @@ export default {
       axios.get(`${import.meta.env.VITE_PHP_URL}/back/backSHProduct.php`)
         .then((response) => {
           console.log(response.data);
-          // 成功取得資料後，將資料存入 member 陣列
-          this.SHPro = response.data;
-          this.displayData = response.data;
+          // 成功取得資料後，將資料存入 SHPro 陣列，因為Tibame的DB傳出來是字串，欄位的值取出來要判斷字串會有型別問題，要轉成數值。
+          this.SHPro = response.data.map(item => {
+            return {
+              ...item,
+              sh_pro_situation: parseInt(item.sh_pro_situation),
+              sh_pro_state: parseInt(item.sh_pro_state),
+              sh_pro_sold: parseInt(item.sh_pro_sold),
+              sh_pro_pin: parseInt(item.sh_pro_pin)
+            }
+          });
+          //用來確認傳出去的是否為數字型態
+          // if (isNaN(this.SHPro[0].sh_pro_situation)) {
+          // console.log("要查的欄位 不是數字");
+          // } else {
+          // console.log("要查的欄位 是數字");
+          // }
+          // console.log(this.SHPro);
+          this.displayData = response.data.map(item => {
+            return {
+              ...item,
+              sh_pro_situation: parseInt(item.sh_pro_situation),
+              sh_pro_state: parseInt(item.sh_pro_state),
+              sh_pro_sold: parseInt(item.sh_pro_sold),
+              sh_pro_pin: parseInt(item.sh_pro_pin)
+            }
+          })
         })
         .catch((error) => {
           console.error("Error fetching data:", error);
