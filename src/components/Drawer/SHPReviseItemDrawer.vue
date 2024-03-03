@@ -78,8 +78,11 @@
                     <Upload multiple :accept="['.jpg', '.jpeg', '.png']" :before-upload="handleUpload" action="">
                         <Button><i class="fa-regular fa-image" style="margin: 2px;"></i>選擇圖片上傳</Button>
                     </Upload>
-                    <div v-if="newImgFile.length > 0">
-                        已選擇的圖片:
+                    <div class="SHPImgss">
+                        <img :src="getSHPImgSrc(formData.img_name)" alt="圖片預覽">
+                    </div>
+                    <div>
+                        <p>已選擇的圖片:</p>
                         <ul>
                             <li class="uploadImgShow" v-for="image in newImgFile" :key="image">
                                 <img :src="image.previewImage" alt="">
@@ -135,7 +138,8 @@ export default {
                 sh_pro_state: '',
                 launch_date: '',
                 sh_pro_sold: '',
-                sh_pro_pin: ''
+                sh_pro_pin: '',
+                img_name: '',
             },
             // imgfiles: [],
             newImgFile: [],
@@ -165,6 +169,7 @@ export default {
                 this.formData.sh_pro_sold = this.detail.sh_pro_sold
                 this.formData.launch_date = this.detail.launch_date
                 this.formData.sh_pro_pin = this.detail.sh_pro_pin
+                this.formData.img_name = this.detail.img_name;
             }
         },
     },
@@ -172,6 +177,9 @@ export default {
         // 關閉抽屜
         closeDrawer() {
             this.value = false;
+        },
+        getSHPImgSrc() {
+            return new URL(`${import.meta.env.VITE_IMG_BASE_URL}/sh_products/${this.formData.img_name}`).href
         },
         // 取得這一份商品的全部圖片名稱
         getThisProductAllImgs(sh_pro_id) {
